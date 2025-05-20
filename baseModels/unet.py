@@ -6,273 +6,305 @@ Serves as a baseline model for the
 
 
 import torch
-import segmentation_models_pytorch as smp
-from baseModels.dataloaders import create_train_val_test_loaders
+import segmentation_models_pytorch as smp 
 import os
-import time
+import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.metrics import roc_auc_score
+import json
+from dataloaders import create_train_val_test_loaders
 
-# Training parameters
+#MACROS
 MAXEPOCHS = 10
-BATCHSIZE = 4     # Slightly larger batch size for better training
+BATCHSIZE = 1
 MOMENTUM = 0.99
 LEARNING_RATE = 0.01
 NUM_CLASSES = 2
-SAVE_INTERVAL = 5  # Save checkpoints every N epochs
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# Create UNet model
+# Model, optimizer, loss definitions -------------------------------------------------------------
+# vanilla unet, untrained
 unet = smp.Unet(
-    encoder_name="resnet34",  # Use a lighter backbone for CPU training
-    encoder_weights=None,     # Start with random weights
-    in_channels=3,           # RGB images have 3 channels
-    classes=NUM_CLASSES,     # Binary segmentation (background/foreground)
+    encoder_name="resnet34",  
+    encoder_weights=None,  
+    in_channels=3,  
+    classes=NUM_CLASSES,
 )
 unet.to(device)
 
-# Define optimizer with SGD
 optimizer = torch.optim.SGD(unet.parameters(),
                            lr=LEARNING_RATE,
                            momentum=MOMENTUM)
 
-# Define loss function for segmentation
 lossFunc = torch.nn.CrossEntropyLoss()
 
-# ----------------------------------------------------------------------------------------------------
+# Data loaders ------------------------------------------------------------------------------------
 path_images_folder = os.path.join("CUBdata/CUB_200_2011/images/")
 path_segmentations_folder = os.path.join("CUBdata/segmentations/")
 
-# Create data loaders with parameters optimized for CPU training
 training_dataloader, validation_dataloader, testing_dataloader = create_train_val_test_loaders(
     image_dir=path_images_folder, 
     segmentation_dir=path_segmentations_folder,
-    batch_size=BATCHSIZE,
-    num_workers=2,  # Use multiple workers for data loading
-    pin_memory=True  # This helps with data transfer to device
+    batch_size=BATCHSIZE
 )
 
-# ----------------------------------------------------------------------------------------------------
-
-def train(num_epochs=MAXEPOCHS, save_model=True):
-    """Train the UNet model
-    
-    Args:
-        num_epochs: Number of epochs to train
-        save_model: Whether to save the model after training
-        
-    Returns:
-        Model training history (train_losses, val_losses)
-    """
+# Training ------------------------------------------------------------------------------------------
+def train(): 
+    # Lists to store metrics for visualization
     train_losses = []
     val_losses = []
-    best_val_loss = float('inf')
+    train_aucs = []
+    val_aucs = []
+    epochs = []
     
-    print(f"Training on {device}")
-    print(f"Number of training samples: {len(training_dataloader.dataset)}")
-    print(f"Number of validation samples: {len(validation_dataloader.dataset)}")
-    print("-" * 50)
+    # Create output directory for saving metrics and plots
+    os.makedirs("outputs", exist_ok=True)
     
-    for epoch in range(1, num_epochs + 1):
+    for epoch in range(1, MAXEPOCHS + 1):
+        epochs.append(epoch)
+        
         # Training phase
         unet.train()
-        train_loss = 0.0
+        tloss = 0.0
+        train_preds = []
+        train_targets = []
         
-        for batch_idx, (images, masks) in enumerate(training_dataloader):
-            # Move data to device
-            images = images.to(device)
-            masks = masks.to(device).long()
+        for image, segmentation_mask in training_dataloader: 
+            # batch size is 1, outputs individual image seg pairs
+            image = image.to(device)
+            segmentation_mask = segmentation_mask.to(device).long()
             
-            # Zero the gradients
             optimizer.zero_grad()
             
-            # Forward pass
-            outputs = unet(images)
-            loss = lossFunc(outputs, masks)
+            logits = unet(image)
+            loss = lossFunc(logits, segmentation_mask)
             
-            # Backward pass and optimize
             loss.backward()
             optimizer.step()
             
-            # Track loss
-            train_loss += loss.item()
+            tloss += loss.item()
             
-            # Print progress every 10 batches
-            if (batch_idx + 1) % 10 == 0:
-                print(f"Epoch [{epoch}/{num_epochs}], Batch [{batch_idx+1}/{len(training_dataloader)}], Loss: {loss.item():.4f}")
+            # Store predictions and targets for AUC calculation
+            probs = torch.softmax(logits, dim=1)[:, 1]  # Probability of class 1 (foreground)
+            train_preds.extend(probs.flatten().cpu().detach().numpy())
+            train_targets.extend(segmentation_mask.flatten().cpu().numpy())
         
-        # Calculate average training loss for this epoch
-        avg_train_loss = train_loss / len(training_dataloader)
-        train_losses.append(avg_train_loss)
+        # Calculate training metrics
+        avg_train = tloss / len(training_dataloader)
+        train_losses.append(avg_train)
+        
+        # Calculate training AUC if possible
+        try:
+            if len(np.unique(train_targets)) > 1:  # Ensure both classes are present
+                train_auc = roc_auc_score(train_targets, train_preds)
+                train_aucs.append(train_auc)
+                print(f"Epoch {epoch} \t Training Loss: {avg_train:.4f} \t Training AUC: {train_auc:.4f}")
+            else:
+                train_aucs.append(float('nan'))
+                print(f"Epoch {epoch} \t Training Loss: {avg_train:.4f} \t Training AUC: N/A (need both classes)")
+        except ValueError as e:
+            train_aucs.append(float('nan'))
+            print(f"Epoch {epoch} \t Training Loss: {avg_train:.4f} \t Training AUC: Error ({str(e)})")
         
         # Validation phase
         unet.eval()
         val_loss = 0.0
+        val_preds = []
+        val_targets = []
         
         with torch.no_grad():
-            for images, masks in validation_dataloader:
-                images = images.to(device)
-                masks = masks.to(device).long()
+            for image, segmentation_mask in validation_dataloader:
+                image = image.to(device)
+                segmentation_mask = segmentation_mask.to(device).long()
+                logits = unet(image)
+                val_loss += lossFunc(logits, segmentation_mask).item()
                 
-                outputs = unet(images)
-                loss = lossFunc(outputs, masks)
-                val_loss += loss.item()
+                # Store predictions and targets for AUC calculation
+                probs = torch.softmax(logits, dim=1)[:, 1]  # Probability of class 1 (foreground)
+                val_preds.extend(probs.flatten().cpu().numpy())
+                val_targets.extend(segmentation_mask.flatten().cpu().numpy())
         
-        # Calculate average validation loss
-        avg_val_loss = val_loss / len(validation_dataloader)
-        val_losses.append(avg_val_loss)
+        # Calculate validation metrics
+        avg_val = val_loss / len(validation_dataloader)
+        val_losses.append(avg_val)
         
-        # Print epoch stats
-        print(f"Epoch {epoch}/{num_epochs}:\t Training Loss: {avg_train_loss:.4f}\t Validation Loss: {avg_val_loss:.4f}")
-        print("-" * 50)
+        # Calculate validation AUC if possible
+        try:
+            if len(np.unique(val_targets)) > 1:  # Ensure both classes are present
+                val_auc = roc_auc_score(val_targets, val_preds)
+                val_aucs.append(val_auc)
+                print(f"Epoch {epoch} \t Validation Loss: {avg_val:.4f} \t Validation AUC: {val_auc:.4f}")
+            else:
+                val_aucs.append(float('nan'))
+                print(f"Epoch {epoch} \t Validation Loss: {avg_val:.4f} \t Validation AUC: N/A (need both classes)")
+        except ValueError as e:
+            val_aucs.append(float('nan'))
+            print(f"Epoch {epoch} \t Validation Loss: {avg_val:.4f} \t Validation AUC: Error ({str(e)})")
+            
+        print("=" * 60)
         
-        # Save model if it's the best so far
-        if avg_val_loss < best_val_loss and save_model:
-            best_val_loss = avg_val_loss
-            torch.save({
-                'epoch': epoch,
-                'model_state_dict': unet.state_dict(),
-                'optimizer_state_dict': optimizer.state_dict(),
-                'train_loss': avg_train_loss,
-                'val_loss': avg_val_loss,
-            }, 'unet_best_model.pth')
-            print(f"Model saved at epoch {epoch} with validation loss: {avg_val_loss:.4f}")
+        # Visualize metrics after each epoch
+        plt.figure(figsize=(12, 5))
+        
+        # Plot losses
+        plt.subplot(1, 2, 1)
+        plt.plot(epochs, train_losses, 'b-', label='Training Loss')
+        plt.plot(epochs, val_losses, 'r-', label='Validation Loss')
+        plt.xlabel('Epoch')
+        plt.ylabel('Loss')
+        plt.title('Training and Validation Loss')
+        plt.legend()
+        plt.grid(True)
+        
+        # Plot AUCs
+        plt.subplot(1, 2, 2)
+        plt.plot(epochs, train_aucs, 'b-', label='Training AUC')
+        plt.plot(epochs, val_aucs, 'r-', label='Validation AUC')
+        plt.xlabel('Epoch')
+        plt.ylabel('AUC')
+        plt.title('Training and Validation AUC')
+        plt.legend()
+        plt.grid(True)
+        
+        plt.tight_layout()
+        plt.savefig(f"outputs/training_metrics_epoch_{epoch}.png")
+        plt.close()
     
-    print("Training completed!")
+    # Save metrics to JSON for later visualization
+    metrics = {
+        'epochs': epochs,
+        'train_loss': train_losses,
+        'val_loss': val_losses,
+        'train_auc': train_aucs,
+        'val_auc': val_aucs
+    }
     
-    if save_model:
-        # Save final model
-        torch.save({
-            'epoch': num_epochs,
-            'model_state_dict': unet.state_dict(),
-            'optimizer_state_dict': optimizer.state_dict(),
-            'train_loss': train_losses[-1],
-            'val_loss': val_losses[-1],
-        }, 'unet_final_model.pth')
-        print("Final model saved as 'unet_final_model.pth'")
+    with open('outputs/training_metrics.json', 'w') as f:
+        json.dump(metrics, f)
     
-    return train_losses, val_losses
+    # Final visualization of training process
+    visualize_training_process(metrics)
+
+def test(): 
+    unet.eval()
+    
+    tloss = 0.0
+    test_preds = []
+    test_targets = []
+    
+    # Create a figure for sample visualization
+    fig, axes = plt.subplots(4, 3, figsize=(15, 10))
+    sample_idx = 0
+    
+    for image, segmentation_mask in testing_dataloader: 
+        image = image.to(device)
+        segmentation_mask = segmentation_mask.to(device).long()
+        
+        logits = unet(image)
+        tloss += lossFunc(logits, segmentation_mask).item()
+        
+        # Store predictions and targets for AUC calculation
+        probs = torch.softmax(logits, dim=1)[:, 1]  # Probability of class 1 (foreground)
+        test_preds.extend(probs.flatten().cpu().detach().numpy())
+        test_targets.extend(segmentation_mask.flatten().cpu().numpy())
+        
+        # Visualize some test samples
+        if sample_idx < 4:  # Show 4 samples
+            # Original image
+            axes[sample_idx, 0].imshow(image[0].cpu().permute(1, 2, 0))
+            axes[sample_idx, 0].set_title(f"Sample {sample_idx+1}: Original")
+            axes[sample_idx, 0].axis('off')
+            
+            # Ground truth segmentation
+            axes[sample_idx, 1].imshow(segmentation_mask[0].cpu(), cmap='gray')
+            axes[sample_idx, 1].set_title(f"Sample {sample_idx+1}: Ground Truth")
+            axes[sample_idx, 1].axis('off')
+            
+            # Predicted segmentation
+            pred_mask = torch.argmax(logits, dim=1)[0].cpu()
+            axes[sample_idx, 2].imshow(pred_mask, cmap='gray')
+            axes[sample_idx, 2].set_title(f"Sample {sample_idx+1}: Prediction")
+            axes[sample_idx, 2].axis('off')
+            
+            sample_idx += 1
+    
+    # Save the visualization samples
+    plt.tight_layout()
+    plt.savefig("outputs/test_samples_visualization.png")
+    plt.close()
+    
+    # Calculate test metrics
+    avg_test = tloss / len(testing_dataloader)
+    
+    # Calculate test AUC if possible
+    try:
+        if len(np.unique(test_targets)) > 1:  # Ensure both classes are present
+            test_auc = roc_auc_score(test_targets, test_preds)
+            print(f"Test Loss: {avg_test:.4f} \t Test AUC: {test_auc:.4f}")
+        else:
+            print(f"Test Loss: {avg_test:.4f} \t Test AUC: N/A (need both classes)")
+    except ValueError as e:
+        print(f"Test Loss: {avg_test:.4f} \t Test AUC: Error ({str(e)})")
+    
+    # Save test metrics
+    test_metrics = {
+        'test_loss': avg_test,
+        'test_auc': test_auc if 'test_auc' in locals() else float('nan'),
+        'test_predictions': test_preds,
+        'test_targets': test_targets
+    }
+    
+    with open('outputs/test_metrics.json', 'w') as f:
+        # Convert numpy arrays to lists for JSON serialization
+        test_metrics['test_predictions'] = [float(p) for p in test_metrics['test_predictions']]
+        test_metrics['test_targets'] = [int(t) for t in test_metrics['test_targets']]
+        json.dump(test_metrics, f)
+    
+    return test_metrics
 
 
-def evaluate(dataloader, model):
-    """Evaluate the model on a given dataloader
+def visualize_training_process(metrics):
+    """Visualize the final training process metrics"""
+    # Create a more detailed final visualization
+    plt.figure(figsize=(15, 10))
     
-    Args:
-        dataloader: DataLoader to evaluate on
-        model: Model to evaluate
-        
-    Returns:
-        avg_loss, accuracy, iou_score
-    """
-    model.eval()
-    total_loss = 0.0
-    total_correct = 0
-    total_pixels = 0
-    total_iou = 0.0
-    num_samples = 0
-    
-    with torch.no_grad():
-        for images, masks in dataloader:
-            images = images.to(device)
-            masks = masks.to(device).long()
-            
-            # Forward pass
-            outputs = model(images)
-            loss = lossFunc(outputs, masks)
-            
-            # Track metrics
-            total_loss += loss.item()
-            
-            # Convert outputs to predictions
-            preds = torch.argmax(outputs, dim=1)
-            
-            # Calculate accuracy
-            correct = (preds == masks).sum().item()
-            total_correct += correct
-            total_pixels += masks.numel()
-            
-            # Calculate IoU (Intersection over Union)
-            intersection = ((preds == 1) & (masks == 1)).sum().item()
-            union = ((preds == 1) | (masks == 1)).sum().item()
-            if union > 0:
-                iou = intersection / union
-                total_iou += iou
-                num_samples += 1
-    
-    # Calculate averages
-    avg_loss = total_loss / len(dataloader)
-    accuracy = total_correct / total_pixels if total_pixels > 0 else 0
-    avg_iou = total_iou / num_samples if num_samples > 0 else 0
-    
-    return avg_loss, accuracy, avg_iou
-
-
-def plot_training_history(train_losses, val_losses):
-    """Plot training and validation loss history"""
-    plt.figure(figsize=(10, 5))
-    plt.plot(train_losses, label='Training Loss')
-    plt.plot(val_losses, label='Validation Loss')
-    plt.title('Training and Validation Loss')
-    plt.xlabel('Epochs')
+    # Plot losses
+    plt.subplot(2, 1, 1)
+    plt.plot(metrics['epochs'], metrics['train_loss'], 'bo-', label='Training Loss')
+    plt.plot(metrics['epochs'], metrics['val_loss'], 'ro-', label='Validation Loss')
+    plt.xlabel('Epoch')
     plt.ylabel('Loss')
+    plt.title('Training and Validation Loss Over Epochs')
     plt.legend()
-    plt.savefig('training_history.png')
+    plt.grid(True)
+    
+    # Plot AUCs
+    plt.subplot(2, 1, 2)
+    plt.plot(metrics['epochs'], metrics['train_auc'], 'bo-', label='Training AUC')
+    plt.plot(metrics['epochs'], metrics['val_auc'], 'ro-', label='Validation AUC')
+    plt.xlabel('Epoch')
+    plt.ylabel('AUC')
+    plt.title('Training and Validation AUC Over Epochs')
+    plt.legend()
+    plt.grid(True)
+    
+    plt.tight_layout()
+    plt.savefig("outputs/final_training_metrics.png")
     plt.close()
-    print("Training history plot saved as 'training_history.png'")
-
-
-def predict_and_visualize(image, mask, model):
-    """Make prediction and visualize results"""
-    model.eval()
-    with torch.no_grad():
-        image = image.unsqueeze(0).to(device)  # Add batch dimension
-        output = model(image)
-        pred = torch.argmax(output, dim=1).squeeze().cpu().numpy()
-    
-    # Convert tensors to numpy arrays for visualization
-    image = image.squeeze().cpu().permute(1, 2, 0).numpy()  # Change from (C,H,W) to (H,W,C)
-    mask = mask.cpu().numpy()
-    
-    # Plot results
-    fig, axs = plt.subplots(1, 3, figsize=(15, 5))
-    axs[0].imshow(image)
-    axs[0].set_title('Original Image')
-    axs[0].axis('off')
-    
-    axs[1].imshow(mask, cmap='gray')
-    axs[1].set_title('True Mask')
-    axs[1].axis('off')
-    
-    axs[2].imshow(pred, cmap='gray')
-    axs[2].set_title('Predicted Mask')
-    axs[2].axis('off')
-    
-    plt.savefig('prediction_example.png')
-    plt.close()
-    print("Prediction visualization saved as 'prediction_example.png'")
 
 
 if __name__ == "__main__":
-    # Train the model
-    start_time = time.time()
-    train_losses, val_losses = train(num_epochs=MAXEPOCHS)
-    training_time = time.time() - start_time
+    # Create outputs directory if it doesn't exist
+    os.makedirs("outputs", exist_ok=True)
     
-    print(f"Total training time: {training_time/60:.2f} minutes")
-    
-    # Plot training history
-    plot_training_history(train_losses, val_losses)
-    
-    # Evaluate on test set
-    test_loss, test_accuracy, test_iou = evaluate(testing_dataloader, unet)
-    print(f"\nTest Results:\n"
-          f"Loss: {test_loss:.4f}\n"
-          f"Accuracy: {test_accuracy:.4f}\n"
-          f"IoU Score: {test_iou:.4f}")
-    
-    # Visualize a prediction example
-    # Get a sample from the test set
-    for images, masks in testing_dataloader:
-        predict_and_visualize(images[0], masks[0], unet)
-        break  # Just use the first sample
+    if device.type == "cuda":
+        print("Starting training process...")
+        train()
+        print("\nStarting testing process...")
+        test_metrics = test()
+        print("\nTraining and testing completed successfully.")
+        print("Results and visualizations saved in the 'outputs' directory.")
+    else:
+        print("No GPU available, exiting...")

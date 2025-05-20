@@ -9,7 +9,7 @@ does two things:
 no need for labels, segmentation only.
 """
 
-from torch.utils.data import Dataset, DataLoader, random_split
+from torch.utils.data import Dataset, DataLoader, random_split  # split technique up for discussion
 import os
 from PIL import Image
 import numpy as np
@@ -56,10 +56,8 @@ def load_segmentation_mask(mask_path):
         
         # If mask is RGB or RGBA, convert to binary (0/1)
         if len(mask_array.shape) == 3:
-            # Assuming any non-zero value in any channel represents foreground
             mask_array = (mask_array.sum(axis=2) > 0).astype(np.int64)
         else:
-            # For grayscale masks, threshold to convert to binary
             mask_array = (mask_array > 0).astype(np.int64)
         
         # Convert to tensor (no normalization needed for segmentation masks)
@@ -85,11 +83,10 @@ def get_file_paths(directory):
     
     for root, _, files in os.walk(directory):
         for file in files:
-            # Only include image files (add more extensions if needed)
-            if file.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.tif', '.tiff')):
+            if file.endswith(('.png', '.jpg', '.jpeg', '.JPG', '.JPEG', '.PNG')):
                 file_paths.append(os.path.join(root, file))
     
-    return sorted(file_paths)  # Sort to ensure consistent ordering
+    return file_paths
 
 # --------------------------------------------------------------------------------------------------------
 
@@ -122,15 +119,12 @@ class CUBDataset(Dataset):
         return image, segmentation
 
 
-# --------------------------------------------------------------------------------------------------------
 
-# No need for a custom DataLoader class, we'll use the standard DataLoader with improved parameters
 
 # --------------------------------------------------------------------------------------------------------
 
 def create_train_val_test_loaders(image_dir, segmentation_dir, batch_size=32, 
-                                 train_ratio=0.7, val_ratio=0.2, test_ratio=0.1,
-                                 num_workers=2, pin_memory=True):
+                                 train_ratio=0.7, val_ratio=0.2, test_ratio=0.1):
     """
     Create train, validation, and test DataLoaders with split
     
@@ -164,29 +158,23 @@ def create_train_val_test_loaders(image_dir, segmentation_dir, batch_size=32,
         full_dataset, [train_size, val_size, test_size], generator=generator
     )
     
-    # Create DataLoaders with improved settings for CPU usage
+    # Create DataLoaders
     train_loader = DataLoader(
         train_dataset, 
         batch_size=batch_size, 
-        shuffle=True,
-        num_workers=num_workers,
-        pin_memory=pin_memory
+        shuffle=True
     )
     
     val_loader = DataLoader(
         val_dataset, 
         batch_size=batch_size, 
-        shuffle=False,
-        num_workers=num_workers,
-        pin_memory=pin_memory
+        shuffle=False
     )
     
     test_loader = DataLoader(
         test_dataset, 
         batch_size=batch_size, 
-        shuffle=False,
-        num_workers=num_workers,
-        pin_memory=pin_memory
+        shuffle=False
     )
     
     return train_loader, val_loader, test_loader
@@ -201,12 +189,11 @@ Example usage:
 image_dir = os.path.join("CUBdata/CUB_200_2011/images/")
 segmentation_dir = os.path.join("CUBdata/segmentations/")
 
-# Create data loaders with smaller batch size for CPU training
+# Create data loaders
 train_loader, val_loader, test_loader = create_train_val_test_loaders(
     image_dir=image_dir,
     segmentation_dir=segmentation_dir,
-    batch_size=1,  # Small batch size for CPU
-    num_workers=2  # Use more workers for CPU parallelism
+    batch_size=1
 )
 
 # Test loading a batch
