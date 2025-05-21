@@ -202,3 +202,17 @@ for images, masks in train_loader:
     print(f"Mask batch shape: {masks.shape}")
     break
 """
+
+path_images_folder = os.path.join("CUBdata/CUB_200_2011/images/")
+path_segmentations_folder = os.path.join("CUBdata/segmentations/")
+
+train_loader, val_loader, test_loader = create_train_val_test_loaders(
+    image_dir=path_images_folder,
+    segmentation_dir=path_segmentations_folder,
+    batch_size=1
+)
+
+for images, masks in train_loader:
+    print(f"Image batch shape: {images.shape}")
+    print(f"Mask batch shape: {masks.shape}")
+    break
