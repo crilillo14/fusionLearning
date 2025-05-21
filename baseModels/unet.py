@@ -264,7 +264,6 @@ def test():
     
     return test_metrics
 
-
 def visualize_training_process(metrics):
     """Visualize the final training process metrics"""
     # Create a more detailed final visualization
@@ -294,7 +293,6 @@ def visualize_training_process(metrics):
     plt.savefig("outputs/final_training_metrics.png")
     plt.close()
 
-
 if __name__ == "__main__":
     # Create outputs directory if it doesn't exist
     os.makedirs("outputs", exist_ok=True)
@@ -305,6 +303,6 @@ if __name__ == "__main__":
         print("\nStarting testing process...")
         test_metrics = test()
         print("\nTraining and testing completed successfully.")
-        print("Results and visualizations saved in the 'outputs' directory.")
+        print("\t * Results and visualizations saved in the 'outputs' directory. * ")
     else:
         print("No GPU available, exiting...")
