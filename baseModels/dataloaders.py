@@ -135,8 +135,6 @@ def create_train_val_test_loaders(image_dir, segmentation_dir, batch_size=32,
         train_ratio: Proportion of data for training
         val_ratio: Proportion of data for validation
         test_ratio: Proportion of data for testing
-        num_workers: Number of worker processes for data loading
-        pin_memory: Whether to pin memory for faster data transfer to GPU
         
     Returns:
         train_loader, val_loader, test_loader
@@ -150,7 +148,8 @@ def create_train_val_test_loaders(image_dir, segmentation_dir, batch_size=32,
     val_size = int(val_ratio * total_size)
     test_size = total_size - train_size - val_size
     
-    # Set a fixed seed for reproducibility
+    # Set a fixed seed for reproducibility  (optional)
+    # Note: ensures that the split is consistent across runs.
     generator = torch.Generator().manual_seed(42)
     
     # Split dataset
@@ -203,6 +202,8 @@ for images, masks in train_loader:
     break
 """
 
+"""
+
 path_images_folder = os.path.join("CUBdata/CUB_200_2011/images/")
 path_segmentations_folder = os.path.join("CUBdata/segmentations/")
 
@@ -216,3 +217,5 @@ for images, masks in train_loader:
     print(f"Image batch shape: {images.shape}")
     print(f"Mask batch shape: {masks.shape}")
     break
+
+"""
