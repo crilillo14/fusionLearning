@@ -5,3 +5,5 @@ Pillow>=8.0.0
 segmentation-models-pytorch>=0.2.0
 matplotlib>=3.5.0
 scikit-learn>=1.0.0
+torchmetrics>=0.6.0
+tqdm>=4.62.0
