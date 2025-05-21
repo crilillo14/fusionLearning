@@ -1,2 +1,4 @@
 # ignore dataset & labels
-CUBdata/*
+CUBdata/
+CUB_200_2011/
+segmentations/
