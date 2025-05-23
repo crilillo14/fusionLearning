@@ -1,6 +1,6 @@
 ### ABFL
 
-Where base models could be ViTs, Unets, etc.
+for segmentation
 
 ```
  ____________
