@@ -123,7 +123,7 @@ class CUBDataset(Dataset):
 
 # --------------------------------------------------------------------------------------------------------
 
-def create_train_val_test_loaders(image_dir, segmentation_dir, batch_size=32, 
+def create_train_val_test_loaders(image_dir, segmentation_dir, batch_size=1, 
                                  train_ratio=0.7, val_ratio=0.2, test_ratio=0.1):
     """
     Create train, validation, and test DataLoaders with split
