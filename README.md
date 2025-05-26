@@ -2,7 +2,7 @@
 
 for segmentation tasks
 
-```txt
+```
  ____________
 |            |
 |  Model 1   | __ mask __
