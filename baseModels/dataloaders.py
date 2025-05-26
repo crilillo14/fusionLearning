@@ -185,10 +185,14 @@ def create_train_val_test_loaders(image_dir, segmentation_dir, batch_size=1,
 # --------------------------------------------------------------------------------------------------------
 
 
-def generateSegmentationMasks(model, model_weights, model_name, image_dir, segmentation_dir, batch_size=1,
+def generateSegmentationMasks(model, model_weights_path, model_name, image_dir, segmentation_dir, batch_size=1,
                               save_dir="segmentations"):
 
-    model.load_state_dict(torch.load(model_weights))
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print("Using device:", device)
+
+    model.load_state_dict(torch.load(model_weights_path))
     model.to(device)
     model.eval()
     
