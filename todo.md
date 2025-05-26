@@ -1,13 +1,22 @@
+# TODO List
 
+================
 
-### TODO
-- pad images to a consistent size, along with seg masks .
-    - pad per batch
-- add visualization \
-- save best model from val score.
-    - test it. 
-- make sure dataloaders are working well.
+## TODO
 
-### might do
-- add transforms to data
+--------
 
+* Pad images to a consistent size, along with seg masks.
+  * Pad per batch
+* Add visualization
+* Save best model from val score.
+  * Test it.
+* Make sure dataloaders are working well.
+
+* Add lr scheduler
+* Add early stopping
+* _Make all cwd relative to fusionLearning root_
+
+## Might Do
+
+* Add transforms to data [ rotation, noise, data augmentation ]

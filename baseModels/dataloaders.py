@@ -9,6 +9,7 @@ does two things:
 no need for labels, segmentation only.
 """
 
+from fileinput import filename
 from torch.utils.data import Dataset, DataLoader, random_split  # split technique up for discussion
 import os
 from PIL import Image
@@ -31,7 +32,7 @@ def load_image(image_path):
     try:
         img = Image.open(image_path).convert('RGB')
         transform = transforms.Compose([
-            transforms.ToTensor(),  # Converts to tensor and scales to [0, 1]
+            transforms.ToTensor(),  # Converts to tensor and normalize
         ])
         return transform(img)
     except Exception as e:
@@ -107,16 +108,17 @@ class CUBDataset(Dataset):
 
     def __getitem__(self, idx):
         # Load image and convert to tensor
-        image = load_image(self.image_paths[idx])
+        image, image_filename = load_image(self.image_paths[idx])
         
         # Load segmentation mask and convert to tensor
         segmentation = load_segmentation_mask(self.segmentation_paths[idx])
+        print(self.image_paths[idx])
         
         # Apply transformations if specified
         if self.transform:
             image = self.transform(image)
             
-        return image, segmentation
+        return image, segmentation, self.image_paths[idx]
 
 
 
@@ -181,6 +183,42 @@ def create_train_val_test_loaders(image_dir, segmentation_dir, batch_size=1,
 
 
 # --------------------------------------------------------------------------------------------------------
+
+
+def generateSegmentationMasks(model, model_weights, model_name, image_dir, segmentation_dir, batch_size=1,
+                              save_dir="segmentations"):
+
+    model.load_state_dict(torch.load(model_weights))
+    model.to(device)
+    model.eval()
+    
+    allDataloader = DataLoader(
+        CUBDataset(image_dir, segmentation_dir),
+        batch_size=batch_size,
+        shuffle=False
+    )
+
+    os.makedirs(save_dir + "/" + model_name, exist_ok=True)
+
+    for images, masks, filename in allDataloader:
+        images = images.to(device)
+        masks = masks.to(device)
+
+        with torch.no_grad():
+            logits = model(images)
+
+        pred_mask = torch.argmax(logits, dim=1)[0].cpu().numpy()
+
+        Image.fromarray(pred_mask).save(save_dir + "/" + model_name + "/" + filename)
+        
+        print("Saved mask for", filename)
+
+
+
+
+
+            
+
 
 """
 Example usage:
