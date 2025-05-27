@@ -16,6 +16,7 @@ from PIL import Image
 import numpy as np
 import torch
 from torchvision import transforms
+from tqdm import tqdm
 
 # --------------------------------------------------------------------------------------------------------
 def load_image(image_path):
@@ -34,7 +35,7 @@ def load_image(image_path):
         transform = transforms.Compose([
             transforms.ToTensor(),  # Converts to tensor and normalize
         ])
-        return transform(img)
+        return transform(img), os.path.basename(image_path)
     except Exception as e:
         print(f"Error loading image {image_path}: {e}")
         return None
@@ -112,13 +113,12 @@ class CUBDataset(Dataset):
         
         # Load segmentation mask and convert to tensor
         segmentation = load_segmentation_mask(self.segmentation_paths[idx])
-        print(self.image_paths[idx])
         
         # Apply transformations if specified
         if self.transform:
             image = self.transform(image)
             
-        return image, segmentation, self.image_paths[idx]
+        return image, segmentation, image_filename
 
 
 
@@ -185,8 +185,22 @@ def create_train_val_test_loaders(image_dir, segmentation_dir, batch_size=1,
 # --------------------------------------------------------------------------------------------------------
 
 
+    """ Generate segmentation masks for all images in the dataset, placing them under images/segmentations.
+    
+    Args:
+        model: The model to use for segmentation.
+        model_weights_path: Path to the model weights.
+        model_name: Name of the model.
+        image_dir: Directory containing the images.
+        segmentation_dir: Directory containing the segmentation masks.
+        batch_size: Batch size for the dataloader.
+        save_dir: Directory to save the segmentation masks.
+        
+    Returns:
+        None
+    """
 def generateSegmentationMasks(model, model_weights_path, model_name, image_dir, segmentation_dir, batch_size=1,
-                              save_dir="segmentations"):
+                              save_dir="images/segmentations"):
 
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -204,17 +218,20 @@ def generateSegmentationMasks(model, model_weights_path, model_name, image_dir, 
 
     os.makedirs(save_dir + "/" + model_name, exist_ok=True)
 
-    for images, masks, filename in allDataloader:
+    for images, _, filename in tqdm(allDataloader, desc="Generating segmentation masks", leave=False, ncols=80):
         images = images.to(device)
-        masks = masks.to(device)
-
+        
         with torch.no_grad():
             logits = model(images)
-
-        pred_mask = torch.argmax(logits, dim=1)[0].cpu().numpy()
-
-        Image.fromarray(pred_mask).save(save_dir + "/" + model_name + "/" + filename)
+            
         
-        print("Saved mask for", filename)
-
-
+        # create a file from the logits and save it in the save_dir
+        
+        logits = logits.cpu().numpy()
+        
+        # save the segmentation mask (same format as original)
+        np.save(save_dir + "/" + model_name + "/" + filename, logits)
+        
+        print(f"Saved logits for {filename}")
+        
+    print(f"Generated all segmentation masks for {model_name}, saved to ./{save_dir}/{model_name}")
