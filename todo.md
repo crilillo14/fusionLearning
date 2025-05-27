@@ -20,3 +20,6 @@
 ## Might Do
 
 * Add transforms to data [ rotation, noise, data augmentation ]
+
+
+> Might have to make dataloaders more general...
