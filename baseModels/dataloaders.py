@@ -9,7 +9,6 @@ does two things:
 no need for labels, segmentation only.
 """
 
-from fileinput import filename
 from torch.utils.data import Dataset, DataLoader, random_split  # split technique up for discussion
 import os
 from PIL import Image
@@ -199,8 +198,13 @@ def create_train_val_test_loaders(image_dir, segmentation_dir, batch_size=1,
     Returns:
         None
     """
-def generateSegmentationMasks(model, model_weights_path, model_name, image_dir, segmentation_dir, batch_size=1,
-                              save_dir="images/segmentations"):
+def generateSegmentationMasks( model : torch.nn.Module, 
+                               model_weights_path : str, 
+                               model_name : str, 
+                               image_dir : str, 
+                               segmentation_dir : str, 
+                               batch_size : int = 1, 
+                               save_dir : str = "images/segmentations"):
 
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -216,7 +220,7 @@ def generateSegmentationMasks(model, model_weights_path, model_name, image_dir, 
         shuffle=False
     )
 
-    os.makedirs(save_dir + "/" + model_name, exist_ok=True)
+    os.makedirs(os.path.join(save_dir, model_name), exist_ok=True)
 
     for images, _, filename in tqdm(allDataloader, desc="Generating segmentation masks", leave=False, ncols=80):
         images = images.to(device)
@@ -224,14 +228,16 @@ def generateSegmentationMasks(model, model_weights_path, model_name, image_dir, 
         with torch.no_grad():
             logits = model(images)
             
-        
-        # create a file from the logits and save it in the save_dir
-        
-        logits = logits.cpu().numpy()
-        
-        # save the segmentation mask (same format as original)
-        np.save(save_dir + "/" + model_name + "/" + filename, logits)
-        
-        print(f"Saved logits for {filename}")
-        
-    print(f"Generated all segmentation masks for {model_name}, saved to ./{save_dir}/{model_name}")
+            # From the logits, construct a png, save it using Pillow
+            segmentation_mask = torch.argmax(logits, dim=1).squeeze().cpu().numpy()
+            segmentation_mask = (segmentation_mask * 255).astype(np.uint8)
+            img = Image.fromarray(segmentation_mask)
+
+            filename = filename[0] #    1 len tuple ???
+
+
+            img.save(os.path.join(save_dir, model_name, filename))
+    
+        # print(f"Saved segmentation mask for {filename}")
+    
+    print(f"Generated all segmentation masks for {model_name}, saved to ./{os.path.join(save_dir, model_name)}")
