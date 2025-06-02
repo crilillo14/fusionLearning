@@ -141,7 +141,13 @@ def create_train_val_test_loaders(image_dir, segmentation_dir, batch_size=1,
         train_loader, val_loader, test_loader
     """
     # Create full dataset
-    full_dataset = CUBDataset(image_dir, segmentation_dir)
+
+    transform = transforms.Compose([
+
+        transforms.ToTensor(),
+    ])
+
+    full_dataset = CUBDataset(image_dir, segmentation_dir, transform)
     
     # Calculate split sizes
     total_size = len(full_dataset)
