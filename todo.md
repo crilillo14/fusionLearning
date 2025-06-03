@@ -1,6 +1,18 @@
 # TODO List
 
-================
+
+## Global - 
+
+### Dataloaders
+
+
+
+## Model Specific / niche
+### unet 
+
+
+## Nitpicking / would be nice, not urgent
+
 
 ## TODO
 
