@@ -1,0 +1,28 @@
+
+It's important that base models have the same hyperparameters and rely on the same dataloaders;
+after all it has to be shown that base models are not the reason for the fusion model's success.
+
+Const. vars: 
+
+BATCHSIZE = 1 ( recommended for Unet, would also require padding and cropping for larger batch sizes )
+
+MAXEPOCHS = 10
+
+LEARNING_RATE = 0.01     - until I am bothered to implement lr scheduling
+
+MOMENTUM = 0.99
+
+moving average weights in learning process;
+
+! from the dataset and task
+
+NUM_CLASSES = 2
+
+IN_CHANNELS = 3
+
+OUT_CHANNELS = 1
+
+
+! For ROC AUC metric,
+
+THRESHOLDS = 128
