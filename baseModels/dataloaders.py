@@ -7,6 +7,25 @@ does two things:
 2. pairs segmentation mask targets with images
 
 no need for labels, segmentation only.
+
+
+for create_train_val_test_loaders:
+
+    first load each image
+    load_image()
+
+    then load each mask
+    load_segmentation_mask()
+
+    then split into train, val, test
+    random_split()
+
+    then create dataloaders
+    DataLoader()
+
+
+
+
 """
 
 from torch.utils.data import Dataset, DataLoader, random_split  # split technique up for discussion
@@ -18,6 +37,9 @@ from torchvision import transforms
 from tqdm import tqdm
 
 # --------------------------------------------------------------------------------------------------------
+
+# !!!! returns a pytorch tensor.
+
 def load_image(image_path):
     """
     Loads an image from path, converts to RGB, and converts to a PyTorch tensor.
@@ -31,10 +53,7 @@ def load_image(image_path):
     """
     try:
         img = Image.open(image_path).convert('RGB')
-        transform = transforms.Compose([
-            transforms.ToTensor(),  # Converts to tensor and normalize
-        ])
-        return transform(img), os.path.basename(image_path)
+        return img, os.path.basename(image_path)
     except Exception as e:
         print(f"Error loading image {image_path}: {e}")
         return None
@@ -125,7 +144,7 @@ class CUBDataset(Dataset):
 # --------------------------------------------------------------------------------------------------------
 
 def create_train_val_test_loaders(image_dir, segmentation_dir, batch_size=1, 
-                                 train_ratio=0.7, val_ratio=0.2, test_ratio=0.1):
+                                 train_ratio=0.7, val_ratio=0.2, test_ratio=0.1, transform=None):
     """
     Create train, validation, and test DataLoaders with split
     
@@ -140,13 +159,12 @@ def create_train_val_test_loaders(image_dir, segmentation_dir, batch_size=1,
     Returns:
         train_loader, val_loader, test_loader
     """
-    # Create full dataset
 
-    transform = transforms.Compose([
 
-        transforms.ToTensor(),
-    ])
 
+
+
+    #           $ pass transform to Dataset $
     full_dataset = CUBDataset(image_dir, segmentation_dir, transform)
     
     # Calculate split sizes
