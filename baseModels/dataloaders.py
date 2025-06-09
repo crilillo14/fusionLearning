@@ -42,14 +42,13 @@ from tqdm import tqdm
 
 def load_image(image_path):
     """
-    Loads an image from path, converts to RGB, and converts to a PyTorch tensor.
-    Normalizes to [0, 1] range.
+    Loads an image from path, converts to RGB.
     
     Args:
         image_path: Path to the image file.
         
     Returns:
-        A PyTorch tensor of shape (3, height, width)
+        PIL image and filename
     """
     try:
         img = Image.open(image_path).convert('RGB')
@@ -67,21 +66,19 @@ def load_segmentation_mask(mask_path):
         mask_path: Path to the segmentation mask.
         
     Returns:
-        A PyTorch tensor of shape (height, width) with class indices.
+        PIL mask
     """
     try:
         mask = Image.open(mask_path)
-        # Convert mask to numpy array
-        mask_array = np.array(mask)
         
         # If mask is RGB or RGBA, convert to binary (0/1)
-        if len(mask_array.shape) == 3:
-            mask_array = (mask_array.sum(axis=2) > 0).astype(np.int64)
+        if len(mask.shape) == 3:
+            mask = (mask.sum(axis=2) > 0).astype(torch.uint8)
         else:
-            mask_array = (mask_array > 0).astype(np.int64)
+            mask = (mask > 0).astype(torch.uint8)
         
         # Convert to tensor (no normalization needed for segmentation masks)
-        return torch.from_numpy(mask_array)
+        return mask
     except Exception as e:
         print(f"Error loading mask {mask_path}: {e}")
         return None
@@ -111,10 +108,15 @@ def get_file_paths(directory):
 # --------------------------------------------------------------------------------------------------------
 
 class CUBDataset(Dataset):
-    def __init__(self, image_dir, segmentation_dir, transform=None):
+    def __init__(self, image_dir, segmentation_dir, gTransforms=None, cTransforms=None):
         self.image_paths = get_file_paths(image_dir)
         self.segmentation_paths = get_file_paths(segmentation_dir)
-        self.transform = transform
+
+        self.geometricTransforms = gTransforms
+        self.colorTransforms = cTransforms
+        
+        
+        
         
         # Ensure matching number of images and segmentation masks
         if len(self.image_paths) != len(self.segmentation_paths):
@@ -128,15 +130,23 @@ class CUBDataset(Dataset):
     def __getitem__(self, idx):
         # Load image and convert to tensor
         image, image_filename = load_image(self.image_paths[idx])
+        image = transforms.PILToTensor()(image)
+        
         
         # Load segmentation mask and convert to tensor
         segmentation = load_segmentation_mask(self.segmentation_paths[idx])
+        segmentation_tensor = transforms.PILToTensor()(segmentation)
         
         # Apply transformations if specified
-        if self.transform:
-            image = self.transform(image)
+        if self.geometricTransforms:
+            image = self.geometricTransforms(image)
+            segmentation_tensor = self.geometricTransforms(segmentation_tensor)
+        if self.colorTransforms:
+            image = self.colorTransforms(image)
+    
             
-        return image, segmentation, image_filename
+            
+        return image, segmentation_tensor, image_filename
 
 
 
@@ -165,7 +175,7 @@ def create_train_val_test_loaders(image_dir, segmentation_dir, batch_size=1,
 
 
     #           $ pass transform to Dataset $
-    full_dataset = CUBDataset(image_dir, segmentation_dir, transform)
+    full_dataset = CUBDataset(image_dir, segmentation_dir, transform=transform)
     
     # Calculate split sizes
     total_size = len(full_dataset)
