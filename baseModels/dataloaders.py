@@ -108,15 +108,14 @@ def get_file_paths(directory):
 # --------------------------------------------------------------------------------------------------------
 
 class CUBDataset(Dataset):
-    def __init__(self, image_dir, segmentation_dir, gTransforms=None, cTransforms=None):
+    def __init__(self, image_dir, segmentation_dir, gTransforms=None, pTransforms=None):
+
+        # hold files by reference
         self.image_paths = get_file_paths(image_dir)
         self.segmentation_paths = get_file_paths(segmentation_dir)
 
         self.geometricTransforms = gTransforms
-        self.colorTransforms = cTransforms
-        
-        
-        
+        self.photometricTransforms = pTransforms
         
         # Ensure matching number of images and segmentation masks
         if len(self.image_paths) != len(self.segmentation_paths):
@@ -141,8 +140,8 @@ class CUBDataset(Dataset):
         if self.geometricTransforms:
             image = self.geometricTransforms(image)
             segmentation_tensor = self.geometricTransforms(segmentation_tensor)
-        if self.colorTransforms:
-            image = self.colorTransforms(image)
+        if self.photometricTransforms:
+            image = self.photometricTransforms(image)
     
             
             
@@ -154,7 +153,7 @@ class CUBDataset(Dataset):
 # --------------------------------------------------------------------------------------------------------
 
 def create_train_val_test_loaders(image_dir, segmentation_dir, batch_size=1, 
-                                 train_ratio=0.7, val_ratio=0.2, test_ratio=0.1, transform=None):
+                                 train_ratio=0.7, val_ratio=0.2, test_ratio=0.1, gTransforms=None, pTransforms=None):
     """
     Create train, validation, and test DataLoaders with split
     
@@ -175,7 +174,7 @@ def create_train_val_test_loaders(image_dir, segmentation_dir, batch_size=1,
 
 
     #           $ pass transform to Dataset $
-    full_dataset = CUBDataset(image_dir, segmentation_dir, transform=transform)
+    full_dataset = CUBDataset(image_dir, segmentation_dir, gTransforms=gTransforms, pTransforms=pTransforms)
     
     # Calculate split sizes
     total_size = len(full_dataset)

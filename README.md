@@ -17,3 +17,16 @@ for segmentation tasks
 |____________|
 
 ```
+
+Base Models had to be trained exactly the same way, with the same dataloaders, same transforms, same hyperparameters.
+
+For hps:
+
+BATCHSIZE = 1
+MAXEPOCHS = 10
+LEARNING_RATE = 0.01
+MOMENTUM = 0.99
+
+For transforms look at baseModels\aug.py. Geometric and photometric augmentations separated for faster data processing.
+
+For dataloaders look at baseModels\dataloaders.py.
