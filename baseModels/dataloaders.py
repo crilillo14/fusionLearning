@@ -35,12 +35,13 @@ import numpy as np
 import torch
 from torchvision import transforms
 from tqdm import tqdm
+from typing import Optional
 
 # --------------------------------------------------------------------------------------------------------
 
 # !!!! returns a pytorch tensor.
 
-def load_image(image_path):
+def load_image(image_path : str):
     """
     Loads an image from path, converts to RGB.
     
@@ -57,7 +58,7 @@ def load_image(image_path):
         print(f"Error loading image {image_path}: {e}")
         return None
 
-def load_segmentation_mask(mask_path):
+def load_segmentation_mask(mask_path : str):
     """
     Loads a segmentation mask and converts it to a class index tensor.
     For binary segmentation (foreground/background), creates a tensor of shape (height, width).
@@ -66,19 +67,12 @@ def load_segmentation_mask(mask_path):
         mask_path: Path to the segmentation mask.
         
     Returns:
-        PIL mask
+        PIL image segmentation mask
     """
     try:
-        mask = Image.open(mask_path)
-        
-        # If mask is RGB or RGBA, convert to binary (0/1)
-        if len(mask.shape) == 3:
-            mask = (mask.sum(axis=2) > 0).astype(torch.uint8)
-        else:
-            mask = (mask > 0).astype(torch.uint8)
-        
-        # Convert to tensor (no normalization needed for segmentation masks)
+        mask = Image.open(mask_path).convert('L')
         return mask
+
     except Exception as e:
         print(f"Error loading mask {mask_path}: {e}")
         return None
@@ -86,7 +80,7 @@ def load_segmentation_mask(mask_path):
 # --------------------------------------------------------------------------------------------------------
 # get images, works for both segmentations and images
 
-def get_file_paths(directory):
+def get_file_paths(directory : str):
     """
     Get all image file paths from a directory structure.
     
@@ -108,7 +102,11 @@ def get_file_paths(directory):
 # --------------------------------------------------------------------------------------------------------
 
 class CUBDataset(Dataset):
-    def __init__(self, image_dir, segmentation_dir, gTransforms=None, pTransforms=None):
+    def __init__( self, 
+                  image_dir : str, 
+                  segmentation_dir : str, 
+                  gTransforms : Optional[torch.nn.Module] = None, 
+                  pTransforms : Optional[torch.nn.Module] = None ):
 
         # hold files by reference
         self.image_paths = get_file_paths(image_dir)
@@ -126,34 +124,40 @@ class CUBDataset(Dataset):
     def __len__(self):
         return len(self.image_paths)
 
-    def __getitem__(self, idx):
+    def __getitem__(self, idx : int):
         # Load image and convert to tensor
         image, image_filename = load_image(self.image_paths[idx])
-        image = transforms.PILToTensor()(image)
+        
         
         
         # Load segmentation mask and convert to tensor
         segmentation = load_segmentation_mask(self.segmentation_paths[idx])
-        segmentation_tensor = transforms.PILToTensor()(segmentation)
+
         
         # Apply transformations if specified
         if self.geometricTransforms:
             image = self.geometricTransforms(image)
-            segmentation_tensor = self.geometricTransforms(segmentation_tensor)
+            segmentation = self.geometricTransforms(segmentation)
         if self.photometricTransforms:
             image = self.photometricTransforms(image)
-    
-            
-            
-        return image, segmentation_tensor, image_filename
+        
+        image_tensor : torch.Tensor = transforms.PILToTensor()(image)
+        segmentation_tensor : torch.Tensor = transforms.PILToTensor()(segmentation)
+
+        return image_tensor, segmentation_tensor, image_filename
 
 
 
 
 # --------------------------------------------------------------------------------------------------------
 
-def create_train_val_test_loaders(image_dir, segmentation_dir, batch_size=1, 
-                                 train_ratio=0.7, val_ratio=0.2, test_ratio=0.1, gTransforms=None, pTransforms=None):
+def create_train_val_test_loaders(image_dir : str, 
+                                  segmentation_dir : str, 
+                                  batch_size : int = 1, 
+                                  train_ratio : float = 0.7, 
+                                  val_ratio : float = 0.2, 
+                                  gTransforms : Optional[torch.nn.Module] = None, 
+                                  pTransforms : Optional[torch.nn.Module] = None):
     """
     Create train, validation, and test DataLoaders with split
     
@@ -174,17 +178,17 @@ def create_train_val_test_loaders(image_dir, segmentation_dir, batch_size=1,
 
 
     #           $ pass transform to Dataset $
-    full_dataset = CUBDataset(image_dir, segmentation_dir, gTransforms=gTransforms, pTransforms=pTransforms)
+    full_dataset : CUBDataset = CUBDataset(image_dir, segmentation_dir, gTransforms=gTransforms, pTransforms=pTransforms)
     
     # Calculate split sizes
-    total_size = len(full_dataset)
-    train_size = int(train_ratio * total_size)
-    val_size = int(val_ratio * total_size)
-    test_size = total_size - train_size - val_size
+    total_size : int = len(full_dataset)
+    train_size : int = int(train_ratio * total_size)
+    val_size : int = int(val_ratio * total_size)
+    test_size : int = total_size - train_size - val_size
     
     # Set a fixed seed for reproducibility  (optional)
     # Note: ensures that the split is consistent across runs.
-    generator = torch.Generator().manual_seed(42)
+    generator : torch.Generator = torch.Generator().manual_seed(42)
     
     # Split dataset
     train_dataset, val_dataset, test_dataset = random_split(
@@ -192,19 +196,19 @@ def create_train_val_test_loaders(image_dir, segmentation_dir, batch_size=1,
     )
     
     # Create DataLoaders
-    train_loader = DataLoader(
+    train_loader : DataLoader = DataLoader(
         train_dataset, 
         batch_size=batch_size, 
         shuffle=True
     )
     
-    val_loader = DataLoader(
+    val_loader : DataLoader = DataLoader(
         val_dataset, 
         batch_size=batch_size, 
         shuffle=False
     )
     
-    test_loader = DataLoader(
+    test_loader : DataLoader = DataLoader(
         test_dataset, 
         batch_size=batch_size, 
         shuffle=False
