@@ -16,21 +16,17 @@ from torchvision.transforms import v2
 from PIL import Image
 import torch
 
-def pad_to_multiple(img, multiple=32, fill=0):
+def pad_to_multiple(img: Image.Image, multiple=32, fill=0) -> Image.Image:
     """
-    Pad image to make its dimensions divisible by multiple
+    Pad image to make its dimensions divisible by multiple (32 for compile models)
     Args:
-        img: PIL Image or Tensor
+        img: PIL Image
         multiple: The number to make dimensions divisible by
         fill: Fill value for padding
     Returns:
-        Padded image
+        Padded PIL Image
     """
-    if isinstance(img, Image.Image):
-        w, h = img.size
-    else:  # tensor
-        h, w = img.shape[-2:]
-    
+    w, h = img.size
     new_h = ((h + multiple - 1) // multiple) * multiple
     new_w = ((w + multiple - 1) // multiple) * multiple
     
@@ -47,11 +43,9 @@ geoTransforms = v2.Compose([
 ])
 
 photometricTransforms = v2.Compose([
-    pad_to_multiple,
     v2.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),
     v2.RandomGrayscale(p=0.1),
     v2.RandomAdjustSharpness(sharpness_factor=2.0, p=0.1),
     v2.RandomAutocontrast(p=0.1),
-    v2.RandomEqualize(p=0.1),
-
+    v2.RandomEqualize(p=0.1)
 ])
