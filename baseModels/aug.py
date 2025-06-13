@@ -16,6 +16,9 @@ from torchvision.transforms import v2
 from PIL import Image
 import torch
 
+# only needed for compiled models.
+# decision discontinued for now. Will be reimplemented for H100 training.
+
 def pad_to_multiple(img: Image.Image, multiple=32, fill=0) -> Image.Image:
     """
     Pad image to make its dimensions divisible by multiple (32 for compile models)
