@@ -141,7 +141,7 @@ class CUBDataset(Dataset):
         if self.photometricTransforms:
             image = self.photometricTransforms(image)
         
-        image_tensor : torch.Tensor = transforms.PILToTensor()(image)
+        image_tensor : torch.Tensor = transforms.PILToTensor()(image).float() / 255.0
         segmentation_tensor : torch.Tensor = transforms.PILToTensor()(segmentation)
 
         return image_tensor, segmentation_tensor, image_filename
