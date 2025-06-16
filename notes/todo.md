@@ -8,11 +8,14 @@
 
 
 ## Model Specific / niche
-### unet 
 
+### unet
+
+### fpn
+
+### unet++
 
 ## Nitpicking / would be nice, not urgent
-
 
 ## TODO
 
@@ -32,6 +35,5 @@
 ## Might Do
 
 * Add transforms to data [ rotation, noise, data augmentation ]
-
 
 > Might have to make dataloaders more general...
