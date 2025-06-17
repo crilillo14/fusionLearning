@@ -11,15 +11,13 @@ Tweak as needed. Don't want to overdo it and take out birds out the image.
 
 
 
-from torchvision.transforms import functional as F
 from torchvision.transforms import v2
 from PIL import Image
-import torch
 
 # only needed for compiled models.
 # decision discontinued for now. Will be reimplemented for H100 training.
 
-def pad_to_multiple(img: Image.Image, multiple=32, fill=0) -> Image.Image:
+def pad_to_multiple(img: Image.Image, multiple : int = 32, fill : int = 0) -> Image.Image:
     """
     Pad image to make its dimensions divisible by multiple (32 for compile models)
     Args:
@@ -34,7 +32,7 @@ def pad_to_multiple(img: Image.Image, multiple=32, fill=0) -> Image.Image:
     new_w = ((w + multiple - 1) // multiple) * multiple
     
     padding = (0, 0, new_w - w, new_h - h)
-    return F.pad(img, padding, fill=fill)
+    return v2.Pad(padding, fill=fill)(img)
 
 geoTransforms = v2.Compose([
     pad_to_multiple,

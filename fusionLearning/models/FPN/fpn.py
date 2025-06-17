@@ -1,66 +1,65 @@
-# # FPN
-
-# Change cwd to root of proj
-
 import os
-from pathlib import Path
+#change to root of src
+os.chdir(os.path.join(os.path.dirname(__file__), "../.."))
 
-root_is_cwd = os.getcwd().endswith("fusionLearning")
+from config import CUB, CUB_IMAGES, CUB_SEGMENTATIONS
+from models.consts import MAXEPOCHS, BATCHSIZE, MOMENTUM, LEARNING_RATE, NUM_CLASSES
+from data.dataloaders import create_train_val_test_loaders
+from data.aug import geoTransforms, photometricTransforms
 
-if not root_is_cwd:
-    os.chdir(Path().resolve().parent.parent)
-    print("Changed to root directory")
-    root_is_cwd = True
-else:
-    print("Already in root directory")
+import segmentation_models_pytorch as smp 
+from torchmetrics.classification import BinaryAUROC
+import torch 
 
-print(os.getcwd())
+import matplotlib.pyplot as plt
+from tqdm import tqdm
+import json
+
+
 
 # ## Configuring HPs, model, device, compiling.
 
-MAXEPOCHS : int = 10
-BATCHSIZE : int = 1
-MOMENTUM : float = 0.99
-LEARNING_RATE : float = 0.01
-NUM_CLASSES : int = 2
 
-
-import torch 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(device)
 
 # initialize model and compile it
 
-import segmentation_models_pytorch as smp 
 
-fpn = smp.FPN(
+model = smp.FPN(
     encoder_name="resnet34",  
     encoder_weights=None,  
     in_channels=3,  
     classes=NUM_CLASSES,
-)
+).to(device)
 
-fpn.to(device)
-
-optimizer = torch.optim.SGD(fpn.parameters(),
+optimizer = torch.optim.SGD(model.parameters(),
                            lr=LEARNING_RATE,
                            momentum=MOMENTUM)
 
-lossFunc = torch.nn.CrossEntropyLoss()
+lossFunc = torch.nn.CrossEntropyLoss().to(device)
 
-torch.cuda.empty_cache()
-fpn = torch.compile(fpn)
+
+if device.type == "cuda":
+    print(f"CUDA available: {torch.cuda.is_available()}")
+    print(f"CUDA device count: {torch.cuda.device_count()}")
+    print(f"CUDA current device: {torch.cuda.current_device()}")
+    print(f"CUDA device name: {torch.cuda.get_device_name(0)}")
+    print(f"Cuda version: {torch.version.cuda}")
+
+else:
+    print("No CUDA device found")
 
 
 # ## Init Dataloaders w/ transforms
 # ---
 
-path_images_folder : str = os.path.join("CUBdata/CUB_200_2011/images")
-path_segmentations_folder : str = os.path.join("CUBdata/segmentations")
+path_images_folder = os.path.join(CUB_IMAGES)
+path_segmentations_folder = os.path.join(CUB_SEGMENTATIONS)
+print(path_images_folder)
+print(path_segmentations_folder)
 
-from baseModels.dataloaders import create_train_val_test_loaders
-from baseModels.aug import geoTransforms, photometricTransforms
 
 
 training_dataloader, validation_dataloader, test_dataloader = create_train_val_test_loaders(
@@ -76,37 +75,49 @@ training_dataloader, validation_dataloader, test_dataloader = create_train_val_t
 
 # ## Training loop:
 
+DEBUG_TRAIN = True
 
-from tqdm import tqdm
-import os
-import json
-from torchmetrics.classification import BinaryAUROC
-import matplotlib.pyplot as plt
+
 
 # !!! TODO: Fix ROC AUC metric calculation in validation phase
 # think it's fixed now
 
 def train(modelDir, modelName : str):
-    output_dir = os.path.join(modelDir, "outputs")
+    
+    output_dir = modelDir + "outputs"
     os.makedirs(output_dir, exist_ok=True)
-    metrics_path = os.path.join(output_dir, "epoch_metrics.json")
+    
     # Initialize metrics file
+    metrics_path = os.path.join(output_dir, "epoch_metrics.json")
     with open(metrics_path, 'w') as f:
         json.dump([], f)
 
     best_val_loss = float('inf')
-    val_auc_metric = BinaryAUROC(thresholds=128).to(device)
+    val_auc_metric = BinaryAUROC(thresholds=64)
 
     for epoch in range(1, MAXEPOCHS + 1):
+        
         # --- Training Phase ---
-        fpn.train()
-        train_loss = 0.0
-        for images, masks, _ in tqdm(training_dataloader, desc=f"Epoch {epoch}/{MAXEPOCHS} [Train]", leave=False, ncols=80):
-            images = images.to(device)
-            masks  = masks.to(device).long()
+        
+        model.train()
+        train_loss : float = 0.0
 
-            optimizer.zero_grad()
-            logits = fpn(images)
+        for images, masks, _ in tqdm(training_dataloader, desc=f"Epoch {epoch}/{MAXEPOCHS} [Train]", leave=False, ncols=80):
+
+            images = images.to(device)
+
+            # transfer to GPU, remove channel dim, convert uint8 to float32, normalize to [0, 1]
+            masks  = masks.to(device).squeeze(1).long()
+
+            if DEBUG_TRAIN:
+                print(f"images shape: {images.shape}, masks shape: {masks.shape}")
+                print(f"images dtype: {images.dtype}, masks dtype: {masks.dtype}")
+                print(f"Mask min: {masks.min()}, max: {masks.max()}")
+                print(f"Unique mask values: {torch.unique(masks)}")
+
+
+            optimizer.zero_grad(set_to_none=True)
+            logits = model(images)
             loss = lossFunc(logits, masks)
             loss.backward()
             optimizer.step()
@@ -115,14 +126,14 @@ def train(modelDir, modelName : str):
         avg_train_loss = train_loss / len(training_dataloader)
         
         # --- Validation Phase ---
-        fpn.eval()
+        model.eval()
         val_loss = 0.0
         val_auc_metric.reset()
         with torch.no_grad():
             for images, masks, _ in tqdm(validation_dataloader, desc=f"Epoch {epoch}/{MAXEPOCHS} [Val]", leave=False, ncols=80):
                 images = images.to(device)
-                masks  = masks.to(device)
-                logits = fpn(images)
+                masks  = masks.to(device).squeeze(1).long()
+                logits = model(images)
                 val_loss += lossFunc(logits, masks.long()).item()
 
                 # Ensure correct shape and type for ROC AUC
@@ -139,7 +150,7 @@ def train(modelDir, modelName : str):
         # save to .pth
         if avg_val_loss < best_val_loss:
             best_val_loss = avg_val_loss
-            torch.save(fpn.state_dict(), os.path.join(output_dir, f'{modelName}_best_model.pth'))
+            torch.save(model.state_dict(), os.path.join(output_dir, f'{modelDir + modelName}_best_model.pth'))
 
         # write to jason
         with open(metrics_path, 'r+') as f:
@@ -161,16 +172,16 @@ def train(modelDir, modelName : str):
     print(f"Training complete. Metrics written to {metrics_path}")
 
 
-def test(modelDir, modelName):
-    fpn.eval()
+def test(modelDir, modelName : str):
+    model.eval()
     tloss = 0.0
 
     with torch.no_grad():
         for image, segmentation_mask, _ in tqdm(test_dataloader, desc=f"[TEST]", leave=False, ncols=80):
             image = image.to(device)
-            segmentation_mask = segmentation_mask.to(device)
+            segmentation_mask = segmentation_mask.to(device).squeeze(1).long()
 
-            logits = fpn(image)
+            logits = model(image)
             tloss += lossFunc(logits, segmentation_mask.long()).item()
 
     avg_test_loss = tloss / len(test_dataloader)
@@ -178,13 +189,14 @@ def test(modelDir, modelName):
     test_metrics = {
         'test_loss': avg_test_loss,
     }
-    with open(os.path.join(modelDir, 'outputs', f'{modelName}_test_metrics.json'), 'w') as f:
+    with open(modelDir + f'outputs/{modelName}_test_metrics.json', 'w') as f:
         json.dump(test_metrics, f)
 
     print(f"Test: Loss={avg_test_loss:.4f}")
     return test_metrics
 
 # ## Visualization Helpers >
+
 def visualize_training_process(metrics):
     """Visualize the final training process metrics"""
     plt.figure(figsize=(8, 5))
@@ -200,7 +212,6 @@ def visualize_training_process(metrics):
     plt.close()
 
 
-import matplotlib.pyplot as plt
 
 def plot_metrics(modelDir, modelName : str):
     with open(modelDir + f"{modelName}_outputs/epoch_metrics.json", 'r') as f:
@@ -209,7 +220,7 @@ def plot_metrics(modelDir, modelName : str):
     train_loss = [d['train_loss'] for d in data]
     val_loss = [d['val_loss'] for d in data]
     val_auc = [d['val_auc'] for d in data]
-    lr = [d['lr'] for d in data]
+    # lr = [d['lr'] for d in data]
     plt.figure(figsize=(12, 8))
     plt.subplot(2,1,1)
     plt.plot(epochs, train_loss, 'b-', label='Train Loss')
@@ -226,22 +237,26 @@ def plot_metrics(modelDir, modelName : str):
     plt.legend()
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig(os.path.join(modelDir, "outputs/final_training_metrics.png"))
+    plt.savefig(modelDir + "outputs/final_training_metrics.png")
     plt.show()
 
+torch.cuda.empty_cache()
 
-modelDir = "baseModels/FPN/"
+# # **Change modelDir and modelName!**
+
+
+modelDir = "models/FPN/"
 modelName = "FPN"
 
 # Create outputs directory if it doesn't exist
-os.makedirs(os.path.join(modelDir, "outputs"), exist_ok=True)
+os.makedirs(modelDir + "outputs", exist_ok=True)
 
-if os.path.exists(os.path.join(modelDir, f"outputs/{modelName}_best_model.pth")):
+if os.path.exists(modelDir + f"outputs/{modelName}_best_model.pth"):
     print("Model already trained. To retrain, delete the 'outputs/{modelName}_best_model.pth' file.\n Going ahead with testing...")
 
     # Load best model
-    fpn.load_state_dict(torch.load(os.path.join(modelDir, f"outputs/{modelName}_best_model.pth")))
-    fpn.to(device)
+    model.load_state_dict(torch.load(modelDir + f"outputs/{modelName}_best_model.pth"))
+    model.to(device)
 
     test_metrics = test(modelDir)
     print("\nTesting completed successfully.")
@@ -251,14 +266,12 @@ else:
         print("Starting training process...")
         train(modelDir, modelName)
         print("\nStarting testing process...")
-        test_metrics = test(modelDir)
+        test_metrics = test(modelDir, modelName)
         print("\nTraining and testing completed successfully.")
         print("\t * Results and visualizations saved in the 'outputs' directory. * ")
 
         plot_metrics(modelDir)
 
     else:
+        print(f"CUDA device not found: {device.type}")
         print("No GPU available, exiting...")
-
-
-

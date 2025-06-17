@@ -33,9 +33,9 @@ import os
 from PIL import Image
 import numpy as np
 import torch
-from torchvision import transforms
 from tqdm import tqdm
 from typing import Optional
+from torchvision.transforms import v2
 
 # --------------------------------------------------------------------------------------------------------
 
@@ -67,11 +67,15 @@ def load_segmentation_mask(mask_path : str):
         mask_path: Path to the segmentation mask.
         
     Returns:
-        PIL image segmentation mask
+        Torch segmentation mask
     """
     try:
         mask = Image.open(mask_path).convert('L')
+        mask_np : np.ndarray = np.array(mask)
+        bin_mask_np : np.ndarray = (mask_np > 0).astype(np.uint8)
+        mask : Image.Image = Image.fromarray(bin_mask_np, mode='L')
         return mask
+
 
     except Exception as e:
         print(f"Error loading mask {mask_path}: {e}")
@@ -127,22 +131,27 @@ class CUBDataset(Dataset):
     def __getitem__(self, idx : int):
         # Load image and convert to tensor
         image, image_filename = load_image(self.image_paths[idx])
-        
-        
+        image : Image.Image
+        image_filename : str
         
         # Load segmentation mask and convert to tensor
-        segmentation = load_segmentation_mask(self.segmentation_paths[idx])
+        segmentation : Image.Image = load_segmentation_mask(self.segmentation_paths[idx])
 
-        
         # Apply transformations if specified
         if self.geometricTransforms:
             image = self.geometricTransforms(image)
             segmentation = self.geometricTransforms(segmentation)
+
+        # Convert to tensor and normalize to [0,1] range
+        image_tensor : torch.Tensor = v2.PILToTensor()(image).float() / 255.0
+        segmentation_tensor : torch.Tensor = torch.as_tensor(np.array(segmentation), dtype=torch.long)
+
         if self.photometricTransforms:
-            image = self.photometricTransforms(image)
-        
-        image_tensor : torch.Tensor = transforms.PILToTensor()(image).float() / 255.0
-        segmentation_tensor : torch.Tensor = transforms.PILToTensor()(segmentation)
+            image_tensor = self.photometricTransforms(image_tensor)
+
+
+        assert image_tensor.ndim == 3  # [C, H, W]
+        assert segmentation_tensor.ndim == 2  # [H, W]
 
         return image_tensor, segmentation_tensor, image_filename
 
