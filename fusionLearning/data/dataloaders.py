@@ -36,6 +36,8 @@ import torch
 from tqdm import tqdm
 from typing import Optional
 from torchvision.transforms import v2
+from torchvision.datapoints import Image as tvImage, Mask as tvMask
+
 
 # --------------------------------------------------------------------------------------------------------
 
@@ -110,6 +112,7 @@ class CUBDataset(Dataset):
                   image_dir : str, 
                   segmentation_dir : str, 
                   gTransforms : Optional[torch.nn.Module] = None, 
+                  gTransforms_masks : Optional[torch.nn.Module] = None, 
                   pTransforms : Optional[torch.nn.Module] = None ):
 
         # hold files by reference
@@ -137,14 +140,16 @@ class CUBDataset(Dataset):
         # Load segmentation mask and convert to tensor
         segmentation : Image.Image = load_segmentation_mask(self.segmentation_paths[idx])
 
+        img = tvImage(image)
+        mask = tvMask(segmentation)
+
         # Apply transformations if specified
         if self.geometricTransforms:
-            image = self.geometricTransforms(image)
-            segmentation = self.geometricTransforms(segmentation)
+            img = self.geometricTransforms(img)
 
         # Convert to tensor and normalize to [0,1] range
-        image_tensor : torch.Tensor = v2.PILToTensor()(image).float() / 255.0
-        segmentation_tensor : torch.Tensor = torch.as_tensor(np.array(segmentation), dtype=torch.long)
+        image_tensor : torch.Tensor = v2.PILToTensor()(img).float() / 255.0
+        segmentation_tensor : torch.Tensor = torch.as_tensor(np.array(mask), dtype=torch.long)
 
         if self.photometricTransforms:
             image_tensor = self.photometricTransforms(image_tensor)
@@ -187,7 +192,10 @@ def create_train_val_test_loaders(image_dir : str,
 
 
     #           $ pass transform to Dataset $
-    full_dataset : CUBDataset = CUBDataset(image_dir, segmentation_dir, gTransforms=gTransforms, pTransforms=pTransforms)
+    full_dataset : CUBDataset = CUBDataset(image_dir, 
+                                          segmentation_dir, 
+                                          gTransforms=gTransforms, 
+                                          pTransforms=pTransforms)
     
     # Calculate split sizes
     total_size : int = len(full_dataset)
