@@ -9,7 +9,7 @@ does two things:
 no need for labels, segmentation only.
 
 
-for create_train_val_test_loaders:
+1.  create_train_val_test_loaders:
 
     first load each image
     load_image()
@@ -22,9 +22,6 @@ for create_train_val_test_loaders:
 
     then create dataloaders
     DataLoader()
-
-
-
 
 """
 
