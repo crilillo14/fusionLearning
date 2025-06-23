@@ -33,7 +33,7 @@ import torch
 from tqdm import tqdm
 from typing import Optional
 from torchvision.transforms import v2
-from torchvision.datapoints import Image as tvImage, Mask as tvMask
+import random
 
 
 # --------------------------------------------------------------------------------------------------------
@@ -109,8 +109,9 @@ class CUBDataset(Dataset):
                   image_dir : str, 
                   segmentation_dir : str, 
                   gTransforms : Optional[torch.nn.Module] = None, 
-                  gTransforms_masks : Optional[torch.nn.Module] = None, 
-                  pTransforms : Optional[torch.nn.Module] = None ):
+                  pTransforms : Optional[torch.nn.Module] = None,
+                  # gTransforms_masks : Optional[torch.nn.Module] = None
+                  ):
 
         # hold files by reference
         self.image_paths = get_file_paths(image_dir)
@@ -131,22 +132,28 @@ class CUBDataset(Dataset):
     def __getitem__(self, idx : int):
         # Load image and convert to tensor
         image, image_filename = load_image(self.image_paths[idx])
-        image : Image.Image
         image_filename : str
         
         # Load segmentation mask and convert to tensor
         segmentation : Image.Image = load_segmentation_mask(self.segmentation_paths[idx])
 
-        img = tvImage(image)
-        mask = tvMask(segmentation)
+        img : Image.Image = image  # use PIL Image directly
 
         # Apply transformations if specified
         if self.geometricTransforms:
+            # Use identical random seed so that transformations are consistent between image and mask
+            seed = torch.randint(0, 2**32, (1,)).item()
+            torch.manual_seed(seed)
+            random.seed(seed)
             img = self.geometricTransforms(img)
 
-        # Convert to tensor and normalize to [0,1] range
+            torch.manual_seed(seed)
+            random.seed(seed)
+            segmentation = self.geometricTransforms(segmentation)
+
+        # Convert to tensor and normalize
         image_tensor : torch.Tensor = v2.PILToTensor()(img).float() / 255.0
-        segmentation_tensor : torch.Tensor = torch.as_tensor(np.array(mask), dtype=torch.long)
+        segmentation_tensor : torch.Tensor = torch.as_tensor(np.array(segmentation), dtype=torch.long)
 
         if self.photometricTransforms:
             image_tensor = self.photometricTransforms(image_tensor)

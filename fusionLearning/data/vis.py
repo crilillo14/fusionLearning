@@ -26,7 +26,7 @@ import torch
 from torchvision.transforms import v2 as T
 
 # Relative imports within the package
-from .dataloaders import (
+from fusionLearning.data.dataloaders import (
     CUBDataset,
     get_file_paths,
     load_image,

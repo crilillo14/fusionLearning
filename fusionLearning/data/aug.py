@@ -13,13 +13,12 @@ Tweak as needed. Don't want to overdo it and take out birds out the image.
 
 from torchvision.transforms import InterpolationMode, v2
 from PIL import Image
-from torchvision.datapoints import Image as tvImage, Mask as tvMask
 
 
 # only needed for compiled models.
 # decision discontinued for now. Will be reimplemented for H100 training.
 
-def pad_to_multiple(img: tvImage, multiple : int = 32, fill : int = 0) -> tvImage:
+def pad_to_multiple(img: Image.Image, multiple : int = 32, fill : int = 0) -> Image.Image:
     """
     Pad image to make its dimensions divisible by multiple (32 for compile models)
     Args:
@@ -37,7 +36,7 @@ def pad_to_multiple(img: tvImage, multiple : int = 32, fill : int = 0) -> tvImag
     return v2.Pad(padding, fill=fill)(img)
 
 
-# edited to be more subtle...
+# edited to be even more subtle...
 
 
 geoTransforms = v2.Compose([
@@ -52,9 +51,9 @@ geoTransforms = v2.Compose([
 
 
 photometricTransforms = v2.Compose([
-    v2.ColorJitter(brightness=0.1, contrast=0.1, saturation=0.1, hue=0.05), 
-    v2.RandomGrayscale(p=0.05),
-    v2.RandomAdjustSharpness(sharpness_factor=1.5, p=0.05),
-    v2.RandomAutocontrast(p=0.05),
-    v2.RandomEqualize(p=0.05)
+    v2.ColorJitter(brightness=0.01, contrast=0.01, saturation=0.01, hue=0.001),
+    v2.RandomGrayscale(p=0.01),
+    v2.RandomAdjustSharpness(sharpness_factor=1.2, p=0.01),
+    v2.RandomAutocontrast(p=0.01),
+    v2.RandomEqualize(p=0.01)
 ])
