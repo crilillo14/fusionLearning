@@ -36,52 +36,9 @@ from torchvision.transforms import v2
 import random
 
 
-# --------------------------------------------------------------------------------------------------------
-
-# !!!! returns a pytorch tensor.
-
-def load_image(image_path : str):
-    """
-    Loads an image from path, converts to RGB.
-    
-    Args:
-        image_path: Path to the image file.
-        
-    Returns:
-        PIL image and filename
-    """
-    try:
-        img = Image.open(image_path).convert('RGB')
-        return img, os.path.basename(image_path)
-    except Exception as e:
-        print(f"Error loading image {image_path}: {e}")
-        return None
-
-def load_segmentation_mask(mask_path : str):
-    """
-    Loads a segmentation mask and converts it to a class index tensor.
-    For binary segmentation (foreground/background), creates a tensor of shape (height, width).
-    
-    Args:
-        mask_path: Path to the segmentation mask.
-        
-    Returns:
-        Torch segmentation mask
-    """
-    try:
-        mask = Image.open(mask_path).convert('L')
-        mask_np : np.ndarray = np.array(mask)
-        bin_mask_np : np.ndarray = (mask_np > 0).astype(np.uint8)
-        mask : Image.Image = Image.fromarray(bin_mask_np, mode='L')
-        return mask
-
-
-    except Exception as e:
-        print(f"Error loading mask {mask_path}: {e}")
-        return None
 
 # --------------------------------------------------------------------------------------------------------
-# get images, works for both segmentations and images
+# GET > file paths, then files
 
 def get_file_paths(directory : str):
     """
@@ -102,7 +59,40 @@ def get_file_paths(directory : str):
     
     return file_paths
 
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def load_image(image_path : str):
+    """
+    Loads an image from path, converts to RGB.
+    
+    Args:
+        image_path: Path to the image file.
+        
+    Returns:
+        PIL image and filename
+    """
+    try:
+        img = Image.open(image_path).convert('RGB')
+        return img, os.path.basename(image_path)
+    except Exception as e:
+        print(f"Error loading image {image_path}: {e}")
+        return None
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def load_segmentation_mask(mask_path : str):
+    """
+    Loads a segmentation mask preserving original grayscale values.
+    """
+    try:
+        mask = Image.open(mask_path).convert('L')
+        return mask
+    except Exception as e:
+        print(f"Error loading mask {mask_path}: {e}")
+        return None
+
 # --------------------------------------------------------------------------------------------------------
+# Custom dataset class that implements the torch.utils.data.Dataset interface
 
 class CUBDataset(Dataset):
     def __init__( self, 
@@ -114,8 +104,9 @@ class CUBDataset(Dataset):
                   ):
 
         # hold files by reference
-        self.image_paths = get_file_paths(image_dir)
-        self.segmentation_paths = get_file_paths(segmentation_dir)
+        # Ensure deterministic, matching order by sorting paths
+        self.image_paths = sorted(get_file_paths(image_dir))
+        self.segmentation_paths = sorted(get_file_paths(segmentation_dir))
 
         self.geometricTransforms = gTransforms
         self.photometricTransforms = pTransforms
@@ -130,41 +121,41 @@ class CUBDataset(Dataset):
         return len(self.image_paths)
 
     def __getitem__(self, idx : int):
-        # Load image and convert to tensor
+        # Load image and segmentation mask
         image, image_filename = load_image(self.image_paths[idx])
-        image_filename : str
-        
-        # Load segmentation mask and convert to tensor
-        segmentation : Image.Image = load_segmentation_mask(self.segmentation_paths[idx])
+        segmentation = load_segmentation_mask(self.segmentation_paths[idx])
 
-        img : Image.Image = image  # use PIL Image directly
-
-        # Apply transformations if specified
+        # Apply geometric transformations with consistent seeding
         if self.geometricTransforms:
-            # Use identical random seed so that transformations are consistent between image and mask
             seed = torch.randint(0, 2**32, (1,)).item()
+        
             torch.manual_seed(seed)
             random.seed(seed)
-            img = self.geometricTransforms(img)
+            image = self.geometricTransforms(image)
 
             torch.manual_seed(seed)
             random.seed(seed)
             segmentation = self.geometricTransforms(segmentation)
 
-        # Convert to tensor and normalize
-        image_tensor : torch.Tensor = v2.PILToTensor()(img).float() / 255.0
-        segmentation_tensor : torch.Tensor = torch.as_tensor(np.array(segmentation), dtype=torch.long)
+        # Convert to tensors
+        image_tensor = v2.PILToTensor()(image).float() / 255.0
+    
+        # Handle segmentation: remove interpolation artifacts from geometric transforms
+        seg_np = np.array(segmentation)
+        if self.geometricTransforms:
+            # Clean up interpolation artifacts - convert back to discrete classes
+            seg_np = np.round(seg_np).astype(np.uint8)
+    
+        segmentation_tensor = torch.as_tensor(seg_np, dtype=torch.long)
 
+        # Apply photometric transforms only to image
         if self.photometricTransforms:
             image_tensor = self.photometricTransforms(image_tensor)
-
 
         assert image_tensor.ndim == 3  # [C, H, W]
         assert segmentation_tensor.ndim == 2  # [H, W]
 
         return image_tensor, segmentation_tensor, image_filename
-
-
 
 
 # --------------------------------------------------------------------------------------------------------
