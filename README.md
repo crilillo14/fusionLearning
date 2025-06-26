@@ -31,6 +31,10 @@ MOMENTUM = 0.99
 
 Should incorporate an LR scheduler. Hyperparameters based on Unet paper [https://arxiv.org/abs/1505.04597].
 
-For transforms look at ```baseModels\aug.py```. Geometric and photometric augmentations separated for faster data processing.
+For transforms look at ```data\aug.py```. Geometric and photometric augmentations separated for faster data processing.
 
-For dataloaders look at ```baseModels\dataloaders.py```.
+For dataloaders look at ```data\dataloaders.py```.
+
+For base model implementations look at ```models\*```
+
+For controlled variables and repo configuration look at ```config.py```

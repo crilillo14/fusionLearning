@@ -9,7 +9,7 @@ does two things:
 no need for labels, segmentation only.
 
 
-for create_train_val_test_loaders:
+1.  create_train_val_test_loaders:
 
     first load each image
     load_image()
@@ -23,9 +23,6 @@ for create_train_val_test_loaders:
     then create dataloaders
     DataLoader()
 
-
-
-
 """
 
 from torch.utils.data import Dataset, DataLoader, random_split  # split technique up for discussion
@@ -33,52 +30,15 @@ import os
 from PIL import Image
 import numpy as np
 import torch
-from torchvision import transforms
 from tqdm import tqdm
 from typing import Optional
+from torchvision.transforms import v2
+import random
+
+
 
 # --------------------------------------------------------------------------------------------------------
-
-# !!!! returns a pytorch tensor.
-
-def load_image(image_path : str):
-    """
-    Loads an image from path, converts to RGB.
-    
-    Args:
-        image_path: Path to the image file.
-        
-    Returns:
-        PIL image and filename
-    """
-    try:
-        img = Image.open(image_path).convert('RGB')
-        return img, os.path.basename(image_path)
-    except Exception as e:
-        print(f"Error loading image {image_path}: {e}")
-        return None
-
-def load_segmentation_mask(mask_path : str):
-    """
-    Loads a segmentation mask and converts it to a class index tensor.
-    For binary segmentation (foreground/background), creates a tensor of shape (height, width).
-    
-    Args:
-        mask_path: Path to the segmentation mask.
-        
-    Returns:
-        PIL image segmentation mask
-    """
-    try:
-        mask = Image.open(mask_path).convert('L')
-        return mask
-
-    except Exception as e:
-        print(f"Error loading mask {mask_path}: {e}")
-        return None
-
-# --------------------------------------------------------------------------------------------------------
-# get images, works for both segmentations and images
+# GET > file paths, then files
 
 def get_file_paths(directory : str):
     """
@@ -99,18 +59,54 @@ def get_file_paths(directory : str):
     
     return file_paths
 
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def load_image(image_path : str):
+    """
+    Loads an image from path, converts to RGB.
+    
+    Args:
+        image_path: Path to the image file.
+        
+    Returns:
+        PIL image and filename
+    """
+    try:
+        img = Image.open(image_path).convert('RGB')
+        return img, os.path.basename(image_path)
+    except Exception as e:
+        print(f"Error loading image {image_path}: {e}")
+        return None
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def load_segmentation_mask(mask_path : str):
+    """
+    Loads a segmentation mask preserving original grayscale values.
+    """
+    try:
+        mask = Image.open(mask_path).convert('L')
+        return mask
+    except Exception as e:
+        print(f"Error loading mask {mask_path}: {e}")
+        return None
+
 # --------------------------------------------------------------------------------------------------------
+# Custom dataset class that implements the torch.utils.data.Dataset interface
 
 class CUBDataset(Dataset):
     def __init__( self, 
                   image_dir : str, 
                   segmentation_dir : str, 
                   gTransforms : Optional[torch.nn.Module] = None, 
-                  pTransforms : Optional[torch.nn.Module] = None ):
+                  pTransforms : Optional[torch.nn.Module] = None,
+                  # gTransforms_masks : Optional[torch.nn.Module] = None
+                  ):
 
         # hold files by reference
-        self.image_paths = get_file_paths(image_dir)
-        self.segmentation_paths = get_file_paths(segmentation_dir)
+        # Ensure deterministic, matching order by sorting paths
+        self.image_paths = sorted(get_file_paths(image_dir))
+        self.segmentation_paths = sorted(get_file_paths(segmentation_dir))
 
         self.geometricTransforms = gTransforms
         self.photometricTransforms = pTransforms
@@ -125,28 +121,41 @@ class CUBDataset(Dataset):
         return len(self.image_paths)
 
     def __getitem__(self, idx : int):
-        # Load image and convert to tensor
+        # Load image and segmentation mask
         image, image_filename = load_image(self.image_paths[idx])
-        
-        
-        
-        # Load segmentation mask and convert to tensor
         segmentation = load_segmentation_mask(self.segmentation_paths[idx])
 
-        
-        # Apply transformations if specified
+        # Apply geometric transformations with consistent seeding
         if self.geometricTransforms:
-            image = self.geometricTransforms(image)
-            segmentation = self.geometricTransforms(segmentation)
-        if self.photometricTransforms:
-            image = self.photometricTransforms(image)
+            seed = torch.randint(0, 2**32, (1,)).item()
         
-        image_tensor : torch.Tensor = transforms.PILToTensor()(image).float() / 255.0
-        segmentation_tensor : torch.Tensor = transforms.PILToTensor()(segmentation)
+            torch.manual_seed(seed)
+            random.seed(seed)
+            image = self.geometricTransforms(image)
+
+            torch.manual_seed(seed)
+            random.seed(seed)
+            segmentation = self.geometricTransforms(segmentation)
+
+        # Convert to tensors
+        image_tensor = v2.PILToTensor()(image).float() / 255.0
+    
+        # Handle segmentation: remove interpolation artifacts from geometric transforms
+        seg_np = np.array(segmentation)
+        if self.geometricTransforms:
+            # Clean up interpolation artifacts - convert back to discrete classes
+            seg_np = np.round(seg_np).astype(np.uint8)
+    
+        segmentation_tensor = torch.as_tensor(seg_np, dtype=torch.long)
+
+        # Apply photometric transforms only to image
+        if self.photometricTransforms:
+            image_tensor = self.photometricTransforms(image_tensor)
+
+        assert image_tensor.ndim == 3  # [C, H, W]
+        assert segmentation_tensor.ndim == 2  # [H, W]
 
         return image_tensor, segmentation_tensor, image_filename
-
-
 
 
 # --------------------------------------------------------------------------------------------------------
@@ -178,7 +187,10 @@ def create_train_val_test_loaders(image_dir : str,
 
 
     #           $ pass transform to Dataset $
-    full_dataset : CUBDataset = CUBDataset(image_dir, segmentation_dir, gTransforms=gTransforms, pTransforms=pTransforms)
+    full_dataset : CUBDataset = CUBDataset(image_dir, 
+                                          segmentation_dir, 
+                                          gTransforms=gTransforms, 
+                                          pTransforms=pTransforms)
     
     # Calculate split sizes
     total_size : int = len(full_dataset)
