@@ -8,3 +8,5 @@ CUB_SEGMENTATIONS = CUB + "/segmentations"
 LEARNED_WEIGHTS = "./weights"
 BASE_MODELS = "./models"
 FUSION_MODELS = "./ensembles"
+
+BASE_MODELS_SEGMENTATIONS = "./images/segmentations"
