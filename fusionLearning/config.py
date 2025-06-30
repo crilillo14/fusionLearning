@@ -6,3 +6,5 @@ CUB_IMAGES = CUB + "/CUB_200_2011/images"
 CUB_SEGMENTATIONS = CUB + "/segmentations"
 
 LEARNED_WEIGHTS = "./weights"
+BASE_MODELS = "./models"
+FUSION_MODELS = "./ensembles"

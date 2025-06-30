@@ -132,9 +132,6 @@ class CUBDataset(Dataset):
             torch.manual_seed(seed)
             random.seed(seed)
             image = self.geometricTransforms(image)
-
-            torch.manual_seed(seed)
-            random.seed(seed)
             segmentation = self.geometricTransforms(segmentation)
 
         # Convert to tensors
