@@ -31,7 +31,7 @@ from PIL import Image
 import numpy as np
 import torch
 from tqdm import tqdm
-from typing import Optional
+from typing import Optional, Type
 from torchvision.transforms import v2
 import random
 
@@ -155,7 +155,53 @@ class CUBDataset(Dataset):
         return image_tensor, segmentation_tensor, image_filename
 
 
-# --------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------------------------------------
+# Vanilla CUB Dataset - no transforms apart from padding to a multiple of 32
+class vanillaCUBDataset(Dataset):
+    def __init__( self, 
+                  image_dir : str, 
+                  segmentation_dir : str, 
+                  ):
+
+        self.image_paths = sorted(get_file_paths(image_dir))
+        self.segmentation_paths = sorted(get_file_paths(segmentation_dir))
+
+        self.geometricTransforms = v2.Compose([
+            pad_to_multiple,
+        ])
+        
+        if len(self.image_paths) != len(self.segmentation_paths):
+            raise ValueError(f"Number of images ({len(self.image_paths)}) doesn't match number of segmentations ({len(self.segmentation_paths)})")
+            
+        print(f"Dataset loaded with {len(self.image_paths)} image-segmentation pairs")
+
+    def __len__(self):
+        return len(self.image_paths)
+
+    def __getitem__(self, idx : int):
+        # Load image and segmentation mask
+        image, image_filename = load_image(self.image_paths[idx])
+        segmentation = load_segmentation_mask(self.segmentation_paths[idx])
+
+        # pad to multiple of 32
+        image = self.geometricTransforms(image)
+        segmentation = self.geometricTransforms(segmentation)
+
+        # Convert to tensors
+        image_tensor = v2.PILToTensor()(image).float() / 255.0
+        # Handle segmentation: remove interpolation artifacts from geometric transforms
+        seg_np = np.array(segmentation)
+        seg_np = np.round(seg_np).astype(np.uint8)
+    
+        segmentation_tensor = torch.as_tensor(seg_np, dtype=torch.long)
+
+        assert image_tensor.ndim == 3  # [C, H, W]
+        assert segmentation_tensor.ndim == 2  # [H, W]
+
+        return image_tensor, segmentation_tensor, image_filename
+
+
+# -------------------------------------------------------------------------------------------------------------------------------
 
 def create_train_val_test_loaders(image_dir : str, 
                                   segmentation_dir : str, 
@@ -183,7 +229,7 @@ def create_train_val_test_loaders(image_dir : str,
 
 
 
-    #           $ pass transform to Dataset $
+    #        $ pass transform to Dataset $
     full_dataset : CUBDataset = CUBDataset(image_dir, 
                                           segmentation_dir, 
                                           gTransforms=gTransforms, 
@@ -227,7 +273,7 @@ def create_train_val_test_loaders(image_dir : str,
 
 
 
-# --------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------------------------------------
 
 
     """ Generate segmentation masks for all images in the dataset, placing them under images/segmentations.
@@ -244,13 +290,14 @@ def create_train_val_test_loaders(image_dir : str,
     Returns:
         None
     """
-def generateSegmentationMasks( model : torch.nn.Module, 
+def generateSegmentationMasks( DATASET : Type[CUBDataset | vanillaCUBDataset],
+                               model : torch.nn.Module, 
                                model_weights_path : str, 
+                               image_dir : str,
+                               segmentation_dir : str,
                                model_name : str, 
-                               image_dir : str, 
-                               segmentation_dir : str, 
                                batch_size : int = 1, 
-                               save_dir : str = "images/segmentations"):
+                               save_dir : str = "images/segmentations"): 
 
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -261,7 +308,7 @@ def generateSegmentationMasks( model : torch.nn.Module,
     model.eval()
     
     allDataloader = DataLoader(
-        CUBDataset(image_dir, segmentation_dir),
+        DATASET(image_dir, segmentation_dir),
         batch_size=batch_size,
         shuffle=False
     )
