@@ -313,6 +313,10 @@ def generateSegmentationMasks( DATASET : Type[CUBDataset | vanillaCUBDataset],
         shuffle=False
     )
 
+    if os.path.exists(os.path.join(save_dir, model_name)):
+        print(f"Segmentation masks for {model_name} already exist, skipping.")
+        return
+
     os.makedirs(os.path.join(save_dir, model_name), exist_ok=True)
 
     for images, _, filename in tqdm(allDataloader, desc="Generating segmentation masks", leave=False, ncols=80):
