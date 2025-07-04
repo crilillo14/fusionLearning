@@ -10,18 +10,7 @@ from aug import pad_to_multiple
 
 
 
-# --------------------------------------------------------------------------------------------------------
-# LOADING FILEPATHS
 
-
-def get_model_segmentation_paths(model_prediction_dir : str):
-    file_paths = []
-    
-    for root, _, files in os.walk(model_prediction_dir):
-        for file in files:
-            if file.endswith(('.png', '.jpg', '.jpeg', '.JPG', '.JPEG', '.PNG')):
-                file_paths.append(os.path.join(root, file))
-    return sorted(file_paths)
 
 # --------------------------------------------------------------------------------------------------------
 
@@ -46,7 +35,19 @@ def load_preds(pred_paths : list[str]):
     except Exception as e:
         print(f"Error loading prediction mask: {e}")
         return None
+        
+# --------------------------------------------------------------------------------------------------------
+# LOADING FILEPATHS
 
+
+def get_model_segmentation_paths(model_prediction_dir : str):
+    file_paths = []
+    
+    for root, _, files in os.walk(model_prediction_dir):
+        for file in files:
+            if file.endswith(('.png', '.jpg', '.jpeg', '.JPG', '.JPEG', '.PNG')):
+                file_paths.append(os.path.join(root, file))
+    return sorted(file_paths)
 
 
 # --------------------------------------------------------------------------------------------------------
@@ -75,11 +76,6 @@ class FusionDataset(Dataset):
             mdir = os.path.join(BASE_MODELS_SEGMENTATIONS, model_name)
             
             self.model_segmentations_paths.append(get_model_segmentation_paths(mdir))
-
-
-            
-            
-            
 
 
     def __len__(self):

@@ -35,6 +35,7 @@ from typing import Optional, Type
 from torchvision.transforms import v2
 import random
 
+from data.aug import pad_to_multiple, maskGeoTransforms
 
 
 # --------------------------------------------------------------------------------------------------------
@@ -100,7 +101,7 @@ class CUBDataset(Dataset):
                   segmentation_dir : str, 
                   gTransforms : Optional[torch.nn.Module] = None, 
                   pTransforms : Optional[torch.nn.Module] = None,
-                  # gTransforms_masks : Optional[torch.nn.Module] = None
+                  gTransforms_masks : Optional[torch.nn.Module] = None
                   ):
 
         # hold files by reference
@@ -109,6 +110,7 @@ class CUBDataset(Dataset):
         self.segmentation_paths = sorted(get_file_paths(segmentation_dir))
 
         self.geometricTransforms = gTransforms
+        self.geometricTransforms_mask = gTransforms_masks if gTransforms_masks is not None else (maskGeoTransforms if gTransforms is not None else None)
         self.photometricTransforms = pTransforms
         
         # Ensure matching number of images and segmentation masks
@@ -132,7 +134,10 @@ class CUBDataset(Dataset):
             torch.manual_seed(seed)
             random.seed(seed)
             image = self.geometricTransforms(image)
-            segmentation = self.geometricTransforms(segmentation)
+
+            torch.manual_seed(seed)
+            random.seed(seed)
+            segmentation = self.geometricTransforms_mask(segmentation)
 
         # Convert to tensors
         image_tensor = v2.PILToTensor()(image).float() / 255.0
@@ -143,14 +148,19 @@ class CUBDataset(Dataset):
             # Clean up interpolation artifacts - convert back to discrete classes
             seg_np = np.round(seg_np).astype(np.uint8)
     
-        segmentation_tensor = torch.as_tensor(seg_np, dtype=torch.long)
+        # Map mask values to binary class indices {0,1}
+        # Convert grayscale values 0–255 to probabilities 0–1
+        seg_prob = seg_np.astype(np.float32) / 255.0
+        segmentation_tensor = torch.as_tensor(seg_prob, dtype=torch.float32).unsqueeze(0)
 
         # Apply photometric transforms only to image
         if self.photometricTransforms:
             image_tensor = self.photometricTransforms(image_tensor)
 
-        assert image_tensor.ndim == 3  # [C, H, W]
-        assert segmentation_tensor.ndim == 2  # [H, W]
+        # print(image_tensor.shape)
+        # print(segmentation_tensor.shape)
+        # assert image_tensor.ndim == 3  # [C, H, W]
+        # assert segmentation_tensor.ndim == 2  # [H, W]
 
         return image_tensor, segmentation_tensor, image_filename
 
@@ -193,10 +203,13 @@ class vanillaCUBDataset(Dataset):
         seg_np = np.array(segmentation)
         seg_np = np.round(seg_np).astype(np.uint8)
     
-        segmentation_tensor = torch.as_tensor(seg_np, dtype=torch.long)
-
-        assert image_tensor.ndim == 3  # [C, H, W]
-        assert segmentation_tensor.ndim == 2  # [H, W]
+        # Map mask values to binary class indices {0,1}
+        # Convert grayscale values 0–255 to probabilities 0–1
+        seg_prob = seg_np.astype(np.float32) / 255.0
+        segmentation_tensor = torch.as_tensor(seg_prob, dtype=torch.float32).unsqueeze(0)
+        
+        # assert image_tensor.ndim == 3  # [C, H, W]
+        # assert segmentation_tensor.ndim == 2  # [H, W]
 
         return image_tensor, segmentation_tensor, image_filename
 

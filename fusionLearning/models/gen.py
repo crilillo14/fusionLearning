@@ -6,7 +6,7 @@ parent_parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'
 if parent_parent_dir not in sys.path:
     sys.path.insert(0, parent_parent_dir)
 
-from fusionLearning.config import BASE_MODELS_SEGMENTATIONS, CUB_IMAGES, CUB_SEGMENTATIONS
+from fusionLearning.config import BASE_MODELS_SEGMENTATIONS, CUB_IMAGES, CUB_SEGMENTATIONS, BASE_MODELS
 from fusionLearning.data.dataloaders import vanillaCUBDataset, generateSegmentationMasks
 from fusionLearning.models.consts import NUM_CLASSES
 
@@ -49,7 +49,8 @@ def GENERATE_ALL_PREDICTIONS():
             )
 
             archstr = archToString(arch)
-            model_weights_path = os.path.join(f"./models/{archstr}_{encoder}/outputs" , "best_model.pth")
+            model_weights_path = os.path.join(BASE_MODELS, f"{archstr}_{encoder}", "outputs", "best_model.pth")
+            print(f"Model weights expected at: {model_weights_path} (exists={os.path.exists(model_weights_path)})")
 
             generateSegmentationMasks(
                 DATASET = vanillaCUBDataset,
@@ -63,7 +64,21 @@ def GENERATE_ALL_PREDICTIONS():
             )
     
     
+def debug_print_paths():
+    print("=== Path Debug ===")
+    paths = {
+        "CUB_IMAGES": CUB_IMAGES,
+        "CUB_SEGMENTATIONS": CUB_SEGMENTATIONS,
+        "BASE_MODELS_SEGMENTATIONS": BASE_MODELS_SEGMENTATIONS,
+        "BASE_MODELS": BASE_MODELS,
+    }
+    for name, path in paths.items():
+        print(f"{name}: {path} (exists={os.path.exists(path)})")
+    print("==================")
+
+
 def main(): 
+    debug_print_paths()
     print("Going ahead with generating all masks...")
     GENERATE_ALL_PREDICTIONS()
     print("Generation complete.")

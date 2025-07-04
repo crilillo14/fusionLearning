@@ -49,6 +49,15 @@ geoTransforms = v2.Compose([
     v2.RandomPosterize(bits=2, p=0.05)
 ])
 
+# Mask-specific geometric transforms (use nearest-neighbour interpolation to preserve class labels)
+maskGeoTransforms = v2.Compose([
+    pad_to_multiple,
+    v2.RandomHorizontalFlip(),
+    v2.RandomVerticalFlip(),
+    v2.RandomRotation(5, interpolation=InterpolationMode.NEAREST),
+    v2.RandomPerspective(distortion_scale=0.05, p=0.05,
+                         interpolation=InterpolationMode.NEAREST),
+])
 
 photometricTransforms = v2.Compose([
     v2.ColorJitter(brightness=0.01, contrast=0.01, saturation=0.01, hue=0.001),
