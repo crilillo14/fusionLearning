@@ -6,7 +6,7 @@ from config import BASE_MODELS_SEGMENTATIONS
 import os
 
 from dataloaders import get_file_paths, load_segmentation_mask
-from aug import pad_to_multiple
+from aug import crop_to_multiple
 
 
 
@@ -61,8 +61,8 @@ class FusionDataset(Dataset):
         self.model_names : list[str] = sorted(model_names)
         self.segmentation_paths : list[str] = sorted(get_file_paths(segmentation_dir)) 
 
-        self.padding = v2.Compose([
-            pad_to_multiple,
+        self.crop_to_multiple = v2.Compose([
+            crop_to_multiple,
         ])
 
         self.model_segmentations_paths : list[list[str]] = []
@@ -89,9 +89,9 @@ class FusionDataset(Dataset):
         mask = load_segmentation_mask(true_mask_path)
 
         for pred in preds:
-            pred = self.padding(pred)
+            pred = self.crop_to_multiple(pred)
 
-        mask = self.padding(mask)
+        mask = self.crop_to_multiple(mask)
 
         return preds, mask, pred_filenames
 

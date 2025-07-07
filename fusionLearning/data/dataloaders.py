@@ -35,7 +35,7 @@ from typing import Optional, Type
 from torchvision.transforms import v2
 import random
 
-from data.aug import pad_to_multiple, maskGeoTransforms
+from data.aug import crop_to_multiple, geom_transform_pair
 
 
 # --------------------------------------------------------------------------------------------------------
@@ -101,7 +101,6 @@ class CUBDataset(Dataset):
                   segmentation_dir : str, 
                   gTransforms : Optional[torch.nn.Module] = None, 
                   pTransforms : Optional[torch.nn.Module] = None,
-                  gTransforms_masks : Optional[torch.nn.Module] = None
                   ):
 
         # hold files by reference
@@ -109,8 +108,7 @@ class CUBDataset(Dataset):
         self.image_paths = sorted(get_file_paths(image_dir))
         self.segmentation_paths = sorted(get_file_paths(segmentation_dir))
 
-        self.geometricTransforms = gTransforms
-        self.geometricTransforms_mask = gTransforms_masks if gTransforms_masks is not None else (maskGeoTransforms if gTransforms is not None else None)
+        self.use_geo = gTransforms is not None
         self.photometricTransforms = pTransforms
         
         # Ensure matching number of images and segmentation masks
@@ -128,25 +126,15 @@ class CUBDataset(Dataset):
         segmentation = load_segmentation_mask(self.segmentation_paths[idx])
 
         # Apply geometric transformations with consistent seeding
-        if self.geometricTransforms:
-            seed = torch.randint(0, 2**32, (1,)).item()
-        
-            torch.manual_seed(seed)
-            random.seed(seed)
-            image = self.geometricTransforms(image)
-
-            torch.manual_seed(seed)
-            random.seed(seed)
-            segmentation = self.geometricTransforms_mask(segmentation)
+        if self.use_geo:
+            image, segmentation = geom_transform_pair(image, segmentation)
 
         # Convert to tensors
         image_tensor = v2.PILToTensor()(image).float() / 255.0
     
         # Handle segmentation: remove interpolation artifacts from geometric transforms
         seg_np = np.array(segmentation)
-        if self.geometricTransforms:
-            # Clean up interpolation artifacts - convert back to discrete classes
-            seg_np = np.round(seg_np).astype(np.uint8)
+
     
         # Map mask values to binary class indices {0,1}
         # Convert grayscale values 0–255 to probabilities 0–1
@@ -177,7 +165,7 @@ class vanillaCUBDataset(Dataset):
         self.segmentation_paths = sorted(get_file_paths(segmentation_dir))
 
         self.geometricTransforms = v2.Compose([
-            pad_to_multiple,
+            crop_to_multiple,
         ])
         
         if len(self.image_paths) != len(self.segmentation_paths):
@@ -193,7 +181,7 @@ class vanillaCUBDataset(Dataset):
         image, image_filename = load_image(self.image_paths[idx])
         segmentation = load_segmentation_mask(self.segmentation_paths[idx])
 
-        # pad to multiple of 32
+        # crop to multiple of 32
         image = self.geometricTransforms(image)
         segmentation = self.geometricTransforms(segmentation)
 
