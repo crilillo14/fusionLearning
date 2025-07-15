@@ -14,7 +14,7 @@ setup(
     version="0.1.0",
     author="crilillo14",
     author_email="",
-    description="A machine learning framework for combining different models",
+    description="A late stage fusion learning framework for segmentation",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/crilillo14/fusionLearning",

@@ -81,7 +81,7 @@ def _get_perspective_params(width: int, height: int, distortion_scale: float = 0
     return startpoints, endpoints
 
 def geom_transform_pair(img, mask, degrees: float = 5, perspective_scale: float = 0.05, p_persp: float = 0.05):
-    """Apply the same random geometric ops to img & mask with BILINEAR/NEAREST interpolation."""
+    """Apply the same random geometric ops to img & mask with appropriate interpolation mode."""
     # horizontal flip
     if torch.rand(()) < 0.5:
         img = hflip(img)

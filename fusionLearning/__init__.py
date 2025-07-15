@@ -20,6 +20,7 @@ _ALIAS_MAP: dict[str, str] = {
     "data": __name__ + ".data",
     # Allow ``from dataloaders import CUBDataset`` etc.
     "dataloaders": __name__ + ".data.dataloaders",
+    "aug": __name__ + ".data.aug",
 }
 
 for alias, real_path in _ALIAS_MAP.items():

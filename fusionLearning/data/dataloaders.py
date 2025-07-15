@@ -326,9 +326,9 @@ def generateSegmentationMasks( DATASET : Type[CUBDataset | vanillaCUBDataset],
         with torch.no_grad():
             logits = model(images)
             
-            # From the logits, construct a png, save it using Pillow
-            segmentation_mask = torch.argmax(logits, dim=1).squeeze().cpu().numpy()
-            segmentation_mask = (segmentation_mask * 255).astype(np.uint8)
+            # Convert logits to continuous probability mask (0–255 grayscale)
+            prob_mask = torch.sigmoid(logits).squeeze(1)  # shape [B, H, W]
+            segmentation_mask = (prob_mask.squeeze().cpu().numpy() * 255).astype(np.uint8)
             img = Image.fromarray(segmentation_mask)
 
             filename = filename[0] #    1 len tuple ???
