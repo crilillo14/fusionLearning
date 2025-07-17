@@ -1,6 +1,7 @@
 from typing import override
-from interfaces import FusionModule
+from fusion.interfaces import FusionModule
 from enum import Enum
+import torch
 
 
 
