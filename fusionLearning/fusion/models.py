@@ -1,5 +1,13 @@
+"""
+Utils for loading base Models. 
+
+* Not Necesssary, can instead generate all segmentations at once on a vanilla set.
+"""
 
 
+
+
+import torch
 
 def get_paths() -> list[str]:
     """
@@ -14,7 +22,7 @@ all_pth_paths = list(get_paths())
 
 def get_base_models(models : list[str],
                     get_all : bool = True,
-                    num_models : int = 5):
+                    num_models : int = 5) -> torch.nn.ModuleDict:
     """
     Get a list of base models to use for ensembling.
     
@@ -25,15 +33,15 @@ def get_base_models(models : list[str],
     """
 
     if get_all:
-        return all_pth_paths
+        return torch.nn.ModuleDict({model : torch.load(model) for model in all_pth_paths})
     else:
-        return random.sample(all_pth_paths, num_models)
+        return torch.nn.ModuleDict({model : torch.load(model) for model in random.sample(all_pth_paths, num_models)})
 
 class ModelPathIterator:
     """
     A simple iterator for the model pths, returning their filepaths.
     """
-    def __init__(self, models):
+    def __init__(self, models : torch.nn.ModuleDict):
         self.models = models
         self.index = 0
 
