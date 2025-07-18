@@ -21,6 +21,7 @@ FUSION_MODELS = os.path.join(MODULE_DIR, "ensembles")
 
 # Where the generated segmentation masks will be stored
 BASE_MODELS_SEGMENTATIONS = os.path.join(BASE_DIR, "images", "segmentations")
+FUSED_MODEL_SEGMENTATIONS = os.path.join(BASE_DIR, "images", "fused_segmentations")
 
 if __name__ == '__main__':
     print("Base directory : ", BASE_DIR)
@@ -33,3 +34,4 @@ if __name__ == '__main__':
     print("Base models directory: ", BASE_MODELS)
     print("Fusion models directory: ", FUSION_MODELS)
     print("Base models segmentations directory: ", BASE_MODELS_SEGMENTATIONS)
+    print("Fused models segmentations directory: ", FUSED_MODEL_SEGMENTATIONS)

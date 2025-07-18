@@ -30,7 +30,7 @@ def load_preds(pred_paths : list[str]):
         preds = []
         pred_filenames : list[str] = []
         for pred_path in pred_paths:
-            pred = Image.open(pred_path).convert('RGB')
+            pred = Image.open(pred_path).convert('L')
             preds.append(pred)
             pred_filenames.append(os.path.basename(pred_path))
         return preds, pred_filenames
@@ -121,10 +121,12 @@ class FusionDataset(Dataset):
         # Get paths and filenames for this index
         predictions_paths = [self.model_segmentations_paths[i][idx] 
                           for i in range(len(self.model_segmentations_paths))]
-        prediction_filenames = [self.model_segmentations_filenames[i][idx] 
-                              for i in range(len(self.model_segmentations_filenames))]
+
+        # prediction_filenames = [self.model_segmentations_filenames[i][idx] 
+                              # for i in range(len(self.model_segmentations_filenames))]
+
         true_mask_path = self.segmentation_paths[idx]
-        true_mask_filename = self.segmentation_filenames[idx]
+        true_mask_filename : str = self.segmentation_filenames[idx]
 
         # Verify filenames match
         # if not all(f == true_mask_filename for f in prediction_filenames):
