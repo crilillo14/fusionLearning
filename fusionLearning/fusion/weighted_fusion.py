@@ -17,21 +17,17 @@ Could either be:
 because images vary in size, might have to start doing model-only.
 
 """
-class MaskwiseWeightedFusion(FusionModule): 
+class MaskwisePatchedWeightedFusion(FusionModule): 
 
     def __init__(self, name : str, num_models : int): 
         super().__init__(name)
-
+        # 32 multiple, divide
         
 
-
-    
     @override
     def forward(self, predictions: List[torch.Tensor]) -> torch.Tensor:
         
-
-
-
+        
     
     @override
     def backward(self, y : torch.Tensor) -> None:
