@@ -26,7 +26,7 @@ class MaskwisePatchedWeightedFusion(FusionModule):
 
     @override
     def forward(self, predictions: List[torch.Tensor]) -> torch.Tensor:
-        
+        pass
         
     
     @override

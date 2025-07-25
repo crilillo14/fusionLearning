@@ -1,5 +1,7 @@
 from fusion.interfaces import FusionModule
 from torch import nn
+from fusion.learning.embedding import PatchEmbedding
+
 
 
 
@@ -17,11 +19,9 @@ class PatchedMHSA(FusionModule):
         self.num_patches = patch_size / 16
 
 
-        self.embed_patches = nn.Sequential(
-            nn.Conv2d(
-                in_channels=1, 
-                out_channels=embedding_dim, 
-                kernel_size=patch_size, 
-                stride=patch_size,
-            )
+        self.embed_patches = PatchEmbedding(patch_size=patch_size, embedding_dim=embedding_dim)
+
+        self.attention_k = nn.MultiheadAttention( 
+            num_heads=num_heads,
+            
         )
