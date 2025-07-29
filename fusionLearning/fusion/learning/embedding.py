@@ -7,10 +7,10 @@ class PatchEmbedding(nn.Module):
         
         # Convolutional patch embedding
         self.patch_embed = nn.Conv2d(
-            in_channels=1,           # Each mask is 1 channel
-            out_channels=embedding_dim,    # Embed to d_model dimensions
-            kernel_size=patch_size,  # 16x16 or 32x32
-            stride=patch_size        # Non-overlapping patches
+            in_channels=1,
+            out_channels=embedding_dim,
+            kernel_size=patch_size, # fixed, no overlap.
+            stride=patch_size
         )
         
     def forward(self, mask):
