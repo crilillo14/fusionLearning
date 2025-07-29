@@ -1,6 +1,7 @@
 from fusion.interfaces import FusionModule
 from torch import nn
 from fusion.learning.embedding import PatchEmbedding
+from fusion.learning.encoding import SinusoidalEncoder
 
 config_hi = { 
     "embedding_dim" : 256,
@@ -33,7 +34,8 @@ class PatchedMHSA(FusionModule):
         self.embed_patches = PatchEmbedding(patch_size=self.patch_size, embedding_dim=self.embedding_dim)
 
         # work on this.
-        
+        self.positional_encoding = SinusoidalEncoder(embedding_dim=self.embedding_dim)
+
         self.attention_k = nn.MultiheadAttention( 
             embed_dim=self.embedding_dim,
             num_heads=self.num_heads,
