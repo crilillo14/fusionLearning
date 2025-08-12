@@ -48,3 +48,6 @@ class PatchedMHSA(FusionModule):
             nn.GELU(),
             nn.Linear(self.embedding_dim, self.embedding_dim),
         )
+
+    def forward(x : torch.Tensor) -> torch.Tensor:
+        pass
