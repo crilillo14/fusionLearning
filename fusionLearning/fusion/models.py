@@ -2,11 +2,12 @@
 Utils for loading base Models. 
 
 * Not Necesssary, can instead generate all segmentations at once on a vanilla set.
+* Discontinued till further notice.
 """
 
 
-
-
+import os
+import random
 import torch
 
 def get_paths() -> list[str]:

@@ -1,6 +1,7 @@
 from typing import override
 from fusion.interfaces import FusionModule
 
+import torch
 
 
 
@@ -15,7 +16,7 @@ Could either be:
 3. some compromise -- patching, idk
 
 because images vary in size, might have to start doing model-only.
-
+zsh:1: command not found: venv
 """
 class MaskwisePatchedWeightedFusion(FusionModule): 
 

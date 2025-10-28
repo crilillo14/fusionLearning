@@ -7,6 +7,8 @@ from torch import nn
 import torch
 from abc import ABC, abstractmethod
 
+from typing import Any
+
 
 # --------------- interface
 class Encoder(ABC): 
@@ -43,7 +45,6 @@ class PositionalEncoder(Encoder):
         return super().batch_encode()
 
 
-
 # --------------- sinusoidal encoder
 class SinusoidalEncoder(nn.Module): 
 
@@ -67,5 +68,8 @@ class SinusoidalEncoder(nn.Module):
         return tokens
 
         
-    def decode(self, tokens : torch.Tensor) -> torch.Tensor:
+    def _compute_position_encoding(self, embedding_dim : int) -> torch.Tensor:
+        """
+        computes the positional encoding for a single mask in the predicted masks tensor
+        """
         pass

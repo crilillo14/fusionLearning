@@ -2,7 +2,7 @@
 
 Geometric and photometric transform pipelines using torchvision v2.
 
-Tweak as needed. Don't want to overdo it and take out birds out the image.
+Tweak as needed. Don't want to overdo it and ommit parts of the segmentation. 
 
 ~ Only apply g transform to mask, image geo + photometric.
 
@@ -19,6 +19,7 @@ import random
 
 # only needed for compiled models.
 # decision discontinued for now. Will be reimplemented for H100 training.
+# tiny update: cropping to multiple of 16 always needed, and if not no real disadvantage. 
 
 def crop_to_multiple(img: Image.Image, multiple : int = 32) -> Image.Image:
     """
