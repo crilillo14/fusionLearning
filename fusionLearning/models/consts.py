@@ -1,3 +1,6 @@
+"""Control variables for base model arch and optimizers"""
+
+
 MAXEPOCHS : int = 10
 BATCHSIZE : int = 1
 MOMENTUM : float = 0.99
