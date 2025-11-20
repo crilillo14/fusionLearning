@@ -46,7 +46,7 @@ def warmup() -> None:
         print("Tensors created and moved to CUDA successfully")
     except RuntimeError as e:
         print("RuntimeError:", e)
-    
+
 
 
 def main():
@@ -148,6 +148,9 @@ def main():
         else:
             print("No GPU available, exiting...")
 
+    
+
+
 
     training_dataloader, validation_dataloader, test_dataloader = create_train_val_test_loaders(
         path_images_folder,
@@ -178,13 +181,7 @@ def visualize_training_process(metrics):
     plt.savefig("outputs/final_training_metrics.png")
     plt.close()
 
-def train(modelDir, 
-          model, 
-          optimizer, 
-          lossFunc, 
-          training_dataloader, 
-          validation_dataloader):
-    
+def train(modelDir, model, optimizer, lossFunc, training_dataloader, validation_dataloader):
     output_dir = modelDir + "outputs"
     os.makedirs(output_dir, exist_ok=True)
     metrics_path = os.path.join(output_dir, "epoch_metrics.json")
@@ -195,9 +192,7 @@ def train(modelDir,
     best_val_loss = float('inf')
     val_auc_metric = BinaryAUROC(thresholds=32).to(device)
 
-    # –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
     for epoch in range(1, MAXEPOCHS + 1):
-
         # --- Training Phase ---
         model.train()
         train_loss = 0.0
@@ -337,10 +332,7 @@ def plot_metrics(modelDir):
     plt.savefig(modelDir + "outputs/final_training_metrics.png")
     plt.close()
 
-def inference_from_paths(model, 
-                         modelDir, 
-                         test_dataloader, 
-                         n=5):
+def inference_from_paths(model, modelDir, test_dataloader, n=5):
     global debug_viz
     
     # limit to 50 samples

@@ -1,8 +1,5 @@
-
-
-
-
 import os
+import torch
 
 # Base directory of the repository (one level above the 'fusionLearning' package)
 MODULE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -23,6 +20,11 @@ FUSION_MODELS = os.path.join(MODULE_DIR, "ensembles")
 BASE_MODELS_SEGMENTATIONS = os.path.join(BASE_DIR, "images", "segmentations")
 FUSED_MODEL_SEGMENTATIONS = os.path.join(BASE_DIR, "images", "fused_segmentations")
 
+# Sang Machine
+MASTER_ADDR = "localhost"
+MASTER_PORT = "12355"
+
+
 if __name__ == '__main__':
     print("Base directory : ", BASE_DIR)
     print("Module directory: ", MODULE_DIR)
@@ -35,3 +37,6 @@ if __name__ == '__main__':
     print("Fusion models directory: ", FUSION_MODELS)
     print("Base models segmentations directory: ", BASE_MODELS_SEGMENTATIONS)
     print("Fused models segmentations directory: ", FUSED_MODEL_SEGMENTATIONS)
+    print("Master address: ", MASTER_ADDR)
+    print("Master port: ", MASTER_PORT)
+    print("Number of GPUs: ", torch.cuda.device_count())
