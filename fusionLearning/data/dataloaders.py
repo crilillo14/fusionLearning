@@ -25,7 +25,7 @@ no need for labels, segmentation only.
 
 """
 
-from torch.utils.data import Dataset, DataLoader, random_split  # split technique up for discussion
+from torch.utils.data import Dataset, DataLoader, random_split  # TODO > split technique up for discussion (consider k fold or CV)
 import os
 from PIL import Image
 import numpy as np

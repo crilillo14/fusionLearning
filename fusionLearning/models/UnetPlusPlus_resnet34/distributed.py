@@ -75,6 +75,7 @@ def get_dataloaders(image_dir, segmentation_dir, batch_size, train_ratio=0.7, va
     val_sampler = DistributedSampler(val_dataset, shuffle=False)
     # Test sampler is optional, usually we just run test on rank 0 or distributed without shuffle
     test_sampler = DistributedSampler(test_dataset, shuffle=False)
+    
 
     # Create DataLoaders
     train_loader = DataLoader(
@@ -321,6 +322,7 @@ def train(modelDir,
         # Ideally use torchmetrics with dist_sync_on_step=True or compute on gathered data.
         # Here we will just let rank 0 compute its own AUC as a proxy or assume data is i.i.d.
         # Better: use metric.compute() which should be roughly correct if data is shuffled.
+        # TODO: Verify that AUC computation is synchronized across ranks properly.
         val_auc = val_auc_metric.compute().item()
 
         # Learning rate
@@ -370,6 +372,9 @@ def test(modelDir, model, test_dataloader, lossFunc, device, rank):
     avg_test_loss_local = tloss / len(test_dataloader)
     
     avg_test_loss_tensor = torch.tensor(avg_test_loss_local, device=device)
+    
+    # TODO :  verify allreduce correctness.
+    # This ensures all processes have the same test loss value
     dist.all_reduce(avg_test_loss_tensor, op=dist.ReduceOp.SUM)
     avg_test_loss = avg_test_loss_tensor.item() / dist.get_world_size()
 
