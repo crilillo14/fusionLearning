@@ -21,3 +21,4 @@ def test(modelDir, model, test_dataloader, lossFunc):
         json.dump(test_metrics, f)
 
     print(f"Test: Loss={avg_test_loss:.4f}")
+    return test_metrics

@@ -31,7 +31,9 @@ from torch.utils.data.distributed import DistributedSampler
 import torch.multiprocessing as mp
 from torch.distributed import init_process_group, destroy_process_group
 
-
+from fusionLearning.models.train import train
+from fusionLearning.models.test import test
+from fusionLearning.models.vis import visualize_training_process, plot_metrics
 
 print("On torch version:", torch.__version__)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -54,7 +56,7 @@ def warmup() -> None:
     except RuntimeError as e:
         print("RuntimeError:", e)
 
-def main():
+def main(world_size):
     global torch 
     
     # not really necessary, but making sure torch is initialized properly
@@ -121,7 +123,7 @@ def main():
         model.load_state_dict(state_dict)
         model.to(device)
 
-        test_metrics = test(modelDir)
+        test(modelDir)
         print("\nTesting completed successfully.")
         plot_metrics(modelDir)
     else:
@@ -129,7 +131,7 @@ def main():
             print("Starting training process...")
             train(modelDir)
             print("\nStarting testing process...")
-            test_metrics = test(modelDir)
+            test(modelDir)
             print("\nTraining and testing completed lsuccessfully.")
             print("\t * Results and visualizations saved in the 'outputs' directory. * ")
 
@@ -180,5 +182,5 @@ if __name__ == "__main__":
     ddp_setup(rank, world_size) 
     # train, test, val, inference.
 
-    mp.spawn(main, args=(world_size, total_epochs, save_every), nprocs=world_size, join=True)
+    mp.spawn(main, args=(world_size), nprocs=world_size, join=True) 
     

@@ -39,6 +39,9 @@ import torch.functional as F
 from data.aug import crop_to_multiple, geom_transform_pair
 
 
+from torch.utils.data.distributed import DistributedSampler
+
+
 # --------------------------------------------------------------------------------------------------------
 # GET > file paths, then files
 
@@ -207,6 +210,7 @@ class vanillaCUBDataset(Dataset):
 
 
 # NEEDED FOR BATCHING
+# implemented post distribute for effective sampling.
 
 def pad_collate(batch):
     """
@@ -349,28 +353,35 @@ def create_train_val_test_loaders_distributed(image_dir : str,
         full_dataset, [train_size, val_size, test_size], generator=generator
     )
     
-    # Create DataLoaders
-    train_loader : DataLoader = DataLoader(
+    train_sampler = DistributedSampler(train_dataset, shuffle=True)
+    val_sampler = DistributedSampler(val_dataset, shuffle=False)
+    test_sampler = DistributedSampler(test_dataset, shuffle=False)
+    
+    train_loader = DataLoader(
         train_dataset, 
         batch_size=batch_size, 
-        shuffle=True,
-        sampler=DistributedSampler(train_dataset),
-        
-        collate_fn=pad_collate
+        shuffle=False,  # False with sampler
+        sampler=train_sampler,
+        collate_fn=pad_collate,
+        pin_memory=True  # Performance optimization
     )
     
-    val_loader : DataLoader = DataLoader(
+    val_loader = DataLoader(
         val_dataset, 
         batch_size=batch_size, 
         shuffle=False,
-        collate_fn=pad_collate
+        sampler=val_sampler,  # Add sampler here too
+        collate_fn=pad_collate,
+        pin_memory=True
     )
     
-    test_loader : DataLoader = DataLoader(
+    test_loader = DataLoader(
         test_dataset, 
         batch_size=batch_size, 
-        shuffle=False, 
-        collate_fn=pad_collate
+        shuffle=False,
+        sampler=test_sampler,  # And here
+        collate_fn=pad_collate,
+        pin_memory=True
     )
     
     return train_loader, val_loader, test_loader
