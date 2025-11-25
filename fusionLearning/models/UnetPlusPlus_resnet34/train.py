@@ -85,7 +85,7 @@ def train(modelDir,
         # save to .pth
         if avg_val_loss < best_val_loss:
             best_val_loss = avg_val_loss
-            torch.save(model.state_dict(), os.path.join(output_dir, 'best_model.pth'))
+            torch.save(model.module.state_dict(), os.path.join(output_dir, 'best_model.pth'))
 
         # write to jason
         with open(metrics_path, 'r+') as f:

@@ -8,7 +8,7 @@ if parent_parent_dir not in sys.path:
 
 from fusionLearning.models.consts import MAXEPOCHS, BATCHSIZE, MOMENTUM, LEARNING_RATE, NUM_CLASSES
 from fusionLearning.config import CUB, CUB_IMAGES, CUB_SEGMENTATIONS
-from fusionLearning.data.dataloaders import create_train_val_test_loaders
+from fusionLearning.data.dataloaders import create_train_val_test_loaders_distributed
 from fusionLearning.data.aug import geoTransforms, photometricTransforms
 from fusionLearning.config import MASTER_ADDR, MASTER_PORT, WORLD_SIZE
 
@@ -31,7 +31,7 @@ from torch.utils.data.distributed import DistributedSampler
 import torch.multiprocessing as mp
 from torch.distributed import init_process_group, destroy_process_group
 
-from fusionLearning.models.train import train
+from fusionLearning.models.train import train_distr
 from fusionLearning.models.test import test
 from fusionLearning.models.vis import visualize_training_process, plot_metrics
 
@@ -46,8 +46,7 @@ print("On device:", device)
 debug_viz = 0
 DEBUG_TRAIN = False
 
-def warmup() -> None:
-    device = torch.device("cuda")
+def warmup(device) -> None:
 
     try:
         images = torch.randn(1, 3, 352, 512, device=device)
@@ -56,15 +55,38 @@ def warmup() -> None:
     except RuntimeError as e:
         print("RuntimeError:", e)
 
-def main(world_size):
+
+def ddp_setup(rank, world_size):
+
+    os.environ["MASTER_ADDR"] = MASTER_ADDR
+    os.environ["MASTER_PORT"] = MASTER_PORT
+    
+    dist.init_process_group(
+        backend="nccl",
+        rank=rank,
+        world_size=world_size
+    )
+
+def main(rank, world_size):
+    
+    # don´t know why ...
     global torch 
     
-    # not really necessary, but making sure torch is initialized properly
-    warmup()
+    ddp_setup(rank, world_size) 
+
+
+    device = torch.device(f"cuda:{rank}")
+    torch.cuda.set_device(device)
+    
+    # not really necessary, but making sure torch and device working correctly
+    warmup(device)
+    
+
 
     # Declare model type and encoder architecture
     # Available encoders are listed [here](https://smp.readthedocs.io/en/latest/encoders.html) in SMP's documentation
 
+    # TODO : Move MODEL NAME, encoder config to CLI.
     MODEL_NAME = "UnetPlusPlus"
     MODEL = smp.UnetPlusPlus
     encoder = "resnet34"
@@ -77,6 +99,8 @@ def main(world_size):
         in_channels=3,  
         classes=NUM_CLASSES,
     ).to(device)
+    
+    model = DDP(model, device_ids=[rank])
 
     optimizer = torch.optim.SGD(model.parameters(),
                             lr=LEARNING_RATE,
@@ -117,7 +141,9 @@ def main(world_size):
             encoder_weights=None,  
             in_channels=3,  
             classes=NUM_CLASSES,
-        )
+        ).to(device)
+        
+        model = DDP(model, device_ids=[])
         state_dict = torch.load(modelDir + f"outputs/best_model.pth", map_location=device)
         
         model.load_state_dict(state_dict)
@@ -129,10 +155,13 @@ def main(world_size):
     else:
         if device.type == "cuda":
             print("Starting training process...")
-            train(modelDir)
+            
+            train(modelDir, model, optimizer, lossFunc, training_dataloader, validation_dataloader)
             print("\nStarting testing process...")
-            test(modelDir)
+            
+            test(modelDir, model, test_dataloader, lossFunc)
             print("\nTraining and testing completed lsuccessfully.")
+            
             print("\t * Results and visualizations saved in the 'outputs' directory. * ")
 
             plot_metrics(modelDir)
@@ -141,7 +170,7 @@ def main(world_size):
             print("No GPU available, exiting...")
 
 
-    training_dataloader, validation_dataloader, test_dataloader = create_train_val_test_loaders(
+    training_dataloader, validation_dataloader, test_dataloader = create_train_val_test_loaders_distributed(
         path_images_folder,
         path_segmentations_folder,
         batch_size=BATCHSIZE,
@@ -155,16 +184,6 @@ def main(world_size):
     copy_best_model_to_weights(modelDir)
 
 
-def ddp_setup(rank, world_size):
-
-    os.environ["MASTER_ADDR"] = MASTER_ADDR
-    os.environ["MASTER_PORT"] = MASTER_PORT
-    
-    dist.init_process_group(
-        backend="nccl",
-        rank=rank,
-        world_size=world_size
-    )
 
 if __name__ == "__main__":
     
@@ -172,15 +191,5 @@ if __name__ == "__main__":
     # parser = argparse.ArgumentParser(description='Distributed Training')
     # args = parser.parse_args()
 
-
-    total_epochs = int(sys.argv[1])
-    save_every = int(sys.argv[2])
-    world_size = torch.cuda.device_count()
-
-    
-    # init group
-    ddp_setup(rank, world_size) 
-    # train, test, val, inference.
-
-    mp.spawn(main, args=(world_size), nprocs=world_size, join=True) 
+    mp.spawn(main, args=(WORLD_SIZE,), nprocs=world_size)
     
