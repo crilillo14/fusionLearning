@@ -23,6 +23,8 @@ FUSED_MODEL_SEGMENTATIONS = os.path.join(BASE_DIR, "images", "fused_segmentation
 # Sang Machine
 MASTER_ADDR = "localhost"
 MASTER_PORT = "12355"
+WORLD_SIZE = torch.cuda.device_count()
+
 
 
 if __name__ == '__main__':
@@ -39,4 +41,4 @@ if __name__ == '__main__':
     print("Fused models segmentations directory: ", FUSED_MODEL_SEGMENTATIONS)
     print("Master address: ", MASTER_ADDR)
     print("Master port: ", MASTER_PORT)
-    print("Number of GPUs: ", torch.cuda.device_count())
+    print("Number of GPUs: ", WORLD_SIZE)

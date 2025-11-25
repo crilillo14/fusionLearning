@@ -34,6 +34,7 @@ from tqdm import tqdm
 from typing import Optional, Type
 from torchvision.transforms import v2
 import random
+import torch.functional as F
 
 from data.aug import crop_to_multiple, geom_transform_pair
 
@@ -204,6 +205,31 @@ class vanillaCUBDataset(Dataset):
 
 # -------------------------------------------------------------------------------------------------------------------------------
 
+
+# NEEDED FOR BATCHING
+
+def pad_collate(batch):
+    """
+    pads to max dim in batch.
+    """
+    imgs, masks, names = zip(*batch)
+
+    max_h = max(img.shape[1] for img in imgs)
+    max_w = max(img.shape[2] for img in imgs)
+
+    out_i = []
+    out_m = []
+
+    for img, m in zip(imgs, masks):
+        dh = max_h - img.shape[1]
+        dw = max_w - img.shape[2]
+        img = F.pad(img, (0, dw, 0, dh))
+        m   = F.pad(m,   (0, dw, 0, dh))
+        out_i.append(img)
+        out_m.append(m)
+
+    return torch.stack(out_i), torch.stack(out_m), names
+
 def create_train_val_test_loaders(image_dir : str, 
                                   segmentation_dir : str, 
                                   batch_size : int = 1, 
@@ -255,19 +281,96 @@ def create_train_val_test_loaders(image_dir : str,
     train_loader : DataLoader = DataLoader(
         train_dataset, 
         batch_size=batch_size, 
-        shuffle=True
+        shuffle=True,
+        collate_fn=pad_collate
     )
     
     val_loader : DataLoader = DataLoader(
         val_dataset, 
         batch_size=batch_size, 
-        shuffle=False
+        shuffle=False,
+        collate_fn=pad_collate
     )
     
     test_loader : DataLoader = DataLoader(
         test_dataset, 
         batch_size=batch_size, 
-        shuffle=False
+        shuffle=False,
+        collate_fn=pad_collate
+    )
+    
+    return train_loader, val_loader, test_loader
+
+
+def create_train_val_test_loaders_distributed(image_dir : str, 
+                                  segmentation_dir : str, 
+                                  batch_size : int = 1, 
+                                  train_ratio : float = 0.7, 
+                                  val_ratio : float = 0.2, 
+                                  gTransforms : Optional[torch.nn.Module] = None, 
+                                  pTransforms : Optional[torch.nn.Module] = None):
+    """
+    Create train, validation, and test DataLoaders with split. Additional sampler.
+    
+    Args:
+        image_dir: Directory containing images
+        segmentation_dir: Directory containing segmentation masks
+        batch_size: Batch size for DataLoaders
+        train_ratio: Proportion of data for training
+        val_ratio: Proportion of data for validation
+        test_ratio: Proportion of data for testing
+        
+    Returns:
+        train_loader, val_loader, test_loader
+    """
+
+
+
+
+
+    #        $ pass transform to Dataset $
+    full_dataset : CUBDataset = CUBDataset(image_dir, 
+                                          segmentation_dir, 
+                                          gTransforms=gTransforms, 
+                                          pTransforms=pTransforms)
+    
+    # Calculate split sizes
+    total_size : int = len(full_dataset)
+    train_size : int = int(train_ratio * total_size)
+    val_size : int = int(val_ratio * total_size)
+    test_size : int = total_size - train_size - val_size
+    
+    # Set a fixed seed for reproducibility  (optional)
+    # Note: ensures that the split is consistent across runs.
+    generator : torch.Generator = torch.Generator().manual_seed(42)
+    
+    # Split dataset
+    train_dataset, val_dataset, test_dataset = random_split(
+        full_dataset, [train_size, val_size, test_size], generator=generator
+    )
+    
+    # Create DataLoaders
+    train_loader : DataLoader = DataLoader(
+        train_dataset, 
+        batch_size=batch_size, 
+        shuffle=True,
+        sampler=DistributedSampler(train_dataset),
+        
+        collate_fn=pad_collate
+    )
+    
+    val_loader : DataLoader = DataLoader(
+        val_dataset, 
+        batch_size=batch_size, 
+        shuffle=False,
+        collate_fn=pad_collate
+    )
+    
+    test_loader : DataLoader = DataLoader(
+        test_dataset, 
+        batch_size=batch_size, 
+        shuffle=False, 
+        collate_fn=pad_collate
     )
     
     return train_loader, val_loader, test_loader
@@ -312,7 +415,8 @@ def generateSegmentationMasks( DATASET : Type[CUBDataset | vanillaCUBDataset],
     allDataloader = DataLoader(
         DATASET(image_dir, segmentation_dir),
         batch_size=batch_size,
-        shuffle=False
+        shuffle=False,
+        collate_fn=pad_collate
     )
 
     if os.path.exists(os.path.join(save_dir, model_name)):
@@ -340,3 +444,4 @@ def generateSegmentationMasks( DATASET : Type[CUBDataset | vanillaCUBDataset],
         # print(f"Saved segmentation mask for {filename}")
     
     print(f"Generated all segmentation masks for {model_name}, saved to ./{os.path.join(save_dir, model_name)}")
+
