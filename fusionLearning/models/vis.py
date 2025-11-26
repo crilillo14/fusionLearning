@@ -1,4 +1,10 @@
 
+import json
+
+import matplotlib
+import matplotlib.pyplot as plt
+
+
 def visualize_training_process(metrics):
     """Visualize the final training process metrics"""
     plt.figure(figsize=(8, 5))

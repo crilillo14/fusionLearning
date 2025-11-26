@@ -3,7 +3,7 @@
 import os
 import sys
 
-parent_parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
+parent_parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 if parent_parent_dir not in sys.path:
     sys.path.insert(0, parent_parent_dir)
 
@@ -43,8 +43,34 @@ debug_viz = 0
 # prints logits in train phase, some other verbose stuff too
 DEBUG_TRAIN = False
 
-def warmup(device) -> None:
+arch_dict = {
+    "UnetPlusPlus": smp.UnetPlusPlus,
+    "Unet": smp.Unet,
+    "FPN": smp.FPN,
+    "PSPNet": smp.PSPNet,
+    "DeepLabV3": smp.DeepLabV3,
+    "DeepLabV3Plus": smp.DeepLabV3Plus,
+    "MAnet": smp.MAnet,
+    "Linknet": smp.Linknet,
+    "Segformer": smp.Segformer,
+}
 
+# Available encoders are listed [here](https://smp.readthedocs.io/en/latest/encoders.html) in SMP's documentation
+
+available_encoder_types = {
+    "vgg" : ["vgg16" , "vgg13", "vgg11", "vgg19"],
+    "resnet" : ["resnet18", "resnet34", "resnet50", "resnet101", "resnet152"],
+    "se_resnet" : ["seresnet18", "seresnet34", "seresnet50", "seresnet101", "seresnet152"],
+    "resnext" : ["resnext50", "resnext101"],
+    "se_resnext" : ["seresnext50", "seresnext101"],
+    "senet154" : ["senet154"],
+    "densenet" : ["densenet121", "densenet109", "densenet201"],
+    "inception" : ["inceptionv3", "inceptionresnetv2"],
+    "mobilenet" : ["mobilenet", "mobilenetv2"],
+    "efficientnet" : ["efficientnetb0", "efficientnetb1", "efficientnetb2", "efficientnetb3", "efficientnetb4", "efficientnetb5", "efficientnetb6", "efficientnetb7"],
+}
+
+def warmup(device) -> None:
     try:
         images = torch.randn(1, 3, 352, 512, device=device)
         masks = torch.randint(0, 2, (1, 352, 512), dtype=torch.int64, device=device)
@@ -75,7 +101,7 @@ def destroy_pg(fn):
 
 
 @destroy_pg
-def main(rank, world_size):
+def main(rank, world_size, arch_name, encoder):
     
     # don´t know why ...
     global torch 
@@ -90,13 +116,10 @@ def main(rank, world_size):
     
 
 
-    # Declare model type and encoder architecture
     # Available encoders are listed [here](https://smp.readthedocs.io/en/latest/encoders.html) in SMP's documentation
 
     # TODO : Move MODEL NAME, encoder config to CLI.
-    MODEL_NAME = "UnetPlusPlus"
-    MODEL = smp.UnetPlusPlus
-    encoder = "resnet34"
+    MODEL = arch_dict[arch_name]
 
     # ––––––––––––––––––––– init model, optim, loss func ––––––––––––––––––––– 
     
@@ -130,7 +153,7 @@ def main(rank, world_size):
     # ––––––––––––––––––––– Edit below hard links to point at model directory –––––––––––––––––––––
 
     # EDIT BELOW
-    modelName = f"{MODEL_NAME}_{encoder}"
+    modelName = f"{arch_name}_{encoder}"
     modelDir = f"fusionLearning/models/{modelName}/"
 
     trained = os.path.exists(modelDir + "outputs/best_model.pth") 
@@ -140,7 +163,7 @@ def main(rank, world_size):
 
     if trained:
         if rank == 0: 
-            print("Model already trained. To retrain, delete the 'outputs/best_model.pth' file.\n Going ahead with testing...")
+            print("Model already trained. To retrain, delete 'outputs/best_model.pth' or move it elsewhere.\n Going ahead with testing...")
 
         # Load best model -- EDIT BELOW
 
@@ -193,9 +216,12 @@ def main(rank, world_size):
 
 
 if __name__ == "__main__":
+
+    arch_name = sys.argv[1] 
+    encoder = sys.argv[2]
     
     # TODO: work on cli
     # parser = argparse.ArgumentParser(description='Distributed Training')
     # args = parser.parse_args()
 
-    mp.spawn(main, args=(WORLD_SIZE,), nprocs=WORLD_SIZE)
+    mp.spawn(main, args=(WORLD_SIZE, arch_name, encoder), nprocs=WORLD_SIZE)

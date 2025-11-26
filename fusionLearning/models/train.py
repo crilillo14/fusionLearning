@@ -1,10 +1,19 @@
 
+import os
+import json
+
 import torch
 from torch.utils.data import DataLoader
 import torch.distributed as dist
+from torchmetrics.classification import BinaryAUROC
+from tqdm import tqdm
+
+from fusionLearning.models.consts import MAXEPOCHS, LEARNING_RATE
+
+DEBUG_TRAIN = False
 
 
-def train_distr(modelDir, 
+def train_dist(modelDir, 
           model, 
           optimizer, 
           lossFunc, 
@@ -57,8 +66,8 @@ def train_distr(modelDir,
                 print("device:", device)
 
 
-            images = images.contiguous().to(device)
-            masks  = masks.contiguous().to(device)
+            images = images.to(device)
+            masks  = masks.to(device)
             
             if DEBUG_TRAIN:
                 print("mask unique values:", torch.unique(masks))
@@ -91,8 +100,8 @@ def train_distr(modelDir,
         
         with torch.no_grad():
             for images, masks, _ in tqdm(validation_dataloader, desc=f"Epoch {epoch}/{MAXEPOCHS} [Val]", leave=False, ncols=80):
-                images = images.to(device)
-                masks  = masks.to(device)
+                images = images.to(device, non_blocking=True)
+                masks  = masks.to(device, non_blocking=True)
                 logits = model(images)
                 val_loss += lossFunc(logits, masks).item()
 

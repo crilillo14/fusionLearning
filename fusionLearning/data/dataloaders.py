@@ -34,7 +34,8 @@ from tqdm import tqdm
 from typing import Optional, Type
 from torchvision.transforms import v2
 import random
-import torch.functional as F
+import torch.nn.functional as nnF
+from tqdm import tqdm
 
 from data.aug import crop_to_multiple, geom_transform_pair
 
@@ -227,8 +228,9 @@ def pad_collate(batch):
     for img, m in zip(imgs, masks):
         dh = max_h - img.shape[1]
         dw = max_w - img.shape[2]
-        img = F.pad(img, (0, dw, 0, dh))
-        m   = F.pad(m,   (0, dw, 0, dh))
+
+        img = nnF.pad(img, (0, dw, 0, dh))
+        m   = nnF.pad(m,   (0, dw, 0, dh))
         out_i.append(img)
         out_m.append(m)
 
@@ -363,7 +365,9 @@ def create_train_val_test_loaders_distributed(image_dir : str,
         shuffle=False,  # False with sampler
         sampler=train_sampler,
         collate_fn=pad_collate,
-        pin_memory=True  # Performance optimization
+        pin_memory=True,  # Performance optimization
+        num_workers=4,
+        persistent_workers=True,
     )
     
     val_loader = DataLoader(
@@ -372,7 +376,9 @@ def create_train_val_test_loaders_distributed(image_dir : str,
         shuffle=False,
         sampler=val_sampler,  # Add sampler here too
         collate_fn=pad_collate,
-        pin_memory=True
+        pin_memory=True,
+        num_workers=4,
+        persistent_workers=True,
     )
     
     test_loader = DataLoader(
@@ -381,7 +387,9 @@ def create_train_val_test_loaders_distributed(image_dir : str,
         shuffle=False,
         sampler=test_sampler,  # And here
         collate_fn=pad_collate,
-        pin_memory=True
+        pin_memory=True,
+        num_workers=4, 
+        persistent_workers=True,
     )
     
     return train_loader, val_loader, test_loader
