@@ -70,6 +70,7 @@ available_encoder_types = {
     "efficientnet" : ["efficientnetb0", "efficientnetb1", "efficientnetb2", "efficientnetb3", "efficientnetb4", "efficientnetb5", "efficientnetb6", "efficientnetb7"],
 }
 
+# ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 def warmup(device) -> None:
     try:
         images = torch.randn(1, 3, 352, 512, device=device)
@@ -90,6 +91,7 @@ def ddp_setup(rank, world_size):
         world_size=world_size
     )
 
+# ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 def main(rank, world_size, arch_name, encoder, dset):
     
     # don´t know why ...
@@ -211,18 +213,18 @@ def main(rank, world_size, arch_name, encoder, dset):
             dist.destroy_process_group()
 
 
+# ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
 if __name__ == "__main__":
 
     dset = sys.argv[1]
     arch_name = sys.argv[2] 
     encoder = sys.argv[3]
     
-    # TODO: work on cli
-    # parser = argparse.ArgumentParser(description='Distributed Training')
-    # args = parser.parse_args()
-
     mp.spawn(main, args=(WORLD_SIZE, arch_name, encoder, dset), nprocs=WORLD_SIZE, join=True)
 
-def launch_training(arch_name, encoder):
+# ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+def launch_training(arch_name, encoder, dataset : str):
     world_size = WORLD_SIZE
-    mp.spawn(main, args=(world_size, arch_name, encoder), nprocs=world_size, join=True)
+    mp.spawn(main, args=(world_size, arch_name, encoder, dataset), nprocs=world_size, join=True)
