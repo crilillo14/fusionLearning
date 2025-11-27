@@ -314,7 +314,8 @@ def create_train_val_test_loaders_distributed(image_dir : str,
                                   train_ratio : float = 0.7, 
                                   val_ratio : float = 0.2, 
                                   gTransforms : Optional[torch.nn.Module] = None, 
-                                  pTransforms : Optional[torch.nn.Module] = None):
+                                  pTransforms : Optional[torch.nn.Module] = None,
+                                  num_workers : int = 0):
     """
     Create train, validation, and test DataLoaders with split. Additional sampler.
     
@@ -366,7 +367,7 @@ def create_train_val_test_loaders_distributed(image_dir : str,
         sampler=train_sampler,
         collate_fn=pad_collate,
         pin_memory=True,  # Performance optimization
-        num_workers=4,
+        num_workers=num_workers,
         persistent_workers=True,
     )
     
@@ -377,7 +378,7 @@ def create_train_val_test_loaders_distributed(image_dir : str,
         sampler=val_sampler,  # Add sampler here too
         collate_fn=pad_collate,
         pin_memory=True,
-        num_workers=4,
+        num_workers=num_workers,
         persistent_workers=True,
     )
     
@@ -388,7 +389,7 @@ def create_train_val_test_loaders_distributed(image_dir : str,
         sampler=test_sampler,  # And here
         collate_fn=pad_collate,
         pin_memory=True,
-        num_workers=4, 
+        num_workers=num_workers, 
         persistent_workers=True,
     )
     

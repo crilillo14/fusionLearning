@@ -99,7 +99,6 @@ def inference_from_paths(model,
 
     plt.tight_layout()
     plt.savefig(os.path.join(modelDir, "outputs", "inference.png"), dpi=150, bbox_inches='tight')
-    plt.show()
 
     plt.close()
 
@@ -122,4 +121,4 @@ def copy_best_model_to_weights(model_dir) -> None:
 
     dst_path = os.path.join(dst_dir, f"{model_name}.pth")
     shutil.copy(src, dst_path)
-    
+   

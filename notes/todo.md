@@ -1,6 +1,17 @@
 # TODO List
 
+- gather more datasets for training and testing
+- benchmark base fusion methods.
 
+
+
+
+
+
+
+
+
+# DONE ..........
 ## Global - 
 
 ### Dataloaders

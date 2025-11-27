@@ -7,7 +7,7 @@ parent_parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'
 if parent_parent_dir not in sys.path:
     sys.path.insert(0, parent_parent_dir)
 
-from fusionLearning.models.consts import MAXEPOCHS, BATCHSIZE, MOMENTUM, LEARNING_RATE, NUM_CLASSES
+from fusionLearning.models.consts import MAXEPOCHS, BATCHSIZE, MOMENTUM, LEARNING_RATE, NUM_CLASSES_CUB, NUM_CLASSES_CITYSCAPES
 from fusionLearning.config import CUB, CUB_IMAGES, CUB_SEGMENTATIONS
 from fusionLearning.data.dataloaders import create_train_val_test_loaders_distributed
 from fusionLearning.data.aug import geoTransforms, photometricTransforms
@@ -44,7 +44,7 @@ debug_viz = 0
 DEBUG_TRAIN = False
 
 arch_dict = {
-    "UnetPlusPlus": smp.UnetPlusPlus,
+    "UnetPlusPlus" : smp.UnetPlusPlus,
     "Unet": smp.Unet,
     "FPN": smp.FPN,
     "PSPNet": smp.PSPNet,
@@ -84,144 +84,145 @@ def ddp_setup(rank, world_size):
     os.environ["MASTER_ADDR"] = MASTER_ADDR
     os.environ["MASTER_PORT"] = MASTER_PORT
     
-    dist.init_process_group(
+    init_process_group(
         backend="nccl",
         rank=rank,
         world_size=world_size
     )
 
-def destroy_pg(fn): 
-    def wrapper():
-        try:
-            fn()
-        except Exception as e:
-            print(e)
-            destroy_process_group()
-    return wrapper
-
-
-@destroy_pg
-def main(rank, world_size, arch_name, encoder):
+def main(rank, world_size, arch_name, encoder, dset):
     
     # don´t know why ...
     global torch 
     
-    ddp_setup(rank, world_size) 
+    try:
+        ddp_setup(rank, world_size) 
 
-    device = torch.device(f"cuda:{rank}")
-    torch.cuda.set_device(device)
-    
-    # not really necessary, but making sure torch and device working correctly
-    warmup(device)
-    
+        device = torch.device(f"cuda:{rank}")
+        torch.cuda.set_device(device)
+        
+        # not really necessary, but making sure torch and device working correctly
+        warmup(device)
+        
+        # Available encoders are listed [here](https://smp.readthedocs.io/en/latest/encoders.html) in SMP's documentation
 
+        MODEL = arch_dict[arch_name]
 
-    # Available encoders are listed [here](https://smp.readthedocs.io/en/latest/encoders.html) in SMP's documentation
-
-    # TODO : Move MODEL NAME, encoder config to CLI.
-    MODEL = arch_dict[arch_name]
-
-    # ––––––––––––––––––––– init model, optim, loss func ––––––––––––––––––––– 
-    
-    model = MODEL(
-        encoder_name=encoder,  
-        encoder_weights=None,  
-        in_channels=3,  
-        classes=NUM_CLASSES,
-    ).to(device)
-    
-    model = DDP(model, device_ids=[rank])
-
-    optimizer = torch.optim.SGD(model.parameters(),
-                            lr=LEARNING_RATE,
-                            momentum=MOMENTUM)
-
-    lossFunc = torch.nn.BCEWithLogitsLoss()
-
-    path_images_folder = os.path.join(CUB_IMAGES)
-    path_segmentations_folder = os.path.join(CUB_SEGMENTATIONS)
-
-    training_dataloader, validation_dataloader, test_dataloader = create_train_val_test_loaders_distributed(
-        path_images_folder,
-        path_segmentations_folder,
-        batch_size=BATCHSIZE,
-        train_ratio=0.7,
-        val_ratio=0.2,   
-        gTransforms=geoTransforms,  
-        pTransforms=photometricTransforms
-    )
-    # ––––––––––––––––––––– Edit below hard links to point at model directory –––––––––––––––––––––
-
-    # EDIT BELOW
-    modelName = f"{arch_name}_{encoder}"
-    modelDir = f"fusionLearning/models/{modelName}/"
-
-    trained = os.path.exists(modelDir + "outputs/best_model.pth") 
-
-    # Create outputs directory if it doesn't exist
-    os.makedirs(modelDir + "outputs", exist_ok=True)
-
-    if trained:
-        if rank == 0: 
-            print("Model already trained. To retrain, delete 'outputs/best_model.pth' or move it elsewhere.\n Going ahead with testing...")
-
-        # Load best model -- EDIT BELOW
+        # ––––––––––––––––––––– init model, optim, loss func ––––––––––––––––––––– 
+        # TODO change to dset dependent instantiation
+       
+        num_classes = NUM_CLASSES_CUB if dset == "CUB" else NUM_CLASSES_CITYSCAPES
 
         model = MODEL(
             encoder_name=encoder,  
             encoder_weights=None,  
             in_channels=3,  
-            classes=NUM_CLASSES,
+            classes=num_classes,
         ).to(device)
         
-        model = DDP(model, device_ids=[])
-        state_dict = torch.load(modelDir + f"outputs/best_model.pth", map_location=device)
-        
-        model.load_state_dict(state_dict)
-        model.to(device)
+        model = DDP(model, device_ids=[rank])
 
-        test_dist(modelDir, model, test_dataloader, lossFunc, rank)
-        print("\nTesting completed successfully.")
-        plot_metrics(modelDir)
-    else:
-        if rank == 0: 
-            print("Starting training process...") 
-        train_dist(modelDir, model, optimizer, lossFunc, training_dataloader, validation_dataloader, rank)
-        
-        if rank == 0: 
-            print("\nStarting testing process...")
-        
-        test_loss = test_dist(modelDir, model, test_dataloader, lossFunc, rank)
-        if rank == 0: 
-            print(f"\nFinal test loss: {test_loss:.4f}")
-            print("\nTraining and testing completed lsuccessfully.")
-        
-            print("\t * Results and visualizations saved in the 'outputs' directory. * ")
+        optimizer = torch.optim.SGD(model.parameters(),
+                                lr=LEARNING_RATE,
+                                momentum=MOMENTUM)
 
+        lossFunc = torch.nn.BCEWithLogitsLoss()
+
+        path_images_folder = os.path.join(CUB_IMAGES)
+        path_segmentations_folder = os.path.join(CUB_SEGMENTATIONS)
+
+        training_dataloader, validation_dataloader, test_dataloader = create_train_val_test_loaders_distributed(
+            path_images_folder,
+            path_segmentations_folder,
+            batch_size=BATCHSIZE,
+            train_ratio=0.7,
+            val_ratio=0.2,   
+            gTransforms=geoTransforms,  
+            pTransforms=photometricTransforms,
+            num_workers=4
+        )
+        # ––––––––––––––––––––– Edit below hard links to point at model directory –––––––––––––––––––––
+
+        # EDIT BELOW
+        modelName = f"{arch_name}_{encoder}"
+        modelDir = f"fusionLearning/models/results/{dset}/{modelName}/"
+
+        trained = os.path.exists(modelDir + "outputs/best_model.pth") 
+
+        # Create outputs directory if it doesn't exist
+        os.makedirs(modelDir + "outputs", exist_ok=True)
+
+        if trained:
+            if rank == 0: 
+                print("Model already trained. To retrain, delete 'outputs/best_model.pth' or move it elsewhere.\n Going ahead with testing...")
+
+            # Load best model -- EDIT BELOW
+
+            model = MODEL(
+                encoder_name=encoder,  
+                encoder_weights=None,  
+                in_channels=3,  
+                classes=num_classes,
+            ).to(device)
+            
+            model = DDP(model, device_ids=[])
+            
+            print("Loading from path: ", modelDir + f"outputs/best_model.pth")
+            state_dict = torch.load(modelDir + f"outputs/best_model.pth", map_location=device)
+            
+            model.load_state_dict(state_dict)
+            model.to(device)
+
+            test_dist(modelDir, model, test_dataloader, lossFunc, rank)
+            print("\nTesting completed successfully.")
             plot_metrics(modelDir)
-
         else:
-            print("No GPU available, exiting...")
+            if rank == 0: 
+                print("Starting training process...") 
 
 
-    
-    if rank == 0: 
-        model = model.module
+            train_dist(modelDir, model, optimizer, lossFunc, training_dataloader, validation_dataloader, rank)
+            
+            if rank == 0: 
+                print("\nStarting testing process...")
+            
+            test_loss = test_dist(modelDir, model, test_dataloader, lossFunc, rank)
+            if rank == 0: 
+                print(f"\nFinal test loss: {test_loss:.4f}")
+                print("\nTraining and testing completed lsuccessfully.")
+            
+                print("\t * Results and visualizations saved in the 'outputs' directory. * ")
+
+                plot_metrics(modelDir)
+
         
-        inference_from_paths(model=model, modelDir=modelDir, test_dataloader=test_dataloader, n=20)
-    
-    copy_best_model_to_weights(modelDir)
-    destroy_process_group()
+        if rank == 0: 
+            inference_from_paths(model=model, modelDir=modelDir, test_dataloader=test_dataloader, n=20)
+        
+        copy_best_model_to_weights(modelDir)
 
+        
+
+    except Exception as e:
+        print(e)
+        raise
+    finally:
+        if dist.is_initialized():
+            dist.destroy_process_group()
 
 
 if __name__ == "__main__":
 
-    arch_name = sys.argv[1] 
-    encoder = sys.argv[2]
+    dset = sys.argv[1]
+    arch_name = sys.argv[2] 
+    encoder = sys.argv[3]
     
     # TODO: work on cli
     # parser = argparse.ArgumentParser(description='Distributed Training')
     # args = parser.parse_args()
 
-    mp.spawn(main, args=(WORLD_SIZE, arch_name, encoder), nprocs=WORLD_SIZE)
+    mp.spawn(main, args=(WORLD_SIZE, arch_name, encoder, dset), nprocs=WORLD_SIZE, join=True)
+
+def launch_training(arch_name, encoder):
+    world_size = WORLD_SIZE
+    mp.spawn(main, args=(world_size, arch_name, encoder), nprocs=world_size, join=True)
