@@ -41,7 +41,7 @@ def inference_from_paths(model,
     device = next(model.parameters()).device
 
     model.to(device)
-    model.load_state_dict(torch.load(os.path.join(modelDir, "outputs", "best_model.pth"), map_location=device))
+    model.load_state_dict(torch.load(os.path.join(modelDir, "weights", "best_model.pth"), map_location=device))
     model.eval()
     
     fns = []
@@ -98,7 +98,7 @@ def inference_from_paths(model,
         plt.colorbar(im, fraction=0.046, pad=0.04)
 
     plt.tight_layout()
-    plt.savefig(os.path.join(modelDir, "outputs", "inference.png"), dpi=150, bbox_inches='tight')
+    plt.savefig(os.path.join(modelDir, "figures", "inference.png"), dpi=150, bbox_inches='tight')
 
     plt.close()
 
@@ -112,11 +112,11 @@ def copy_best_model_to_weights(model_dir) -> None:
     Copies the best model from the model's output directory to the weights directory.
     """
 
-    src = os.path.join(model_dir, "outputs", "best_model.pth")
+    src = os.path.join(model_dir, "weights", "best_model.pth")
 
     # derive model name from the final component of model_dir
     model_name = os.path.basename(os.path.normpath(model_dir))
-    dst_dir = os.path.join(model_dir, "..", "..", "weights", model_name)
+    dst_dir = os.path.join(model_dir, "..", "..", "..", "..", "weights", model_name)
     os.makedirs(dst_dir, exist_ok=True)
 
     dst_path = os.path.join(dst_dir, f"{model_name}.pth")

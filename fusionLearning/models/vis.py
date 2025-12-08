@@ -16,15 +16,21 @@ def visualize_training_process(metrics):
     plt.legend()
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig("outputs/final_training_metrics.png")
+    plt.savefig("final_training_metrics.png")
     plt.close()
 
 
 def plot_metrics(modelDir):
     matplotlib.use('Agg')  # non interactive
     
-    with open(modelDir + "outputs/epoch_metrics.json", 'r') as f:
-        data = json.load(f)
+    metrics_path = modelDir + "metrics/epoch_metrics.json"
+
+    try:
+        with open(metrics_path, 'r') as f:
+            data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        print(f"No valid metrics found at {metrics_path}; skipping metric plots.")
+        return
     epochs = [d['epoch'] for d in data]
     train_loss = [d['train_loss'] for d in data]
     val_loss = [d['val_loss'] for d in data]
@@ -46,5 +52,5 @@ def plot_metrics(modelDir):
     plt.legend()
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig(modelDir + "outputs/final_training_metrics.png")
+    plt.savefig(modelDir + "figures/final_training_metrics.png")
     plt.close()

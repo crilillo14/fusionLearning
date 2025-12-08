@@ -70,6 +70,8 @@ available_encoder_types = {
     "efficientnet" : ["efficientnetb0", "efficientnetb1", "efficientnetb2", "efficientnetb3", "efficientnetb4", "efficientnetb5", "efficientnetb6", "efficientnetb7"],
 }
 
+flat_encoders = [item for sublist in available_encoder_types.values() for item in sublist]
+
 # ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 def warmup(device) -> None:
     try:
@@ -122,7 +124,7 @@ def main(rank, world_size, arch_name, encoder, dset):
             classes=num_classes,
         ).to(device)
         
-        model = DDP(model, device_ids=[rank])
+        model = DDP(model, device_ids=[rank], find_unused_parameters=True)
 
         optimizer = torch.optim.SGD(model.parameters(),
                                 lr=LEARNING_RATE,
@@ -149,14 +151,17 @@ def main(rank, world_size, arch_name, encoder, dset):
         modelName = f"{arch_name}_{encoder}"
         modelDir = f"fusionLearning/models/results/{dset}/{modelName}/"
 
-        trained = os.path.exists(modelDir + "outputs/best_model.pth") 
+        trained = os.path.exists(modelDir + "weights/best_model.pth") 
 
         # Create outputs directory if it doesn't exist
-        os.makedirs(modelDir + "outputs", exist_ok=True)
+        os.makedirs(modelDir + "metrics", exist_ok=True)
+        os.makedirs(modelDir + "figures", exist_ok=True)
+        os.makedirs(modelDir + "weights", exist_ok=True)
+        
 
         if trained:
             if rank == 0: 
-                print("Model already trained. To retrain, delete 'outputs/best_model.pth' or move it elsewhere.\n Going ahead with testing...")
+                print("Model already trained. To retrain, delete 'best_model.pth' or move it elsewhere.\n Going ahead with testing...")
 
             # Load best model -- EDIT BELOW
 
@@ -167,10 +172,10 @@ def main(rank, world_size, arch_name, encoder, dset):
                 classes=num_classes,
             ).to(device)
             
-            model = DDP(model, device_ids=[])
+            model = DDP(model, device_ids=[], find_unused_parameters=True)
             
-            print("Loading from path: ", modelDir + f"outputs/best_model.pth")
-            state_dict = torch.load(modelDir + f"outputs/best_model.pth", map_location=device)
+            print("Loading from path: ", modelDir + f"weights/best_model.pth")
+            state_dict = torch.load(modelDir + f"weights/best_model.pth", map_location=device)
             
             model.load_state_dict(state_dict)
             model.to(device)
@@ -193,7 +198,7 @@ def main(rank, world_size, arch_name, encoder, dset):
                 print(f"\nFinal test loss: {test_loss:.4f}")
                 print("\nTraining and testing completed lsuccessfully.")
             
-                print("\t * Results and visualizations saved in the 'outputs' directory. * ")
+                print("\t * Results and visualizations saved in the 'weights' directory. * ")
 
                 plot_metrics(modelDir)
 
@@ -217,9 +222,18 @@ def main(rank, world_size, arch_name, encoder, dset):
 
 if __name__ == "__main__":
 
-    dset = sys.argv[1]
-    arch_name = sys.argv[2] 
-    encoder = sys.argv[3]
+
+    import argparse
+    
+    parser = argparse.ArgumentParser(description='Distributed Training')
+    parser.add_argument('dataset', type=str, choices=['CUB', 'Cityscapes'])
+    parser.add_argument('arch_name', type=str, choices=arch_dict.keys())
+    parser.add_argument('encoder', type=str, choices=flat_encoders)
+    args = parser.parse_args()
+    
+    dset = args.dataset
+    arch_name = args.arch_name 
+    encoder = args.encoder
     
     mp.spawn(main, args=(WORLD_SIZE, arch_name, encoder, dset), nprocs=WORLD_SIZE, join=True)
 

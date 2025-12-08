@@ -25,9 +25,13 @@ def train_dist(modelDir,
     
     
     if rank == 0:
-        output_dir = modelDir + "outputs"
-        os.makedirs(output_dir, exist_ok=True)
-        metrics_path = os.path.join(output_dir, "epoch_metrics.json")
+        weights_dir = modelDir + "weights"
+        metrics_dir = modelDir + "metrics"
+        figs_dir = modelDir + "figures"
+        os.makedirs(weights_dir, exist_ok=True)
+        os.makedirs(metrics_dir, exist_ok=True)
+        os.makedirs(figs_dir, exist_ok=True)
+        metrics_path = os.path.join(metrics_dir, "epoch_metrics.json")
         # Initialize metrics file
         with open(metrics_path, 'w') as f:
             json.dump([], f)
@@ -134,21 +138,26 @@ def train_dist(modelDir,
             # save to .pth
             if avg_val_loss < best_val_loss:
                 best_val_loss = avg_val_loss
-                torch.save(model.state_dict(), os.path.join(output_dir, 'best_model.pth'))
+                torch.save(model.state_dict(), os.path.join(weights_dir, 'best_model.pth'))
 
-            # write to jason
-            with open(metrics_path, 'r+') as f:
-                data = json.load(f)
-                data.append({
-                    'epoch': epoch,
-                    'train_loss': avg_train_loss,
-                    'val_loss': avg_val_loss,
-                    'val_auc': val_auc,
-                    'lr': lr
-                })
-                f.seek(0)
+            # write to JASON darul
+            # safely load existing metrics (if any), then append and overwrite
+            try:
+                with open(metrics_path, 'r') as f:
+                    data = json.load(f)
+            except (FileNotFoundError, json.JSONDecodeError):
+                data = []
+
+            data.append({
+                'epoch': epoch,
+                'train_loss': avg_train_loss,
+                'val_loss': avg_val_loss,
+                'val_auc': val_auc,
+                'lr': lr
+            })
+
+            with open(metrics_path, 'w') as f:
                 json.dump(data, f, indent=2)
-                f.truncate()
 
             print(f"Epoch {epoch:2d} | Train Loss: {avg_train_loss:.4f} | Val Loss: {avg_val_loss:.4f} "
                 f"| Val AUC: {val_auc:.4f} | LR: {lr:.6f}")
