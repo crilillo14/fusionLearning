@@ -20,14 +20,12 @@ for segmentation tasks
 
 Base Models had to be trained exactly the same way, with the same dataloaders, same transforms, same hyperparameters.
 
-For hps:
 
-```txt
-BATCHSIZE = 1
-MAXEPOCHS = 10
-LEARNING_RATE = 0.01
-MOMENTUM = 0.99
-```
+Fusion methods benchmarked: 
+1. Cross model pixel-wise mean (Arithmetic, Geometric, ...)
+2. Weighted cross Model fusion
+3. Convolutional fusion (akin to boosting, slapping a CNN on output heads of previous segmentations)
+4. 
 
 Should incorporate an LR scheduler. Hyperparameters based on Unet paper [https://arxiv.org/abs/1505.04597].
 
@@ -35,6 +33,6 @@ For transforms look at ```data\aug.py```. Geometric and photometric augmentation
 
 For dataloaders look at ```data\dataloaders.py```.
 
-For base model implementations look at ```models\*```
+For base model implementations look at ```models\*```. Most models come from [SMP](https://smp.readthedocs.io/en/latest/models.html#unetplusplus)
 
-For controlled variables and repo configuration look at ```config.py```
+For specific net configurations, check out ```models/config.py```.
