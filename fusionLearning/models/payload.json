@@ -1,0 +1,24 @@
+{
+    "models": [
+        {
+            "dataset": "CUB",
+            "arch_name": "UnetPlusPlus",
+            "encoder": "resnet18"
+        }, 
+        {
+            "dataset": "Cityscapes",
+            "arch_name": "UnetPlusPlus",
+            "encoder": "resnet18"
+        },
+        {
+            "dataset": "Cityscapes",
+            "arch_name": "UnetPlusPlus",
+            "encoder": "resnet18"
+        },
+        {
+            "dataset": "Cityscapes",
+            "arch_name": "UnetPlusPlus",
+            "encoder": "resnet18"
+        }
+    ]
+}

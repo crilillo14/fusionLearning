@@ -1,3 +1,7 @@
+import flashAttentionv3
+import numpy
+
+
 
 class PatchEmbedding(nn.Module):
     def __init__(self, patch_size=16, embedding_dim=256):

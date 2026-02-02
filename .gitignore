@@ -3,3 +3,14 @@ CUBdata/
 CUB_200_2011/
 segmentations/
 images/
+
+cityscapes/
+
+
+fusionLearning/data/cityscapes/
+data/
+datasets/
+fusionLearning/data/
+
+outputs/
+weights/

@@ -25,7 +25,7 @@ no need for labels, segmentation only.
 
 """
 
-from torch.utils.data import Dataset, DataLoader, random_split  # split technique up for discussion
+from torch.utils.data import Dataset, DataLoader, random_split  # TODO > split technique up for discussion (consider k fold or CV)
 import os
 from PIL import Image
 import numpy as np
@@ -34,8 +34,13 @@ from tqdm import tqdm
 from typing import Optional, Type
 from torchvision.transforms import v2
 import random
+import torch.nn.functional as nnF
+from tqdm import tqdm
 
 from data.aug import crop_to_multiple, geom_transform_pair
+
+
+from torch.utils.data.distributed import DistributedSampler
 
 
 # --------------------------------------------------------------------------------------------------------
@@ -204,6 +209,33 @@ class vanillaCUBDataset(Dataset):
 
 # -------------------------------------------------------------------------------------------------------------------------------
 
+
+# NEEDED FOR BATCHING
+# implemented post distribute for effective sampling.
+
+def pad_collate(batch):
+    """
+    pads to max dim in batch.
+    """
+    imgs, masks, names = zip(*batch)
+
+    max_h = max(img.shape[1] for img in imgs)
+    max_w = max(img.shape[2] for img in imgs)
+
+    out_i = []
+    out_m = []
+
+    for img, m in zip(imgs, masks):
+        dh = max_h - img.shape[1]
+        dw = max_w - img.shape[2]
+
+        img = nnF.pad(img, (0, dw, 0, dh))
+        m   = nnF.pad(m,   (0, dw, 0, dh))
+        out_i.append(img)
+        out_m.append(m)
+
+    return torch.stack(out_i), torch.stack(out_m), names
+
 def create_train_val_test_loaders(image_dir : str, 
                                   segmentation_dir : str, 
                                   batch_size : int = 1, 
@@ -255,22 +287,114 @@ def create_train_val_test_loaders(image_dir : str,
     train_loader : DataLoader = DataLoader(
         train_dataset, 
         batch_size=batch_size, 
-        shuffle=True
+        shuffle=True,
+        collate_fn=pad_collate
     )
     
     val_loader : DataLoader = DataLoader(
         val_dataset, 
         batch_size=batch_size, 
-        shuffle=False
+        shuffle=False,
+        collate_fn=pad_collate
     )
     
     test_loader : DataLoader = DataLoader(
         test_dataset, 
         batch_size=batch_size, 
-        shuffle=False
+        shuffle=False,
+        collate_fn=pad_collate
     )
     
     return train_loader, val_loader, test_loader
+
+
+def create_train_val_test_loaders_distributed(image_dir : str, 
+                                  segmentation_dir : str, 
+                                  batch_size : int = 1, 
+                                  train_ratio : float = 0.7, 
+                                  val_ratio : float = 0.2, 
+                                  gTransforms : Optional[torch.nn.Module] = None, 
+                                  pTransforms : Optional[torch.nn.Module] = None,
+                                  num_workers : int = 0):
+    """
+    Create train, validation, and test DataLoaders with split. Additional sampler.
+    
+    Args:
+        image_dir: Directory containing images
+        segmentation_dir: Directory containing segmentation masks
+        batch_size: Batch size for DataLoaders
+        train_ratio: Proportion of data for training
+        val_ratio: Proportion of data for validation
+        test_ratio: Proportion of data for testing
+        
+    Returns:
+        train_loader, val_loader, test_loader
+    """
+
+
+
+
+
+    #        $ pass transform to Dataset $
+    full_dataset : CUBDataset = CUBDataset(image_dir, 
+                                          segmentation_dir, 
+                                          gTransforms=gTransforms, 
+                                          pTransforms=pTransforms)
+    
+    # Calculate split sizes
+    total_size : int = len(full_dataset)
+    train_size : int = int(train_ratio * total_size)
+    val_size : int = int(val_ratio * total_size)
+    test_size : int = total_size - train_size - val_size
+    
+    # Set a fixed seed for reproducibility  (optional)
+    # Note: ensures that the split is consistent across runs.
+    generator : torch.Generator = torch.Generator().manual_seed(42)
+    
+    # Split dataset
+    train_dataset, val_dataset, test_dataset = random_split(
+        full_dataset, [train_size, val_size, test_size], generator=generator
+    )
+    
+    train_sampler = DistributedSampler(train_dataset, shuffle=True)
+    val_sampler = DistributedSampler(val_dataset, shuffle=False)
+    test_sampler = DistributedSampler(test_dataset, shuffle=False)
+    
+    train_loader = DataLoader(
+        train_dataset, 
+        batch_size=batch_size, 
+        shuffle=False,  # False with sampler
+        sampler=train_sampler,
+        collate_fn=pad_collate,
+        pin_memory=True,  # Performance optimization
+        num_workers=num_workers,
+        persistent_workers=True,
+    )
+    
+    val_loader = DataLoader(
+        val_dataset, 
+        batch_size=batch_size, 
+        shuffle=False,
+        sampler=val_sampler,  # Add sampler here too
+        collate_fn=pad_collate,
+        pin_memory=True,
+        num_workers=num_workers,
+        persistent_workers=True,
+    )
+    
+    test_loader = DataLoader(
+        test_dataset, 
+        batch_size=batch_size, 
+        shuffle=False,
+        sampler=test_sampler,  # And here
+        collate_fn=pad_collate,
+        pin_memory=True,
+        num_workers=num_workers, 
+        persistent_workers=True,
+    )
+    
+    return train_loader, val_loader, test_loader
+
 
 
 
@@ -311,7 +435,8 @@ def generateSegmentationMasks( DATASET : Type[CUBDataset | vanillaCUBDataset],
     allDataloader = DataLoader(
         DATASET(image_dir, segmentation_dir),
         batch_size=batch_size,
-        shuffle=False
+        shuffle=False,
+        collate_fn=pad_collate
     )
 
     if os.path.exists(os.path.join(save_dir, model_name)):
@@ -340,99 +465,3 @@ def generateSegmentationMasks( DATASET : Type[CUBDataset | vanillaCUBDataset],
     
     print(f"Generated all segmentation masks for {model_name}, saved to ./{os.path.join(save_dir, model_name)}")
 
-
-# -------------------------------------------------------------------------------------------------------------------------------
-# LOGITS DATASET
-
-class LogitsDataset(Dataset):
-    """Dataset to load pre-computed logits from multiple models and their GT masks."""
-    def __init__(self, logits_root, image_paths, model_names, segmentation_root):
-        """
-        Args:
-            logits_root (string): Root directory where logits are stored (e.g., 'data/logits').
-            image_paths (list): List of original image paths to derive IDs from.
-            model_names (list): List of model names, must match subdirectory names in logits_root.
-            segmentation_root (string): Root directory for ground truth masks.
-        """
-        self.logits_root = logits_root
-        self.image_paths = image_paths
-        self.model_names = model_names
-        self.segmentation_root = segmentation_root
-
-        self.mask_transform = v2.Compose([
-            v2.Resize((224, 224), interpolation=v2.InterpolationMode.NEAREST),
-            v2.PILToTensor(),
-        ])
-
-    def __len__(self):
-        return len(self.image_paths)
-
-    def __getitem__(self, idx):
-        original_img_path = self.image_paths[idx]
-        # Derives a unique ID like 'Black_Footed_Albatross_0001_796111.jpg' from full path
-        image_filename = os.path.basename(original_img_path)
-        image_id = os.path.splitext(image_filename)[0]
-
-        # Stack logits from all models
-        all_logits = []
-        for model_name in self.model_names:
-            logit_path = os.path.join(self.logits_root, model_name, f"{image_id}.pt")
-            try:
-                # Logits were saved as (C, H, W)
-                logits = torch.load(logit_path)
-                all_logits.append(logits)
-            except FileNotFoundError:
-                print(f"ERROR: Logit file not found at {logit_path}. Returning zeros.")
-                # Return a zero tensor as a placeholder to avoid crashing.
-                # Shape is (Num_Models, C, H, W)
-                return torch.zeros(len(self.model_names), 2, 224, 224), torch.zeros(1, 224, 224).long()
-
-        stacked_logits = torch.stack(all_logits, dim=0) # Shape: (N, C, H, W)
-
-        # Load ground truth mask
-        # Assumes mask path can be derived from image path
-        # e.g. .../images/class/image.jpg -> .../segmentations/class/image.png
-        mask_rel_path = os.path.relpath(original_img_path, os.path.commonpath([original_img_path, self.segmentation_root]))
-        mask_rel_path = os.path.splitext(mask_rel_path)[0].replace('images/','') + '.png'
-        mask_path = os.path.join(self.segmentation_root, mask_rel_path)
-
-        try:
-            mask = Image.open(mask_path).convert('L')
-        except FileNotFoundError:
-            print(f"ERROR: Mask file not found at {mask_path}. Returning zeros.")
-            return stacked_logits, torch.zeros(1, 224, 224).long()
-
-        mask_tensor = self.mask_transform(mask).float() / 255.0
-        mask_tensor = (mask_tensor > 0.5).long() # Binarize to {0, 1}
-
-        return stacked_logits, mask_tensor.squeeze(0) # (N,C,H,W), (H,W)
-
-def create_logits_loaders(logits_root, image_dir, segmentation_dir, model_names, batch_size=8, train_ratio=0.7, val_ratio=0.2):
-    """Creates train, val, and test dataloaders for the LogitsDataset."""
-    all_image_paths = sorted(get_file_paths(image_dir))
-
-    # Reproducible split
-    generator = torch.Generator().manual_seed(42)
-    total_size = len(all_image_paths)
-    train_size = int(train_ratio * total_size)
-    val_size = int(val_ratio * total_size)
-    test_size = total_size - train_size - val_size
-    indices = torch.randperm(total_size, generator=generator).tolist()
-
-    train_indices = indices[:train_size]
-    val_indices = indices[train_size:train_size + val_size]
-    test_indices = indices[train_size + val_size:]
-
-    train_paths = [all_image_paths[i] for i in train_indices]
-    val_paths = [all_image_paths[i] for i in val_indices]
-    test_paths = [all_image_paths[i] for i in test_indices]
-
-    train_dataset = LogitsDataset(logits_root, train_paths, model_names, segmentation_dir)
-    val_dataset = LogitsDataset(logits_root, val_paths, model_names, segmentation_dir)
-    test_dataset = LogitsDataset(logits_root, test_paths, model_names, segmentation_dir)
-
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=4, pin_memory=True)
-    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True)
-    test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True)
-
-    return train_loader, val_loader, test_loader
