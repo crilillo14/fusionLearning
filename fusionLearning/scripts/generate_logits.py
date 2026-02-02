@@ -64,6 +64,7 @@ def main():
     # Initialize Dataset and Dataloader
     # Using a simple transform for inference
     from torchvision import transforms
+    
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.ToTensor(),

@@ -1,18 +1,22 @@
 
 
+# prior to imports change cwd to parent directory
 import os
 import sys
+
 parent_parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 if parent_parent_dir not in sys.path:
     sys.path.insert(0, parent_parent_dir)
 
+# import configs
 from fusionLearning.config import BASE_MODELS_SEGMENTATIONS, CUB_IMAGES, CUB_SEGMENTATIONS, BASE_MODELS
-from fusionLearning.data.dataloaders import vanillaCUBDataset, generateSegmentationMasks
 from fusionLearning.models.consts import NUM_CLASSES
-
+# dataloading
+from fusionLearning.data.dataloaders import vanillaCUBDataset, generateSegmentationMasks
+from tqdm import tqdm
+# model classes 
 from segmentation_models_pytorch import Unet, UnetPlusPlus, Linknet, FPN
 
-from tqdm import tqdm
 
 
 
@@ -78,6 +82,11 @@ def debug_print_paths():
 
 
 def main(): 
+    
+    confirmation = input("Are you sure you want to generate all predictions? (y/n)")
+    if confirmation != "y":
+        return
+
     debug_print_paths()
     print("Going ahead with generating all masks...")
     GENERATE_ALL_PREDICTIONS()
