@@ -22,10 +22,8 @@ FUSED_MODEL_SEGMENTATIONS = os.path.join(BASE_DIR, "images", "fused_segmentation
 
 # Sang Machine
 MASTER_ADDR = "localhost"
-MASTER_PORT = "12355"
-WORLD_SIZE = torch.cuda.device_count()
-
-
+MASTER_PORT = "12355" # arbitrary port
+WORLD_SIZE = torch.cuda.device_count() # should be 4, variable if ported to another GPU cluster
 
 if __name__ == '__main__':
     print("Base directory : ", BASE_DIR)

@@ -25,8 +25,13 @@ no need for labels, segmentation only.
 
 """
 
+from __future__ import annotations
+from config import DATA_DIR  # ty:ignore[unresolved-import]
+import torchvision.datasets
+
 from torch.utils.data import Dataset, DataLoader, random_split  # TODO > split technique up for discussion (consider k fold or CV)
 import os
+import functools
 from PIL import Image
 import numpy as np
 import torch
@@ -37,7 +42,7 @@ import random
 import torch.nn.functional as nnF
 from tqdm import tqdm
 
-from data.aug import crop_to_multiple, geom_transform_pair
+from data.aug import crop_to_multiple, geom_transform_pair  # ty:ignore[unresolved-import]
 
 
 from torch.utils.data.distributed import DistributedSampler
@@ -210,12 +215,184 @@ class vanillaCUBDataset(Dataset):
 # -------------------------------------------------------------------------------------------------------------------------------
 
 
+# -------------------------------------------------------------------------------------------------------------------------------
+# Cityscapes: raw label ID (0-33) → train ID (0-18), everything else → 255 (ignore)
+_CS_LABEL_MAP = np.full(256, 255, dtype=np.uint8)
+for _raw, _train in {7:0, 8:1, 11:2, 12:3, 13:4, 17:5, 19:6, 20:7,
+                     21:8, 22:9, 23:10, 24:11, 25:12, 26:13, 27:14,
+                     28:15, 31:16, 32:17, 33:18}.items():
+    _CS_LABEL_MAP[_raw] = _train
+
+
+class CityscapesDataset(Dataset):
+    """
+    Wraps torchvision.datasets.Cityscapes.
+    Returns (image [3,H,W] float, mask [H,W] long, filename).
+    Mask values: 0-18 = train classes, 255 = ignore.
+    Drop-in replacement for CUBDataset with multi-class semantics.
+    """
+    def __init__(self, root: str, split: str = 'train',
+                 gTransforms=None, pTransforms=None):
+        self._inner = torchvision.datasets.Cityscapes(
+            root, split=split, mode='fine', target_type='semantic'
+        )
+        self.gTransforms = gTransforms
+        self.pTransforms = pTransforms
+
+    def __len__(self):
+        return len(self._inner)
+
+    def __getitem__(self, idx: int):
+        img, target = self._inner[idx]
+        filename = os.path.basename(self._inner.images[idx])
+
+        if self.gTransforms is not None:
+            img, target = geom_transform_pair(img, target)
+        else:
+            img    = crop_to_multiple(img)
+            target = crop_to_multiple(target)
+
+        image_tensor = v2.PILToTensor()(img).float() / 255.0
+
+        mask_np = _CS_LABEL_MAP[np.array(target)]
+        mask_tensor = torch.as_tensor(mask_np, dtype=torch.long)
+
+        if self.pTransforms is not None:
+            image_tensor = self.pTransforms(image_tensor)
+
+        return image_tensor, mask_tensor, filename
+
+
+def create_cityscapes_loaders_distributed(root: str,
+                                          batch_size: int = 8,
+                                          gTransforms=None,
+                                          pTransforms=None,
+                                          num_workers: int = 0):
+    """
+    Returns (train_loader, val_loader, test_loader).
+    Cityscapes test split has no GT labels; test_loader == val_loader.
+    Same return signature as create_train_val_test_loaders_distributed.
+    """
+    train_dataset = CityscapesDataset(root, 'train', gTransforms, pTransforms)
+    val_dataset   = CityscapesDataset(root, 'val')
+    # Cityscapes test has no ground-truth masks; use val as test
+    test_dataset  = CityscapesDataset(root, 'val')
+
+    train_sampler = DistributedSampler(train_dataset, shuffle=True)
+    val_sampler   = DistributedSampler(val_dataset,   shuffle=False)
+    test_sampler  = DistributedSampler(test_dataset,  shuffle=False)
+
+    _collate = functools.partial(pad_collate, mask_pad_value=255)
+    _pw = num_workers > 0
+
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False,
+                              sampler=train_sampler, collate_fn=_collate,
+                              pin_memory=True, num_workers=num_workers,
+                              persistent_workers=_pw)
+    val_loader   = DataLoader(val_dataset,   batch_size=batch_size, shuffle=False,
+                              sampler=val_sampler,   collate_fn=_collate,
+                              pin_memory=True, num_workers=num_workers,
+                              persistent_workers=_pw)
+    test_loader  = DataLoader(test_dataset,  batch_size=batch_size, shuffle=False,
+                              sampler=test_sampler,  collate_fn=_collate,
+                              pin_memory=True, num_workers=num_workers,
+                              persistent_workers=_pw)
+
+    return train_loader, val_loader, test_loader
+
+
+# -------------------------------------------------------------------------------------------------------------------------------
+# ADE20K
+
+class ADE20KDataset(Dataset):
+    """
+    Wraps torchvision.datasets.ADE20K (torchvision >= 0.13).
+    Returns (image [3,H,W] float, mask [H,W] long, filename).
+    Mask values: 0-149 = classes, 255 = background/ignore.
+    Drop-in replacement for CUBDataset with multi-class semantics.
+    """
+    def __init__(self, root: str, split: str = 'train',
+                 gTransforms=None, pTransforms=None):
+        self._inner = torchvision.datasets.ADE20K(root, split=split)
+        self.gTransforms = gTransforms
+        self.pTransforms = pTransforms
+
+    def __len__(self):
+        return len(self._inner)
+
+    def __getitem__(self, idx: int):
+        img, target = self._inner[idx]
+        filename = os.path.basename(self._inner.files[idx]['image'])
+
+        if self.gTransforms is not None:
+            img, target = geom_transform_pair(img, target)
+        else:
+            img    = crop_to_multiple(img)
+            target = crop_to_multiple(target)
+
+        image_tensor = v2.PILToTensor()(img).float() / 255.0
+
+        # ADE20K raw: 0 = unlabeled background, 1-150 = classes
+        # Remap to 0-149; background → 255 (ignore)
+        mask_np = np.array(target).astype(np.int32) - 1
+        mask_np[mask_np < 0] = 255
+        mask_tensor = torch.as_tensor(mask_np, dtype=torch.long)
+
+        if self.pTransforms is not None:
+            image_tensor = self.pTransforms(image_tensor)
+
+        return image_tensor, mask_tensor, filename
+
+
+def create_ade20k_loaders_distributed(root: str,
+                                      batch_size: int = 8,
+                                      gTransforms=None,
+                                      pTransforms=None,
+                                      num_workers: int = 0):
+    """
+    Returns (train_loader, val_loader, test_loader).
+    ADE20K has no test split; test_loader == val_loader.
+    Same return signature as create_train_val_test_loaders_distributed.
+    """
+    train_dataset = ADE20KDataset(root, 'train', gTransforms, pTransforms)
+    val_dataset   = ADE20KDataset(root, 'val')
+
+    train_sampler = DistributedSampler(train_dataset, shuffle=True)
+    val_sampler   = DistributedSampler(val_dataset,   shuffle=False)
+
+    _collate = functools.partial(pad_collate, mask_pad_value=255)
+    _pw = num_workers > 0
+
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False,
+                              sampler=train_sampler, collate_fn=_collate,
+                              pin_memory=True, num_workers=num_workers,
+                              persistent_workers=_pw)
+    val_loader   = DataLoader(val_dataset,   batch_size=batch_size, shuffle=False,
+                              sampler=val_sampler,   collate_fn=_collate,
+                              pin_memory=True, num_workers=num_workers,
+                              persistent_workers=_pw)
+    # No test split in ADE20K; reuse val
+    test_loader  = DataLoader(val_dataset,   batch_size=batch_size, shuffle=False,
+                              sampler=val_sampler,   collate_fn=_collate,
+                              pin_memory=True, num_workers=num_workers,
+                              persistent_workers=_pw)
+
+    return train_loader, val_loader, test_loader
+
+
+
+
+# -------------------------------------------------------------------------------------------------------------------------------
+
+
 # NEEDED FOR BATCHING
 # implemented post distribute for effective sampling.
 
-def pad_collate(batch):
+def pad_collate(batch, mask_pad_value: int = 0):
     """
-    pads to max dim in batch.
+    Pads images and masks to max dim in batch.
+
+    mask_pad_value: 0 for binary (CUB), 255 for multi-class (ignore_index).
     """
     imgs, masks, names = zip(*batch)
 
@@ -230,7 +407,7 @@ def pad_collate(batch):
         dw = max_w - img.shape[2]
 
         img = nnF.pad(img, (0, dw, 0, dh))
-        m   = nnF.pad(m,   (0, dw, 0, dh))
+        m   = nnF.pad(m,   (0, dw, 0, dh), value=mask_pad_value)
         out_i.append(img)
         out_m.append(m)
 

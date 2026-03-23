@@ -36,3 +36,11 @@ For dataloaders look at ```data\dataloaders.py```.
 For base model implementations look at ```models\*```. Most models come from [SMP](https://smp.readthedocs.io/en/latest/models.html#unetplusplus)
 
 For specific net configurations, check out ```models/config.py```.
+
+
+Some caveats that are annoying, but will take too long to refactor: 
+
+Everything is imported from the inner fusionLearning package, and I haven't structured paths and modules as actual importable packages. TODO.
+
+CUB has a lot of custom code for loading and transforms. Other datasets don't. 
+

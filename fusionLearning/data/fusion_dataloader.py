@@ -4,11 +4,11 @@ from PIL import Image
 import torch
 
 
-from config import BASE_MODELS_SEGMENTATIONS
+from fusionLearning.config import BASE_MODELS_SEGMENTATIONS
 import os
 
-from data.dataloaders import get_file_paths, load_segmentation_mask
-from data.aug import crop_to_multiple
+from fusionLearning.data.dataloaders import get_file_paths, load_segmentation_mask
+from fusionLearning.data.aug import crop_to_multiple
 
 
 

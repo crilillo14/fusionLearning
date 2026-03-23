@@ -8,9 +8,9 @@ cityscapes/
 
 
 fusionLearning/data/cityscapes/
-data/
+
 datasets/
-fusionLearning/data/
+
 
 outputs/
 weights/
