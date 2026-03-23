@@ -1,4 +1,4 @@
-
+from __future__ import annotations
 
 import os
 import sys
@@ -8,7 +8,7 @@ if parent_parent_dir not in sys.path:
     sys.path.insert(0, parent_parent_dir)
 
 from fusionLearning.models.consts import MAXEPOCHS, BATCHSIZE, MOMENTUM, LEARNING_RATE, NUM_CLASSES_CUB, NUM_CLASSES_CITYSCAPES
-from fusionLearning.config import CUB, CUB_IMAGES, CUB_SEGMENTATIONS
+from fusionLearning.config import CUB, CUB_IMAGES, CUB_SEGMENTATIONS, BASE_MODELS
 from fusionLearning.data.dataloaders import create_train_val_test_loaders_distributed
 from fusionLearning.data.aug import geoTransforms, photometricTransforms
 from fusionLearning.config import MASTER_ADDR, MASTER_PORT, WORLD_SIZE
@@ -25,6 +25,8 @@ import json
 import pprint
 import random
 import shutil
+import traceback
+from datetime import datetime
 from tqdm import tqdm
 
 from torch.nn.parallel import DistributedDataParallel as DDP
@@ -37,25 +39,28 @@ from fusionLearning.models.test import test_dist
 from fusionLearning.models.vis import visualize_training_process, plot_metrics
 from fusionLearning.models.inference import copy_best_model_to_weights, inference_from_paths
 
-
+from fusionLearning.models.ViT.vit import ViT
 # debug_viz determines if logits are outputted when graphing
+
 debug_viz = 0
 # prints logits in train phase, some other verbose stuff too
+
 DEBUG_TRAIN = False
 
 arch_dict = {
     "UnetPlusPlus" : smp.UnetPlusPlus,
     "Unet": smp.Unet,
     "FPN": smp.FPN,
-    "PSPNet": smp.PSPNet,
     "DeepLabV3": smp.DeepLabV3,
     "DeepLabV3Plus": smp.DeepLabV3Plus,
+    "PSPNet": smp.PSPNet,
     "MAnet": smp.MAnet,
     "Linknet": smp.Linknet,
     "Segformer": smp.Segformer,
 }
 
 # Available encoders are listed [here](https://smp.readthedocs.io/en/latest/encoders.html) in SMP's documentation
+# TODO: Read up on MMsegmentation
 
 available_encoder_types = {
     "vgg" : ["vgg16" , "vgg13", "vgg11", "vgg19"],
@@ -71,6 +76,33 @@ available_encoder_types = {
 }
 
 flat_encoders = [item for sublist in available_encoder_types.values() for item in sublist]
+
+
+# helpers for incompatible arch + encoder pairs. blame is usually on arch.
+# ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+import json
+
+SKIP_FILE = os.path.join(BASE_MODELS, "skip_pairs.json")
+
+def load_skip_set():
+    if os.path.exists(SKIP_FILE):
+        with open(SKIP_FILE) as f:
+            return set(json.load(f))
+    return set()
+
+def record_failure(arch, encoder, error):
+    key = f"{arch}__{encoder}"
+    # append traceback to per-pair log
+    err_dir = os.path.join(BASE_MODELS, "_errors")
+    os.makedirs(err_dir, exist_ok=True)
+    with open(f"{err_dir}/{key}.txt", "a") as f:
+        import traceback
+        f.write(f"\n{'='*60}\n{error}\n{traceback.format_exc()}\n")
+    # add to skip list
+    skip = load_skip_set()
+    skip.add(key)
+    with open(SKIP_FILE, "w") as f:
+        json.dump(sorted(skip), f, indent=2)
 
 # ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 def warmup(device) -> None:
@@ -212,7 +244,7 @@ def main(rank, world_size, arch_name, encoder, dset):
 
     except Exception as e:
         print(e)
-        raise
+        
     finally:
         if dist.is_initialized():
             dist.destroy_process_group()
@@ -230,7 +262,8 @@ if __name__ == "__main__":
     parser.add_argument('arch_name', type=str, choices=arch_dict.keys())
     parser.add_argument('encoder', type=str, choices=flat_encoders)
     args = parser.parse_args()
-    
+
+
     dset = args.dataset
     arch_name = args.arch_name 
     encoder = args.encoder
