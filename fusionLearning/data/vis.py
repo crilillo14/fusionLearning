@@ -29,6 +29,7 @@ from torchvision.transforms import v2 as T
 from fusionLearning.data.aug import geom_transform_pair
 from fusionLearning.data.dataloaders import (
     CUBDataset,
+    VOCDataset,
     get_file_paths,
     load_image,
     load_segmentation_mask,
@@ -180,11 +181,15 @@ def _get_raw_pil(dataset, idx: int):
       - ADE20KDataset                   — torchvision inner dataset + .files list
     """
     if hasattr(dataset, "_inner"):
-        # CityscapesDataset or ADE20KDataset
+        # CityscapesDataset, VOCDataset, or ADE20KDataset
         img_pil, mask_pil = dataset._inner[idx]
         inner = dataset._inner
         if hasattr(inner, "images") and isinstance(inner.images, list):
+            # Cityscapes or VOC
             fname = os.path.basename(inner.images[idx])
+        elif hasattr(inner, "masks") and isinstance(inner.masks, list):
+            # VOC fallback (masks attr)
+            fname = os.path.basename(inner.masks[idx])
         elif hasattr(inner, "files") and isinstance(inner.files, list):
             fname = os.path.basename(inner.files[idx]["image"])
         else:
@@ -209,11 +214,19 @@ def _render_mask(ax, mask_arr: np.ndarray, title: str) -> None:
     - Binary / float [0,1]  (CUB)          → grayscale
     - Integer class IDs     (Cityscapes / ADE20K) → tab20; ignore index 255 → black
     """
-    unique_vals = np.unique(mask_arr)
-    is_float_binary = mask_arr.dtype.kind == "f" or int(unique_vals.max()) <= 1
+    unique_vals = set(np.unique(mask_arr).tolist())
+    # Binary: float [0,1], or uint8 with only {0,1} or {0,255} values (CUB confidence masks)
+    is_binary = (
+        mask_arr.dtype.kind == "f"
+        or unique_vals <= {0, 1}
+        or unique_vals <= {0, 255}
+    )
 
-    if is_float_binary:
-        ax.imshow(mask_arr, cmap="gray", vmin=0, vmax=1)
+    if is_binary:
+        display = mask_arr.astype(np.float32)
+        if display.max() > 1.0:
+            display = display / 255.0
+        ax.imshow(display, cmap="gray", vmin=0, vmax=1)
     else:
         # Replace ignore index (255) with NaN so matplotlib renders it as the
         # background colour; use tab20 for the valid class IDs.

@@ -9,3 +9,4 @@ LEARNING_RATE : float = 0.01
 
 NUM_CLASSES_CUB : int = 1
 NUM_CLASSES_CITYSCAPES : int = 19
+NUM_CLASSES_VOC : int = 21  # background + 20 object categories

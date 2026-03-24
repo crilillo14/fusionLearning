@@ -13,6 +13,7 @@ CUB_SEGMENTATIONS = os.path.join(CUB, "segmentations")
 
 CITYSCAPES_ROOT = os.path.join(DATA_DIR, "cityscapes")
 ADE20K_ROOT = os.path.join(DATA_DIR, "ADE20K")
+VOC_ROOT = os.path.join(DATA_DIR, "VOC")
 
 # Model, weights and output directories
 LEARNED_WEIGHTS = os.path.join(MODULE_DIR, "weights")

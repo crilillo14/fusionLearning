@@ -29,7 +29,7 @@ from fusionLearning.models.distributed import (
     record_failure,
 )
 
-SUPPORTED_DATASETS = ["CUB", "Cityscapes", "ADE20K"]
+SUPPORTED_DATASETS = ["CUB", "Cityscapes", "ADE20K", "VOC"]
 
 
 def run_pair(arch_name: str, encoder: str, dataset: str) -> bool:

@@ -433,6 +433,84 @@ def create_ade20k_loaders_distributed(root: str,
 
 
 # -------------------------------------------------------------------------------------------------------------------------------
+# Pascal VOC 2012 Segmentation
+# Mask values: 0 = background, 1-20 = classes, 255 = void/ignore
+
+class VOCDataset(Dataset):
+    """
+    Wraps torchvision.datasets.VOCSegmentation (VOC 2012).
+    Returns (image [3,H,W] float, mask [H,W] long, filename).
+    Mask values: 0-20 = classes (0 = background), 255 = void/ignore.
+    """
+    def __init__(self, root: str, split: str = "train",
+                 gTransforms=None, pTransforms=None, download: bool = False):
+        self._inner = torchvision.datasets.VOCSegmentation(
+            root, year="2012", image_set=split, download=download
+        )
+        self.gTransforms = gTransforms
+        self.pTransforms = pTransforms
+
+    def __len__(self):
+        return len(self._inner)
+
+    def __getitem__(self, idx: int):
+        img, target = self._inner[idx]
+        filename = os.path.basename(self._inner.images[idx])
+
+        if self.gTransforms is not None:
+            img, target = geom_transform_pair(img, target)
+        else:
+            img    = crop_to_multiple(img)
+            target = crop_to_multiple(target)
+
+        image_tensor = v2.PILToTensor()(img).float() / 255.0
+
+        # Palette PNG: values 0-20 (classes) + 255 (void/ignore)
+        mask_tensor = torch.as_tensor(np.array(target), dtype=torch.long)
+
+        if self.pTransforms is not None:
+            image_tensor = self.pTransforms(image_tensor)
+
+        return image_tensor, mask_tensor, filename
+
+
+def create_voc_loaders_distributed(root: str,
+                                   batch_size: int = 8,
+                                   gTransforms=None,
+                                   pTransforms=None,
+                                   num_workers: int = 0,
+                                   download: bool = False):
+    """
+    Returns (train_loader, val_loader, test_loader).
+    VOC has no public test labels; test_loader == val_loader.
+    Same return signature as create_train_val_test_loaders_distributed.
+    """
+    train_dataset = VOCDataset(root, "train",    gTransforms, pTransforms, download=download)
+    val_dataset   = VOCDataset(root, "val",      download=download)
+
+    train_sampler = DistributedSampler(train_dataset, shuffle=True)
+    val_sampler   = DistributedSampler(val_dataset,   shuffle=False)
+
+    _collate = functools.partial(pad_collate, mask_pad_value=255)
+    _pw = num_workers > 0
+
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False,
+                              sampler=train_sampler, collate_fn=_collate,
+                              pin_memory=True, num_workers=num_workers,
+                              persistent_workers=_pw)
+    val_loader   = DataLoader(val_dataset,   batch_size=batch_size, shuffle=False,
+                              sampler=val_sampler,   collate_fn=_collate,
+                              pin_memory=True, num_workers=num_workers,
+                              persistent_workers=_pw)
+    test_loader  = DataLoader(val_dataset,   batch_size=batch_size, shuffle=False,
+                              sampler=val_sampler,   collate_fn=_collate,
+                              pin_memory=True, num_workers=num_workers,
+                              persistent_workers=_pw)
+
+    return train_loader, val_loader, test_loader
+
+
+# -------------------------------------------------------------------------------------------------------------------------------
 
 
 # NEEDED FOR BATCHING

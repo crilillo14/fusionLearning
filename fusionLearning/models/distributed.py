@@ -8,11 +8,12 @@ if parent_parent_dir not in sys.path:
     sys.path.insert(0, parent_parent_dir)
 
 from fusionLearning.models.consts import MAXEPOCHS, BATCHSIZE, MOMENTUM, LEARNING_RATE, NUM_CLASSES_CUB, NUM_CLASSES_CITYSCAPES
-from fusionLearning.config import CUB, CUB_IMAGES, CUB_SEGMENTATIONS, BASE_MODELS, CITYSCAPES_ROOT, ADE20K_ROOT
+from fusionLearning.config import CUB, CUB_IMAGES, CUB_SEGMENTATIONS, BASE_MODELS, CITYSCAPES_ROOT, ADE20K_ROOT, VOC_ROOT
 from fusionLearning.data.dataloaders import (
     create_train_val_test_loaders_distributed,
     create_cityscapes_loaders_distributed,
     create_ade20k_loaders_distributed,
+    create_voc_loaders_distributed,
 )
 from fusionLearning.data.aug import geoTransforms, photometricTransforms
 from fusionLearning.config import MASTER_ADDR, MASTER_PORT, WORLD_SIZE
@@ -94,6 +95,10 @@ dataset_metadata = {
     },
     "ADE20K" : {
         "num_classes" : 150,
+        "input_size" : 512,
+    },
+    "VOC" : {
+        "num_classes" : 21,  # background + 20 object categories
         "input_size" : 512,
     },
     "COCO" : {
@@ -231,6 +236,16 @@ def main(rank, world_size, arch_name, encoder, dset):
                 num_workers=4,
                 download=True,
             )
+        elif dset == "VOC":
+            lossFunc = torch.nn.CrossEntropyLoss(ignore_index=255)
+            training_dataloader, validation_dataloader, test_dataloader = create_voc_loaders_distributed(
+                VOC_ROOT,
+                batch_size=BATCHSIZE,
+                gTransforms=geoTransforms,
+                pTransforms=photometricTransforms,
+                num_workers=4,
+                download=True,
+            )
         else:
             raise ValueError(f"Unsupported dataset: {dset}")
         # ––––––––––––––––––––– Edit below hard links to point at model directory –––––––––––––––––––––
@@ -317,7 +332,7 @@ if __name__ == "__main__":
     import argparse
     
     parser = argparse.ArgumentParser(description='Distributed Training')
-    parser.add_argument('dataset', type=str, choices=['CUB', 'Cityscapes', 'ADE20K'])
+    parser.add_argument('dataset', type=str, choices=['CUB', 'Cityscapes', 'ADE20K', 'VOC'])
     parser.add_argument('arch_name', type=str, choices=arch_dict.keys())
     parser.add_argument('encoder', type=str, choices=flat_encoders)
     args = parser.parse_args()
