@@ -8,8 +8,12 @@ if parent_parent_dir not in sys.path:
     sys.path.insert(0, parent_parent_dir)
 
 from fusionLearning.models.consts import MAXEPOCHS, BATCHSIZE, MOMENTUM, LEARNING_RATE, NUM_CLASSES_CUB, NUM_CLASSES_CITYSCAPES
-from fusionLearning.config import CUB, CUB_IMAGES, CUB_SEGMENTATIONS, BASE_MODELS
-from fusionLearning.data.dataloaders import create_train_val_test_loaders_distributed
+from fusionLearning.config import CUB, CUB_IMAGES, CUB_SEGMENTATIONS, BASE_MODELS, CITYSCAPES_ROOT, ADE20K_ROOT
+from fusionLearning.data.dataloaders import (
+    create_train_val_test_loaders_distributed,
+    create_cityscapes_loaders_distributed,
+    create_ade20k_loaders_distributed,
+)
 from fusionLearning.data.aug import geoTransforms, photometricTransforms
 from fusionLearning.config import MASTER_ADDR, MASTER_PORT, WORLD_SIZE
 
@@ -78,31 +82,26 @@ available_encoder_types = {
 flat_encoders = [item for sublist in available_encoder_types.values() for item in sublist]
 
 
-# helpers for incompatible arch + encoder pairs. blame is usually on arch.
-# ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-import json
+# to look up 
+dataset_metadata = {
+    "CUB" : {
+        "num_classes" : 1, # (binary pixel classification)
+        "input_size" : 224,
+    },
+    "Cityscapes" : {
+        "num_classes" : 19,
+        "input_size" : 512,
+    },
+    "ADE20K" : {
+        "num_classes" : 150,
+        "input_size" : 512,
+    },
+    "COCO" : {
+        "num_classes" : 80,
+        "input_size" : 512,
+    }
+}
 
-SKIP_FILE = os.path.join(BASE_MODELS, "skip_pairs.json")
-
-def load_skip_set():
-    if os.path.exists(SKIP_FILE):
-        with open(SKIP_FILE) as f:
-            return set(json.load(f))
-    return set()
-
-def record_failure(arch, encoder, error):
-    key = f"{arch}__{encoder}"
-    # append traceback to per-pair log
-    err_dir = os.path.join(BASE_MODELS, "_errors")
-    os.makedirs(err_dir, exist_ok=True)
-    with open(f"{err_dir}/{key}.txt", "a") as f:
-        import traceback
-        f.write(f"\n{'='*60}\n{error}\n{traceback.format_exc()}\n")
-    # add to skip list
-    skip = load_skip_set()
-    skip.add(key)
-    with open(SKIP_FILE, "w") as f:
-        json.dump(sorted(skip), f, indent=2)
 
 # ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 def warmup(device) -> None:
@@ -125,7 +124,42 @@ def ddp_setup(rank, world_size):
         world_size=world_size
     )
 
+# ── incompatible pair tracking ────────────────────────────────── AI GENERATED
+import json
+
+SKIP_FILE = os.path.join(BASE_MODELS, "skip_pairs.json")
+
+def load_skip_set():
+    if os.path.exists(SKIP_FILE):
+        with open(SKIP_FILE) as f:
+            return set(json.load(f))
+    return set()
+
+def record_failure(arch, encoder, error):
+    key = f"{arch}__{encoder}"
+    # append traceback to per-pair log
+    err_dir = os.path.join(BASE_MODELS, "_errors")
+    os.makedirs(err_dir, exist_ok=True)
+    with open(os.path.join(err_dir, f"{key}.txt"), "a") as f:
+        import traceback
+        f.write(f"\n{'='*60}\n{error}\n{traceback.format_exc()}\n")
+    # add to skip list
+    skip = load_skip_set()
+    skip.add(key)
+    with open(SKIP_FILE, "w") as f:
+        json.dump(sorted(skip), f, indent=2)
 # ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+"""
+Could be argued that it should be named distributed rumbling or some shit like that, but should be fine as is.
+wrap with mp to initiate on distributed machine. Doesn't support multimachine. 
+
+TODO: ViT, Swin, etc. Include relevant models. 
+
+For more advanced SoTA, 
+
+Simply cite reported benchmarking scores in paper.
+"""
 def main(rank, world_size, arch_name, encoder, dset):
     
     # don´t know why ...
@@ -147,7 +181,10 @@ def main(rank, world_size, arch_name, encoder, dset):
         # ––––––––––––––––––––– init model, optim, loss func ––––––––––––––––––––– 
         # TODO change to dset dependent instantiation
        
-        num_classes = NUM_CLASSES_CUB if dset == "CUB" else NUM_CLASSES_CITYSCAPES
+        # dataset instantiation
+        num_classes = dataset_metadata[dset]["num_classes"]
+
+
 
         model = MODEL(
             encoder_name=encoder,  
@@ -162,26 +199,45 @@ def main(rank, world_size, arch_name, encoder, dset):
                                 lr=LEARNING_RATE,
                                 momentum=MOMENTUM)
 
-        lossFunc = torch.nn.BCEWithLogitsLoss()
-
-        path_images_folder = os.path.join(CUB_IMAGES)
-        path_segmentations_folder = os.path.join(CUB_SEGMENTATIONS)
-
-        training_dataloader, validation_dataloader, test_dataloader = create_train_val_test_loaders_distributed(
-            path_images_folder,
-            path_segmentations_folder,
-            batch_size=BATCHSIZE,
-            train_ratio=0.7,
-            val_ratio=0.2,   
-            gTransforms=geoTransforms,  
-            pTransforms=photometricTransforms,
-            num_workers=4
-        )
+        # ––– dataset-specific: dataloaders + loss function –––
+        if dset == "CUB":
+            lossFunc = torch.nn.BCEWithLogitsLoss()
+            training_dataloader, validation_dataloader, test_dataloader = create_train_val_test_loaders_distributed(
+                CUB_IMAGES,
+                CUB_SEGMENTATIONS,
+                batch_size=BATCHSIZE,
+                train_ratio=0.7,
+                val_ratio=0.2,
+                gTransforms=geoTransforms,
+                pTransforms=photometricTransforms,
+                num_workers=4,
+            )
+        elif dset == "Cityscapes":
+            lossFunc = torch.nn.CrossEntropyLoss(ignore_index=255)
+            training_dataloader, validation_dataloader, test_dataloader = create_cityscapes_loaders_distributed(
+                CITYSCAPES_ROOT,
+                batch_size=BATCHSIZE,
+                gTransforms=geoTransforms,
+                pTransforms=photometricTransforms,
+                num_workers=4,
+            )
+        elif dset == "ADE20K":
+            lossFunc = torch.nn.CrossEntropyLoss(ignore_index=255)
+            training_dataloader, validation_dataloader, test_dataloader = create_ade20k_loaders_distributed(
+                ADE20K_ROOT,
+                batch_size=BATCHSIZE,
+                gTransforms=geoTransforms,
+                pTransforms=photometricTransforms,
+                num_workers=4,
+                download=True,
+            )
+        else:
+            raise ValueError(f"Unsupported dataset: {dset}")
         # ––––––––––––––––––––– Edit below hard links to point at model directory –––––––––––––––––––––
 
         # EDIT BELOW
         modelName = f"{arch_name}_{encoder}"
-        modelDir = f"fusionLearning/models/results/{dset}/{modelName}/"
+        modelDir = os.path.join(BASE_MODELS, "results", dset, modelName) + os.sep
 
         trained = os.path.exists(modelDir + "weights/best_model.pth") 
 
@@ -204,7 +260,7 @@ def main(rank, world_size, arch_name, encoder, dset):
                 classes=num_classes,
             ).to(device)
             
-            model = DDP(model, device_ids=[], find_unused_parameters=True)
+            model = DDP(model, device_ids=[rank], find_unused_parameters=True)
             
             print("Loading from path: ", modelDir + f"weights/best_model.pth")
             state_dict = torch.load(modelDir + f"weights/best_model.pth", map_location=device)
@@ -243,8 +299,11 @@ def main(rank, world_size, arch_name, encoder, dset):
         
 
     except Exception as e:
-        print(e)
-        
+        if rank == 0:
+            record_failure(arch_name, encoder, str(e))
+        print(f"[rank {rank}] Error: {e}")
+        traceback.print_exc()
+
     finally:
         if dist.is_initialized():
             dist.destroy_process_group()
@@ -258,7 +317,7 @@ if __name__ == "__main__":
     import argparse
     
     parser = argparse.ArgumentParser(description='Distributed Training')
-    parser.add_argument('dataset', type=str, choices=['CUB', 'Cityscapes'])
+    parser.add_argument('dataset', type=str, choices=['CUB', 'Cityscapes', 'ADE20K'])
     parser.add_argument('arch_name', type=str, choices=arch_dict.keys())
     parser.add_argument('encoder', type=str, choices=flat_encoders)
     args = parser.parse_args()

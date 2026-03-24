@@ -26,7 +26,7 @@ no need for labels, segmentation only.
 """
 
 from __future__ import annotations
-from config import DATA_DIR  # ty:ignore[unresolved-import]
+
 import torchvision.datasets
 
 from torch.utils.data import Dataset, DataLoader, random_split  # TODO > split technique up for discussion (consider k fold or CV)
@@ -40,9 +40,8 @@ from typing import Optional, Type
 from torchvision.transforms import v2
 import random
 import torch.nn.functional as nnF
-from tqdm import tqdm
 
-from data.aug import crop_to_multiple, geom_transform_pair  # ty:ignore[unresolved-import]
+from fusionLearning.data.aug import crop_to_multiple, geom_transform_pair
 
 
 from torch.utils.data.distributed import DistributedSampler
@@ -165,6 +164,9 @@ class CUBDataset(Dataset):
 
 # -------------------------------------------------------------------------------------------------------------------------------
 # Vanilla CUB Dataset - no transforms apart from padding to a multiple of 32
+# for base mean / voting inference method benchmarking
+
+
 class vanillaCUBDataset(Dataset):
     def __init__( self, 
                   image_dir : str, 
@@ -210,15 +212,9 @@ class vanillaCUBDataset(Dataset):
         # assert segmentation_tensor.ndim == 2  # [H, W]
 
         return image_tensor, segmentation_tensor, image_filename
-
-
-# -------------------------------------------------------------------------------------------------------------------------------
-
-class CityscapesDataset(Dataset):
     
     
-
-
+    
 # -------------------------------------------------------------------------------------------------------------------------------
 # Cityscapes: raw label ID (0-33) → train ID (0-18), everything else → 255 (ignore)
 _CS_LABEL_MAP = np.full(256, 255, dtype=np.uint8)
@@ -310,23 +306,72 @@ def create_cityscapes_loaders_distributed(root: str,
 
 class ADE20KDataset(Dataset):
     """
-    Wraps torchvision.datasets.ADE20K (torchvision >= 0.13).
+    ADE20K semantic segmentation dataset (MIT Scene Parsing Benchmark).
+    Downloads ADEChallengeData2016.zip from MIT if not already present.
+
     Returns (image [3,H,W] float, mask [H,W] long, filename).
     Mask values: 0-149 = classes, 255 = background/ignore.
-    Drop-in replacement for CUBDataset with multi-class semantics.
+
+    Directory structure expected under root/:
+        ADEChallengeData2016/
+            images/training/      ← ADE_train_*.jpg
+            images/validation/    ← ADE_val_*.jpg
+            annotations/training/ ← ADE_train_*.png
+            annotations/validation/
     """
-    def __init__(self, root: str, split: str = 'train',
-                 gTransforms=None, pTransforms=None):
-        self._inner = torchvision.datasets.ADE20K(root, split=split)
+
+    _URL = "http://data.csail.mit.edu/places/ADEchallenge/ADEChallengeData2016.zip"
+    _SPLIT_MAP = {"train": "training", "val": "validation"}
+
+    def __init__(self, root: str, split: str = "train",
+                 gTransforms=None, pTransforms=None, download: bool = False):
+        split_dir = self._SPLIT_MAP[split]
+        img_dir = os.path.join(root, "ADEChallengeData2016", "images", split_dir)
+        ann_dir = os.path.join(root, "ADEChallengeData2016", "annotations", split_dir)
+
+        if download and not os.path.isdir(img_dir):
+            self._download(root)
+
+        self.image_paths = sorted(get_file_paths(img_dir))
+        self.segmentation_paths = sorted(get_file_paths(ann_dir))
+
+        if len(self.image_paths) == 0:
+            raise FileNotFoundError(
+                f"No ADE20K files found at '{img_dir}'. "
+                "Pass download=True or verify the path."
+            )
+        if len(self.image_paths) != len(self.segmentation_paths):
+            raise ValueError(
+                f"ADE20K {split}: {len(self.image_paths)} images vs "
+                f"{len(self.segmentation_paths)} annotations."
+            )
+
         self.gTransforms = gTransforms
         self.pTransforms = pTransforms
+        print(f"ADE20K ({split}): {len(self.image_paths)} samples")
+
+    @classmethod
+    def _download(cls, root: str) -> None:
+        import urllib.request
+        import zipfile
+        os.makedirs(root, exist_ok=True)
+        zip_path = os.path.join(root, "ADEChallengeData2016.zip")
+        if not os.path.exists(zip_path):
+            print(f"Downloading ADE20K (~900 MB) from MIT server...")
+            urllib.request.urlretrieve(cls._URL, zip_path)
+            print("Download complete.")
+        print("Extracting...")
+        with zipfile.ZipFile(zip_path, "r") as zf:
+            zf.extractall(root)
+        print("Extraction complete.")
 
     def __len__(self):
-        return len(self._inner)
+        return len(self.image_paths)
 
     def __getitem__(self, idx: int):
-        img, target = self._inner[idx]
-        filename = os.path.basename(self._inner.files[idx]['image'])
+        img    = Image.open(self.image_paths[idx]).convert("RGB")
+        target = Image.open(self.segmentation_paths[idx])
+        filename = os.path.basename(self.image_paths[idx])
 
         if self.gTransforms is not None:
             img, target = geom_transform_pair(img, target)
@@ -352,14 +397,15 @@ def create_ade20k_loaders_distributed(root: str,
                                       batch_size: int = 8,
                                       gTransforms=None,
                                       pTransforms=None,
-                                      num_workers: int = 0):
+                                      num_workers: int = 0,
+                                      download: bool = False):
     """
     Returns (train_loader, val_loader, test_loader).
     ADE20K has no test split; test_loader == val_loader.
     Same return signature as create_train_val_test_loaders_distributed.
     """
-    train_dataset = ADE20KDataset(root, 'train', gTransforms, pTransforms)
-    val_dataset   = ADE20KDataset(root, 'val')
+    train_dataset = ADE20KDataset(root, "train", gTransforms, pTransforms, download=download)
+    val_dataset   = ADE20KDataset(root, "val", download=download)
 
     train_sampler = DistributedSampler(train_dataset, shuffle=True)
     val_sampler   = DistributedSampler(val_dataset,   shuffle=False)
@@ -540,38 +586,41 @@ def create_train_val_test_loaders_distributed(image_dir : str,
     train_sampler = DistributedSampler(train_dataset, shuffle=True)
     val_sampler = DistributedSampler(val_dataset, shuffle=False)
     test_sampler = DistributedSampler(test_dataset, shuffle=False)
-    
+
+    _collate = functools.partial(pad_collate, mask_pad_value=0)
+    _pw = num_workers > 0
+
     train_loader = DataLoader(
-        train_dataset, 
-        batch_size=batch_size, 
-        shuffle=False,  # False with sampler
+        train_dataset,
+        batch_size=batch_size,
+        shuffle=False,
         sampler=train_sampler,
-        collate_fn=pad_collate,
-        pin_memory=True,  # Performance optimization
+        collate_fn=_collate,
+        pin_memory=True,
         num_workers=num_workers,
-        persistent_workers=True,
+        persistent_workers=_pw,
     )
-    
+
     val_loader = DataLoader(
-        val_dataset, 
-        batch_size=batch_size, 
+        val_dataset,
+        batch_size=batch_size,
         shuffle=False,
-        sampler=val_sampler,  # Add sampler here too
-        collate_fn=pad_collate,
+        sampler=val_sampler,
+        collate_fn=_collate,
         pin_memory=True,
         num_workers=num_workers,
-        persistent_workers=True,
+        persistent_workers=_pw,
     )
-    
+
     test_loader = DataLoader(
-        test_dataset, 
-        batch_size=batch_size, 
+        test_dataset,
+        batch_size=batch_size,
         shuffle=False,
-        sampler=test_sampler,  # And here
-        collate_fn=pad_collate,
+        sampler=test_sampler,
+        collate_fn=_collate,
         pin_memory=True,
-        num_workers=num_workers, 
-        persistent_workers=True,
+        num_workers=num_workers,
+        persistent_workers=_pw,
     )
     
     return train_loader, val_loader, test_loader

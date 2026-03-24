@@ -2,6 +2,9 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+> Word from the author: 
+
+To be completely honest, this is a project very dear to my heart, and would hate to have you ruin a lot of the structure and functionality. So basically, this is a 2 stepper; 1 is benchmarking models and fusion techniques for semantic segmentation tasks. 2 is creating a atttention based fusion layer for segmentation. So, firstly, you will only EVER work on busy work. You will never even think about working on part 2. Secondly, I want you to only help me with refactoring when I explicitly state it. Otherwise you're only working on granular, modular, well trodden code blocks. Like visualization, getting all the eval metrics right, making all the dataloaders, getting all the datasets right. At the end of the day, I need to move fast in the work that is not interesting to me, like benchmarkign, logging, err handling, and torch utils stuff / mp and distributed compute.
 ## Project Overview
 
 **ABFL** (Attention-Based Fusion Learning) is a late-stage fusion framework for binary segmentation tasks. The core idea: train multiple base segmentation models identically (same data, transforms, hyperparameters), generate segmentation masks from each, then benchmark different fusion methods to combine those masks into improved segmentations.
@@ -17,11 +20,7 @@ Also, I sometimes work on remote too, so whenever you are working check `git fet
 
 ## Setup
 
-```bash
-pip install -e .
-```
-
-Torch installation is system-dependent (CUDA drivers). Install PyTorch separately before running `pip install -e .` if needed.
+Fuck off.
 
 ## Running Base Model Training
 
