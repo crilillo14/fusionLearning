@@ -2,11 +2,16 @@
 Mass train, validate, test, and infer models across all arch-encoder pairs.
 
 Usage:
-    python orchestrator.py <dataset> [<dataset> ...] [--all] [--arch ARCH] [--encoder ENCODER]
+    python orchestrator.py <dataset> [<dataset> ...] [--all] [--sota] [--arch ARCH] [--encoder ENCODER]
+
+Flags:
+    --all   Train all base models: SMP archs × encoders + ViT (encoder-free)
+    --sota  Train SOTA benchmarks: BeiT3, Mask2Former (encoder-free, run once each)
 
 Examples:
     python orchestrator.py CUB --all
-    python orchestrator.py CUB Cityscapes ADE20K --all
+    python orchestrator.py CUB Cityscapes ADE20K VOC --all
+    python orchestrator.py CUB --sota
     python orchestrator.py CUB --arch Unet --encoder resnet50
 """
 
@@ -27,6 +32,8 @@ from fusionLearning.models.distributed import (
     flat_encoders,
     load_skip_set,
     record_failure,
+    SOTA_ARCHS,
+    ENCODER_FREE_ARCHS,
 )
 
 SUPPORTED_DATASETS = ["CUB", "Cityscapes", "ADE20K", "VOC"]
@@ -67,32 +74,62 @@ if __name__ == "__main__":
     parser.add_argument(
         "--all",
         action="store_true",
-        help="Train all arch-encoder pairings for each dataset.",
+        help="Train all base models: SMP archs × encoders + ViT.",
+    )
+    parser.add_argument(
+        "--sota",
+        action="store_true",
+        help="Train SOTA benchmarks: BeiT3 and Mask2Former (run once each, no encoder).",
     )
     parser.add_argument(
         "--arch",
         type=str,
         choices=list(arch_dict.keys()),
-        help="Single architecture to train (use with --encoder).",
+        help="Single architecture to train (use with --encoder, or alone for encoder-free archs).",
     )
     parser.add_argument(
         "--encoder",
         type=str,
-        choices=flat_encoders,
-        help="Single encoder to train (use with --arch).",
+        choices=flat_encoders + ["none"],
+        help="Encoder to use. Pass 'none' for encoder-free archs (ViT, BeiT3, Mask2Former).",
     )
     args = parser.parse_args()
 
-    if not args.all and not (args.arch and args.encoder):
-        parser.error("Specify --all or both --arch and --encoder.")
+    if not args.all and not args.sota and not args.arch:
+        parser.error("Specify --all, --sota, or --arch.")
+    if args.arch and args.arch not in ENCODER_FREE_ARCHS and not args.encoder:
+        parser.error(f"--arch {args.arch} requires --encoder.")
 
     results = {"success": [], "skip": [], "fail": []}
 
     for dataset in args.datasets:
-        if args.all:
-            pairs = [(arch, enc) for arch in arch_dict for enc in flat_encoders]
+        if args.all and args.sota:
+            # Everything: base models + SOTA
+            pairs = []
+            for arch in arch_dict:
+                if arch in ENCODER_FREE_ARCHS:
+                    pairs.append((arch, "none"))
+                else:
+                    for enc in flat_encoders:
+                        pairs.append((arch, enc))
+        elif args.all:
+            # Base models only: SMP × encoders + ViT
+            pairs = []
+            for arch in arch_dict:
+                if arch in SOTA_ARCHS:
+                    continue  # skip SOTA in --all
+                if arch in ENCODER_FREE_ARCHS:
+                    pairs.append((arch, "none"))
+                else:
+                    for enc in flat_encoders:
+                        pairs.append((arch, enc))
+        elif args.sota:
+            # SOTA benchmarks only
+            pairs = [(arch, "none") for arch in SOTA_ARCHS]
         else:
-            pairs = [(args.arch, args.encoder)]
+            # Single arch
+            encoder = args.encoder if args.encoder else "none"
+            pairs = [(args.arch, encoder)]
 
         for arch_name, encoder in pairs:
             key = f"{arch_name}__{encoder}"

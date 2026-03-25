@@ -44,7 +44,9 @@ from fusionLearning.models.test import test_dist
 from fusionLearning.models.vis import visualize_training_process, plot_metrics
 from fusionLearning.models.inference import copy_best_model_to_weights, inference_from_paths
 
-from fusionLearning.models.ViT.vit import ViT
+from fusionLearning.models.SOTA.vit import ViTSegmentation
+from fusionLearning.models.SOTA.beit import BeiT3Segmentation
+from fusionLearning.models.SOTA.m2f import Mask2FormerSegmentation
 # debug_viz determines if logits are outputted when graphing
 
 debug_viz = 0
@@ -53,6 +55,7 @@ debug_viz = 0
 DEBUG_TRAIN = False
 
 arch_dict = {
+    # SMP architectures — instantiated as MODEL(encoder_name, encoder_weights, in_channels, classes)
     "UnetPlusPlus" : smp.UnetPlusPlus,
     "Unet": smp.Unet,
     "FPN": smp.FPN,
@@ -62,7 +65,17 @@ arch_dict = {
     "MAnet": smp.MAnet,
     "Linknet": smp.Linknet,
     "Segformer": smp.Segformer,
+    # SOTA architectures — encoder_name/encoder_weights are absorbed via **kwargs
+    "ViT": ViTSegmentation,
+    "BeiT3": BeiT3Segmentation,
+    "Mask2Former": Mask2FormerSegmentation,
 }
+
+# Models that bypass SMP encoder instantiation (called as MODEL(classes=N))
+ENCODER_FREE_ARCHS = {"ViT", "BeiT3", "Mask2Former"}
+
+# SOTA comparison benchmarks — trained separately, not used as fusion inputs
+SOTA_ARCHS = {"BeiT3", "Mask2Former"}
 
 # Available encoders are listed [here](https://smp.readthedocs.io/en/latest/encoders.html) in SMP's documentation
 # TODO: Read up on MMsegmentation
@@ -191,13 +204,16 @@ def main(rank, world_size, arch_name, encoder, dset):
 
 
 
-        model = MODEL(
-            encoder_name=encoder,  
-            encoder_weights=None,  
-            in_channels=3,  
-            classes=num_classes,
-        ).to(device)
-        
+        if arch_name in ENCODER_FREE_ARCHS:
+            model = MODEL(classes=num_classes).to(device)
+        else:
+            model = MODEL(
+                encoder_name=encoder,
+                encoder_weights=None,
+                in_channels=3,
+                classes=num_classes,
+            ).to(device)
+
         model = DDP(model, device_ids=[rank], find_unused_parameters=True)
 
         optimizer = torch.optim.SGD(model.parameters(),
@@ -268,13 +284,16 @@ def main(rank, world_size, arch_name, encoder, dset):
 
             # Load best model -- EDIT BELOW
 
-            model = MODEL(
-                encoder_name=encoder,  
-                encoder_weights=None,  
-                in_channels=3,  
-                classes=num_classes,
-            ).to(device)
-            
+            if arch_name in ENCODER_FREE_ARCHS:
+                model = MODEL(classes=num_classes).to(device)
+            else:
+                model = MODEL(
+                    encoder_name=encoder,
+                    encoder_weights=None,
+                    in_channels=3,
+                    classes=num_classes,
+                ).to(device)
+
             model = DDP(model, device_ids=[rank], find_unused_parameters=True)
             
             print("Loading from path: ", modelDir + f"weights/best_model.pth")
@@ -283,20 +302,24 @@ def main(rank, world_size, arch_name, encoder, dset):
             model.load_state_dict(state_dict)
             model.to(device)
 
-            test_dist(modelDir, model, test_dataloader, lossFunc, rank)
+            test_dist(modelDir, model, test_dataloader, lossFunc, rank,
+                      num_classes=num_classes)
             print("\nTesting completed successfully.")
             plot_metrics(modelDir)
         else:
-            if rank == 0: 
-                print("Starting training process...") 
+            if rank == 0:
+                print("Starting training process...")
 
+            train_dist(modelDir, model, optimizer, lossFunc,
+                       training_dataloader, validation_dataloader, rank,
+                       num_classes=num_classes,
+                       arch=arch_name, encoder=encoder, dataset=dset)
 
-            train_dist(modelDir, model, optimizer, lossFunc, training_dataloader, validation_dataloader, rank)
-            
-            if rank == 0: 
+            if rank == 0:
                 print("\nStarting testing process...")
-            
-            test_loss = test_dist(modelDir, model, test_dataloader, lossFunc, rank)
+
+            test_loss = test_dist(modelDir, model, test_dataloader, lossFunc, rank,
+                                  num_classes=num_classes)
             if rank == 0: 
                 print(f"\nFinal test loss: {test_loss:.4f}")
                 print("\nTraining and testing completed lsuccessfully.")

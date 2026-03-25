@@ -1,66 +1,69 @@
 """Run testing process"""
 
 import json
+from datetime import datetime
 
 import torch
 import torch.distributed as dist
+from torchmetrics.classification import BinaryJaccardIndex, MulticlassJaccardIndex
 from tqdm import tqdm
-from torchmetrics.segmentation import DiceScore, MeanIoU
 
 
-def test_dist(modelDir, model, test_dataloader, lossFunc, rank):
+def _make_iou(num_classes: int, device):
+    if num_classes == 1:
+        return BinaryJaccardIndex().to(device)
+    return MulticlassJaccardIndex(
+        num_classes=num_classes, ignore_index=255, average="macro"
+    ).to(device)
 
+
+def _preds_targets(logits, masks, num_classes: int):
+    if num_classes == 1:
+        return torch.sigmoid(logits).squeeze(1), masks.squeeze(1).long()
+    return logits, masks.long()
+
+
+def test_dist(modelDir, model, test_dataloader, lossFunc, rank, num_classes: int = 1):
     device = f"cuda:{rank}"
-
     model.eval()
-    tloss = 0.0
 
-    loader = tqdm(test_dataloader, desc=f"[TEST]", leave=False, ncols=80) if rank == 0 else test_dataloader
-    
-    test_dice = DiceScore().to(device)
-    test_iou = MeanIoU().to(device)
+    test_loss = 0.0
+    test_iou  = _make_iou(num_classes, device)
 
+    loader = (
+        tqdm(test_dataloader, desc="[TEST]", leave=False, ncols=80)
+        if rank == 0 else test_dataloader
+    )
 
     with torch.no_grad():
-        for image, segmentation_mask, _ in loader:
-            image = image.to(device)
-            segmentation_mask = segmentation_mask.to(device)
+        for images, masks, _ in loader:
+            images = images.to(device, non_blocking=True)
+            masks  = masks.to(device, non_blocking=True)
+            logits = model(images)
+            test_loss += lossFunc(logits, masks).item()
+            p, t = _preds_targets(logits, masks, num_classes)
+            test_iou.update(p, t)
 
-            logits = model(image)
-            tloss += lossFunc(logits, segmentation_mask).item()
+    avg_test_loss = test_loss / len(test_dataloader)
+    avg_test_miou = test_iou.compute().item()
 
-            # Ensure correct shape and type for ROC AUC
-            probs = torch.sigmoid(logits).reshape(-1)
-            targets = segmentation_mask.reshape(-1)
-            test_dice.update(probs, targets)
-            test_iou.update(probs, targets)
-
-    avg_test_loss = tloss / len(test_dataloader)
-
-    test_loss_tensor = torch.tensor(avg_test_loss).to(device)
-
-    dist.all_reduce(test_loss_tensor, op=dist.ReduceOp.AVG)
-    avg_test_loss = test_loss_tensor.item()
-
-    test_dice_tensor = torch.tensor(test_dice.compute().item()).to(device)
-    dist.all_reduce(test_dice_tensor, op=dist.ReduceOp.AVG)
-    avg_test_dice = test_dice_tensor.item()
-
-    test_iou_tensor = torch.tensor(test_iou.compute().item()).to(device)
-    dist.all_reduce(test_iou_tensor, op=dist.ReduceOp.AVG)
-    avg_test_iou = test_iou_tensor.item()
+    # Reduce across ranks
+    for name, val in [("loss", avg_test_loss), ("miou", avg_test_miou)]:
+        t = torch.tensor(val, device=device)
+        dist.all_reduce(t, op=dist.ReduceOp.AVG)
+        if name == "loss":
+            avg_test_loss = t.item()
+        else:
+            avg_test_miou = t.item()
 
     if rank == 0:
-        
-        test_metrics = {
-            'test_loss': avg_test_loss,
-            'test_dice': avg_test_dice,
-            'test_iou': avg_test_iou
+        result = {
+            "test_loss": round(avg_test_loss, 6),
+            "test_miou": round(avg_test_miou, 6),
+            "tested_at": datetime.now().isoformat(timespec="seconds"),
         }
-        with open(modelDir + 'metrics/test_metrics.json', 'w') as f:
-            json.dump(test_metrics, f)
+        with open(modelDir + "metrics/test_metrics.json", "w") as f:
+            json.dump(result, f, indent=2)
+        print(f"Test | loss={avg_test_loss:.4f}  mIoU={avg_test_miou:.4f}")
 
-        print(f"Test: Loss={avg_test_loss:.4f} | Dice={avg_test_dice:.4f} | IoU={avg_test_iou:.4f}")
-
-
-    return avg_test_loss if rank == 0 else None 
+    return avg_test_loss if rank == 0 else None
