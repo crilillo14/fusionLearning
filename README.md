@@ -1,6 +1,8 @@
 # ABFL
 
-for segmentation tasks
+Code pertaining to Masked Attention for cross model fusion. 
+
+Quick little schema of things:
 
 ```txt
  ____________
@@ -18,8 +20,9 @@ for segmentation tasks
 
 ```
 
-Base Models had to be trained exactly the same way, with the same dataloaders, same transforms, same hyperparameters.
+Will make sure to attach a more detailed diagram soon.
 
+Model architectures benchmarked under similar hyperparameters and comparable network depth and size.
 
 Fusion methods benchmarked: 
 1. Cross model pixel-wise mean (Arithmetic, Geometric, ...)
@@ -33,14 +36,11 @@ For transforms look at ```data\aug.py```. Geometric and photometric augmentation
 
 For dataloaders look at ```data\dataloaders.py```.
 
-For base model implementations look at ```models\*```. Most models come from [SMP](https://smp.readthedocs.io/en/latest/models.html#unetplusplus)
+For base model implementations look at ```models\*```. Most models come from [SMP](https://smp.readthedocs.io/en/latest/models.html#unetplusplus). Some come from Hugging Face.
 
 For specific net configurations, check out ```models/config.py```.
 
+> Some caveats that are annoying, but will take too long to refactor: 
 
-Some caveats that are annoying, but will take too long to refactor: 
-
-Everything is imported from the inner fusionLearning package, and I haven't structured paths and modules as actual importable packages. TODO.
-
-CUB has a lot of custom code for loading and transforms. Other datasets don't. 
+CUB has a lot of custom code for loading and transforms. Pascal VOC, ADE20K, Cityscapes dsets don't.
 
