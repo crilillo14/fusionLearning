@@ -1,6 +1,7 @@
 """Run testing process"""
 
 import json
+import os
 from datetime import datetime
 
 import torch
@@ -62,7 +63,7 @@ def test_dist(modelDir, model, test_dataloader, lossFunc, rank, num_classes: int
             "test_miou": round(avg_test_miou, 6),
             "tested_at": datetime.now().isoformat(timespec="seconds"),
         }
-        with open(modelDir + "metrics/test_metrics.json", "w") as f:
+        with open(os.path.join(modelDir, "metrics", "test_metrics.json"), "w") as f:
             json.dump(result, f, indent=2)
         print(f"Test | loss={avg_test_loss:.4f}  mIoU={avg_test_miou:.4f}")
 

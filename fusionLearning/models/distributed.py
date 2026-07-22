@@ -21,7 +21,6 @@ from fusionLearning.config import MASTER_ADDR, MASTER_PORT, WORLD_SIZE
 import segmentation_models_pytorch as smp
 import torch
 import torch.distributed as dist
-from torchmetrics.classification import BinaryAUROC
 import matplotlib.pyplot as plt
 import numpy as np
 

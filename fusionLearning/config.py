@@ -15,6 +15,15 @@ CITYSCAPES_ROOT = os.path.join(DATA_DIR, "cityscapes")
 ADE20K_ROOT = os.path.join(DATA_DIR, "ADE20K")
 VOC_ROOT = os.path.join(DATA_DIR, "VOC")
 
+TOMPEI_CMMD = os.path.join(DATA_DIR, "TOMPEI-CMMD")
+TOMPEI_CMMD_TASK = os.path.join(TOMPEI_CMMD, "Task_classification")
+TOMPEI_CMMD_TRAIN = os.path.join(TOMPEI_CMMD_TASK, "train")
+TOMPEI_CMMD_TRAIN_LABEL = os.path.join(TOMPEI_CMMD_TASK, "train_label")
+TOMPEI_CMMD_VAL = os.path.join(TOMPEI_CMMD_TASK, "val")
+TOMPEI_CMMD_VAL_LABEL = os.path.join(TOMPEI_CMMD_TASK, "val_label")
+TOMPEI_CMMD_TEST = os.path.join(TOMPEI_CMMD_TASK, "test")
+TOMPEI_CMMD_TEST_LABEL = os.path.join(TOMPEI_CMMD_TASK, "test_label")
+
 # Model, weights and output directories
 LEARNED_WEIGHTS = os.path.join(MODULE_DIR, "weights")
 BASE_MODELS = os.path.join(MODULE_DIR, "models")

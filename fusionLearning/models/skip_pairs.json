@@ -1,0 +1,12 @@
+[
+  "UnetPlusPlus__resnext101",
+  "UnetPlusPlus__resnext50",
+  "UnetPlusPlus__seresnet101",
+  "UnetPlusPlus__seresnet152",
+  "UnetPlusPlus__seresnet18",
+  "UnetPlusPlus__seresnet34",
+  "UnetPlusPlus__seresnet50",
+  "UnetPlusPlus__seresnext101",
+  "UnetPlusPlus__seresnext50",
+  "UnetPlusPlus__vgg16"
+]

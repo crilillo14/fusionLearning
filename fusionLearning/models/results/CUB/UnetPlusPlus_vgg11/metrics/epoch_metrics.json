@@ -1,0 +1,237 @@
+{
+  "meta": {
+    "arch": "UnetPlusPlus",
+    "encoder": "vgg11",
+    "dataset": "CUB",
+    "num_classes": 1,
+    "total_params": 33853137,
+    "started_at": "2026-03-25T19:04:01",
+    "completed_at": "2026-03-25T19:40:49"
+  },
+  "epochs": [
+    {
+      "epoch": 1,
+      "timestamp": "2026-03-25T19:06:23",
+      "duration_s": 141.4,
+      "train_loss": 0.213379,
+      "train_miou": 0.159572,
+      "val_loss": 0.249707,
+      "val_miou": 0.040899,
+      "lr": 0.01,
+      "best": true
+    },
+    {
+      "epoch": 2,
+      "timestamp": "2026-03-25T19:08:12",
+      "duration_s": 109.1,
+      "train_loss": 0.178169,
+      "train_miou": 0.383068,
+      "val_loss": 0.191495,
+      "val_miou": 0.421056,
+      "lr": 0.01,
+      "best": true
+    },
+    {
+      "epoch": 3,
+      "timestamp": "2026-03-25T19:10:01",
+      "duration_s": 108.8,
+      "train_loss": 0.161786,
+      "train_miou": 0.442737,
+      "val_loss": 0.212056,
+      "val_miou": 0.352179,
+      "lr": 0.01,
+      "best": false
+    },
+    {
+      "epoch": 4,
+      "timestamp": "2026-03-25T19:11:50",
+      "duration_s": 109.3,
+      "train_loss": 0.156484,
+      "train_miou": 0.46789,
+      "val_loss": 0.158973,
+      "val_miou": 0.429426,
+      "lr": 0.01,
+      "best": true
+    },
+    {
+      "epoch": 5,
+      "timestamp": "2026-03-25T19:13:39",
+      "duration_s": 109.1,
+      "train_loss": 0.148427,
+      "train_miou": 0.492912,
+      "val_loss": 0.15348,
+      "val_miou": 0.505353,
+      "lr": 0.01,
+      "best": true
+    },
+    {
+      "epoch": 6,
+      "timestamp": "2026-03-25T19:15:28",
+      "duration_s": 109.1,
+      "train_loss": 0.140852,
+      "train_miou": 0.517789,
+      "val_loss": 0.14013,
+      "val_miou": 0.524821,
+      "lr": 0.01,
+      "best": true
+    },
+    {
+      "epoch": 7,
+      "timestamp": "2026-03-25T19:17:17",
+      "duration_s": 108.5,
+      "train_loss": 0.136067,
+      "train_miou": 0.53394,
+      "val_loss": 0.140845,
+      "val_miou": 0.518389,
+      "lr": 0.01,
+      "best": false
+    },
+    {
+      "epoch": 8,
+      "timestamp": "2026-03-25T19:19:06",
+      "duration_s": 109.1,
+      "train_loss": 0.129206,
+      "train_miou": 0.556342,
+      "val_loss": 0.123277,
+      "val_miou": 0.575144,
+      "lr": 0.01,
+      "best": true
+    },
+    {
+      "epoch": 9,
+      "timestamp": "2026-03-25T19:20:54",
+      "duration_s": 108.5,
+      "train_loss": 0.123941,
+      "train_miou": 0.574061,
+      "val_loss": 0.13352,
+      "val_miou": 0.561491,
+      "lr": 0.01,
+      "best": false
+    },
+    {
+      "epoch": 10,
+      "timestamp": "2026-03-25T19:22:43",
+      "duration_s": 108.4,
+      "train_loss": 0.125451,
+      "train_miou": 0.570242,
+      "val_loss": 0.127262,
+      "val_miou": 0.570922,
+      "lr": 0.01,
+      "best": false
+    },
+    {
+      "epoch": 11,
+      "timestamp": "2026-03-25T19:24:32",
+      "duration_s": 109.0,
+      "train_loss": 0.121122,
+      "train_miou": 0.585135,
+      "val_loss": 0.119955,
+      "val_miou": 0.598424,
+      "lr": 0.01,
+      "best": true
+    },
+    {
+      "epoch": 12,
+      "timestamp": "2026-03-25T19:26:20",
+      "duration_s": 108.3,
+      "train_loss": 0.120209,
+      "train_miou": 0.587634,
+      "val_loss": 0.121114,
+      "val_miou": 0.583927,
+      "lr": 0.01,
+      "best": false
+    },
+    {
+      "epoch": 13,
+      "timestamp": "2026-03-25T19:28:09",
+      "duration_s": 109.0,
+      "train_loss": 0.113469,
+      "train_miou": 0.609584,
+      "val_loss": 0.110778,
+      "val_miou": 0.627396,
+      "lr": 0.01,
+      "best": true
+    },
+    {
+      "epoch": 14,
+      "timestamp": "2026-03-25T19:29:57",
+      "duration_s": 108.4,
+      "train_loss": 0.110809,
+      "train_miou": 0.615836,
+      "val_loss": 0.111468,
+      "val_miou": 0.616517,
+      "lr": 0.01,
+      "best": false
+    },
+    {
+      "epoch": 15,
+      "timestamp": "2026-03-25T19:31:46",
+      "duration_s": 108.9,
+      "train_loss": 0.107387,
+      "train_miou": 0.626616,
+      "val_loss": 0.104315,
+      "val_miou": 0.642828,
+      "lr": 0.01,
+      "best": true
+    },
+    {
+      "epoch": 16,
+      "timestamp": "2026-03-25T19:33:35",
+      "duration_s": 108.3,
+      "train_loss": 0.108565,
+      "train_miou": 0.623789,
+      "val_loss": 0.10675,
+      "val_miou": 0.633949,
+      "lr": 0.01,
+      "best": false
+    },
+    {
+      "epoch": 17,
+      "timestamp": "2026-03-25T19:35:23",
+      "duration_s": 108.5,
+      "train_loss": 0.103225,
+      "train_miou": 0.639946,
+      "val_loss": 0.118124,
+      "val_miou": 0.600683,
+      "lr": 0.01,
+      "best": false
+    },
+    {
+      "epoch": 18,
+      "timestamp": "2026-03-25T19:37:11",
+      "duration_s": 108.5,
+      "train_loss": 0.099124,
+      "train_miou": 0.653506,
+      "val_loss": 0.103073,
+      "val_miou": 0.641192,
+      "lr": 0.01,
+      "best": false
+    },
+    {
+      "epoch": 19,
+      "timestamp": "2026-03-25T19:39:00",
+      "duration_s": 109.0,
+      "train_loss": 0.097896,
+      "train_miou": 0.657802,
+      "val_loss": 0.099891,
+      "val_miou": 0.660485,
+      "lr": 0.01,
+      "best": true
+    },
+    {
+      "epoch": 20,
+      "timestamp": "2026-03-25T19:40:49",
+      "duration_s": 109.0,
+      "train_loss": 0.09459,
+      "train_miou": 0.66576,
+      "val_loss": 0.088678,
+      "val_miou": 0.686679,
+      "lr": 0.01,
+      "best": true
+    }
+  ],
+  "best": {
+    "epoch": 20,
+    "val_miou": 0.686679
+  }
+}

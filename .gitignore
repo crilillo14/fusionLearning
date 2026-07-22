@@ -5,6 +5,9 @@ segmentations/
 images/
 
 cityscapes/
+ADE20K/
+VOC/
+TOMPEI-CMMD/
 
 
 fusionLearning/data/cityscapes/

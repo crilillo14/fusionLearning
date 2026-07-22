@@ -1,0 +1,12 @@
+
+============================================================
+'train_miou'
+Traceback (most recent call last):
+  File "/home/cal390/fusionLearning/fusionLearning/models/distributed.py", line 307, in main
+    plot_metrics(modelDir)
+  File "/home/cal390/fusionLearning/fusionLearning/models/vis.py", line 49, in plot_metrics
+    train_miou = [d["train_miou"] for d in epochs_data]
+  File "/home/cal390/fusionLearning/fusionLearning/models/vis.py", line 49, in <listcomp>
+    train_miou = [d["train_miou"] for d in epochs_data]
+KeyError: 'train_miou'
+
