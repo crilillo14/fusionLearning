@@ -185,3 +185,72 @@ def gradcam_from_paths_cls(model, modelDir, test_dataloader, timm_name, family, 
     plt.tight_layout()
     plt.savefig(os.path.join(modelDir, "figures", f"gradcam_{timm_name}.png"), dpi=110)
     plt.close(fig)
+
+
+def gradcam_summary_cls(model, modelDir, test_dataloader, timm_name, family, n=20):
+    """
+    Saves a single n-sample grid (default 20) to modelDir/figures/gradcam_summary.png,
+    one Grad-CAM overlay per sample annotated with true label, predicted label, and
+    confidence (probability of the predicted class, so always in [0.5, 1]) - green
+    border on correct predictions, red on incorrect. Unlike gradcam_from_paths_cls
+    (per-stage columns for a handful of samples), this uses a single representative
+    layer - the deepest stage for cnn_staged families, the final block for
+    transformer_final - so a larger sample count fits in one readable figure.
+    """
+    strategy = gradcam_strategy(family)
+    device = next(model.parameters()).device
+    model.eval()
+
+    reshape_transform = None
+    if strategy == "cnn_staged":
+        layers = _resolve_stage_layers(model, timm_name)
+        if not layers:
+            print(f"gradcam_summary_cls: no target layers resolved for {timm_name}, skipping.")
+            return
+        target_layer = layers[-1][1]
+    else:
+        layers, reshape_transform = _resolve_final_layer(model, family)
+        target_layer = layers[-1][1]
+
+    dataset = test_dataloader.dataset
+    indices = _sample_indices(dataset, n)
+    n = len(indices)
+    cols = 5
+    rows = (n + cols - 1) // cols
+    fig, axes = plt.subplots(rows, cols, figsize=(cols * 3, rows * 3.4), squeeze=False)
+    axes = axes.reshape(-1)
+
+    # Grad-CAM needs gradients w.r.t. activations, so this must run outside
+    # torch.no_grad() even though the model is in .eval() mode.
+    with GradCAM(model=model, target_layers=[target_layer], reshape_transform=reshape_transform) as cam:
+        for ax_idx, idx in enumerate(indices):
+            image, label, filename = dataset[idx]
+            input_tensor = image.unsqueeze(0).to(device)
+            with torch.no_grad():
+                prob = torch.sigmoid(model(input_tensor)).item()
+            pred = 1 if prob >= 0.5 else 0
+            true = int(label.item())
+            correct = pred == true
+            confidence = prob if pred == 1 else 1 - prob
+
+            target = [BinaryClassifierOutputTarget(pred)]
+            grayscale_cam = cam(input_tensor=input_tensor, targets=target)[0]
+            rgb_img = image.permute(1, 2, 0).cpu().numpy()
+            overlay = show_cam_on_image(rgb_img, grayscale_cam, use_rgb=True)
+
+            ax = axes[ax_idx]
+            ax.imshow(overlay)
+            color = "seagreen" if correct else "firebrick"
+            ax.set_title(f"pred: {LABEL_NAMES[pred]} ({confidence:.2f})\ntrue: {LABEL_NAMES[true]}",
+                          fontsize=9, color=color)
+            for spine in ax.spines.values():
+                spine.set_edgecolor(color)
+                spine.set_linewidth(3)
+            ax.set_xticks([]); ax.set_yticks([])
+
+    for ax in axes[len(indices):]:
+        ax.axis("off")
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(modelDir, "figures", "gradcam_summary.png"), dpi=130)
+    plt.close(fig)

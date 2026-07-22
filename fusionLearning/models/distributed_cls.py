@@ -31,8 +31,10 @@ from fusionLearning.data.tompei_dataloader import create_tompei_cmmd_loaders_dis
 from fusionLearning.models.roster_cls import MODEL_CONFIGS, get_config
 from fusionLearning.models.train_cls import train_dist_cls
 from fusionLearning.models.test_cls import test_dist_cls
-from fusionLearning.models.vis_cls import plot_metrics_cls
-from fusionLearning.models.inference_cls import inference_from_paths_cls, gradcam_from_paths_cls
+from fusionLearning.models.vis_cls import plot_metrics_cls, plot_extended_metrics_cls
+from fusionLearning.models.inference_cls import (
+    inference_from_paths_cls, gradcam_from_paths_cls, gradcam_summary_cls,
+)
 import fusionLearning.models.distributed as _seg_distributed
 from fusionLearning.models.distributed import ddp_setup
 from fusionLearning.models.inference import copy_best_model_to_weights
@@ -151,9 +153,11 @@ def main(rank, world_size, variant_id, dset="TOMPEI-CMMD"):
 
         if rank == 0:
             plot_metrics_cls(modelDir)
+            plot_extended_metrics_cls(modelDir)
             eval_model = model.module if isinstance(model, DDP) else model
             inference_from_paths_cls(eval_model, modelDir, test_dataloader, n=20)
             gradcam_from_paths_cls(eval_model, modelDir, test_dataloader, timm_name, family, n=8)
+            gradcam_summary_cls(eval_model, modelDir, test_dataloader, timm_name, family, n=20)
             print(f"\n\t * Results and visualizations saved under {modelDir} * ")
 
         copy_best_model_to_weights(modelDir)

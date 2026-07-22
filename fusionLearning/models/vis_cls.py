@@ -1,9 +1,25 @@
 import json
+import math
 import os
 
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
+
+
+def _prf1_mcc_from_cm(cm) -> dict:
+    """precision/recall/F1/MCC from a [[tn, fp], [fn, tp]] confusion matrix."""
+    (tn, fp), (fn, tp) = cm
+    tn, fp, fn, tp = float(tn), float(fp), float(fn), float(tp)
+
+    precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+    recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+    f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
+
+    mcc_denom = math.sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
+    mcc = (tp * tn - fp * fn) / mcc_denom if mcc_denom > 0 else 0.0
+
+    return {"precision": precision, "recall": recall, "f1": f1, "mcc": mcc}
 
 
 def _plot_confusion_matrix(ax, cm, title):
@@ -117,3 +133,66 @@ def plot_metrics_cls(modelDir):
     plt.tight_layout()
     plt.savefig(os.path.join(modelDir, "figures", "confusion_matrix.png"), dpi=120)
     plt.close(fig2)
+
+
+def plot_extended_metrics_cls(modelDir):
+    """
+    Reads epoch_metrics.json and derives precision/recall/F1/MCC per epoch from the
+    train_cm/val_cm already saved by train_dist_cls (no re-evaluation needed). Saves
+    extended_metrics_cls.png to modelDir/figures/ - 5 stacked subplots (loss, F1,
+    precision, recall, MCC), each with train vs val curves over epochs.
+    """
+    matplotlib.use("Agg")
+
+    epoch_path = os.path.join(modelDir, "metrics", "epoch_metrics.json")
+    try:
+        with open(epoch_path) as f:
+            log = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        print(f"No valid metrics found at {epoch_path}; skipping extended metrics plot.")
+        return
+
+    epochs_data = log.get("epochs", log) if isinstance(log, dict) else log
+    if not epochs_data:
+        return
+
+    epochs = [d["epoch"] for d in epochs_data]
+    train_loss = [d["train_loss"] for d in epochs_data]
+    val_loss = [d["val_loss"] for d in epochs_data]
+
+    train_stats = [_prf1_mcc_from_cm(d["train_cm"]) for d in epochs_data]
+    val_stats = [_prf1_mcc_from_cm(d["val_cm"]) for d in epochs_data]
+
+    best_epoch = log.get("best", {}).get("epoch") if isinstance(log, dict) else None
+
+    panels = [
+        ("Loss", train_loss, val_loss, None),
+        ("F1", [s["f1"] for s in train_stats], [s["f1"] for s in val_stats], (0, 1)),
+        ("Precision", [s["precision"] for s in train_stats], [s["precision"] for s in val_stats], (0, 1)),
+        ("Recall", [s["recall"] for s in train_stats], [s["recall"] for s in val_stats], (0, 1)),
+        ("MCC", [s["mcc"] for s in train_stats], [s["mcc"] for s in val_stats], (-1, 1)),
+    ]
+
+    fig, axes = plt.subplots(len(panels), 1, figsize=(10, 4 * len(panels)), sharex=True)
+
+    for ax, (name, train_vals, val_vals, ylim) in zip(axes, panels):
+        ax.plot(epochs, train_vals, color="steelblue", label=f"Train {name}")
+        ax.plot(epochs, val_vals, color="tomato", label=f"Val {name}")
+        if best_epoch is not None:
+            ax.axvline(best_epoch, color="gray", linestyle=":", linewidth=1)
+        if ylim is not None:
+            ax.set_ylim(*ylim)
+        ax.set_ylabel(name)
+        ax.legend(); ax.grid(True, alpha=0.4)
+
+    axes[-1].set_xlabel("Epoch")
+
+    meta = log.get("meta", {}) if isinstance(log, dict) else {}
+    title_parts = [meta.get("arch", ""), meta.get("dataset", "")]
+    title = "  ·  ".join(p for p in title_parts if p)
+    if title:
+        fig.suptitle(title, fontsize=11)
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(modelDir, "figures", "extended_metrics_cls.png"), dpi=120)
+    plt.close(fig)
