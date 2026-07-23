@@ -1,7 +1,7 @@
 """
 Mass train, validate, test, and infer classification models across the
-TOMPEI-CMMD 100-config roster (10 timm architecture families x 10 variants
-each - see roster_cls.py).
+TOMPEI-CMMD 120-config roster (10 timm architecture families x 4 depth tiers
+x 3 resolution tiers - see roster_cls.py).
 
 Usage:
     python orchestrator_cls.py [--all] [--family FAMILY] [--model VARIANT_ID]
@@ -54,11 +54,11 @@ def run_variant(variant_id: str, dataset: str = DATASET) -> bool:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Mass training across the TOMPEI-CMMD 100-config classification roster"
+        description="Mass training across the TOMPEI-CMMD 120-config classification roster"
     )
-    parser.add_argument("--all", action="store_true", help="Train all 100 configs.")
+    parser.add_argument("--all", action="store_true", help="Train all 120 configs.")
     parser.add_argument("--family", type=str, choices=FAMILIES,
-                         help="Train all 10 variants within one architecture family.")
+                         help="Train all 12 variants within one architecture family.")
     parser.add_argument("--model", type=str,
                          choices=[c["variant_id"] for c in MODEL_CONFIGS],
                          help="Train a single variant_id.")

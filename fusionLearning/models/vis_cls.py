@@ -1,25 +1,11 @@
 import json
-import math
 import os
 
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 
-
-def _prf1_mcc_from_cm(cm) -> dict:
-    """precision/recall/F1/MCC from a [[tn, fp], [fn, tp]] confusion matrix."""
-    (tn, fp), (fn, tp) = cm
-    tn, fp, fn, tp = float(tn), float(fp), float(fn), float(tp)
-
-    precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
-    recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
-    f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
-
-    mcc_denom = math.sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
-    mcc = (tp * tn - fp * fn) / mcc_denom if mcc_denom > 0 else 0.0
-
-    return {"precision": precision, "recall": recall, "f1": f1, "mcc": mcc}
+from fusionLearning.models.train_cls import _extended_metrics_from_cm
 
 
 def _plot_confusion_matrix(ax, cm, title):
@@ -101,6 +87,9 @@ def plot_metrics_cls(modelDir):
     if test_data is not None:
         ax_acc.axhline(test_data["test_acc"], color="seagreen", linestyle="--", linewidth=1.5,
                         label=f"Test acc ({test_data['test_acc']:.4f})")
+        if "test_auc" in test_data:
+            ax_acc.axhline(test_data["test_auc"], color="darkorchid", linestyle=":", linewidth=1.5,
+                            label=f"Test AUC ({test_data['test_auc']:.4f})")
     if best_epoch is not None:
         ax_acc.axvline(best_epoch, color="gray", linestyle=":", linewidth=1)
     ax_acc.set_ylabel("Accuracy"); ax_acc.set_xlabel("Epoch")
@@ -160,16 +149,24 @@ def plot_extended_metrics_cls(modelDir):
     train_loss = [d["train_loss"] for d in epochs_data]
     val_loss = [d["val_loss"] for d in epochs_data]
 
-    train_stats = [_prf1_mcc_from_cm(d["train_cm"]) for d in epochs_data]
-    val_stats = [_prf1_mcc_from_cm(d["val_cm"]) for d in epochs_data]
+    train_stats = [_extended_metrics_from_cm(d["train_cm"]) for d in epochs_data]
+    val_stats = [_extended_metrics_from_cm(d["val_cm"]) for d in epochs_data]
 
     best_epoch = log.get("best", {}).get("epoch") if isinstance(log, dict) else None
 
     panels = [
         ("Loss", train_loss, val_loss, None),
+    ]
+    # train_auc/val_auc are computed live (BinaryAUROC), not derived from the CM -
+    # only present in epoch_metrics.json written after the AUC pivot, so guard for
+    # older/archived logs that predate it.
+    if all("train_auc" in d and "val_auc" in d for d in epochs_data):
+        panels.append(("AUC", [d["train_auc"] for d in epochs_data], [d["val_auc"] for d in epochs_data], (0, 1)))
+    panels += [
         ("F1", [s["f1"] for s in train_stats], [s["f1"] for s in val_stats], (0, 1)),
         ("Precision", [s["precision"] for s in train_stats], [s["precision"] for s in val_stats], (0, 1)),
-        ("Recall", [s["recall"] for s in train_stats], [s["recall"] for s in val_stats], (0, 1)),
+        ("Sensitivity (Recall)", [s["sensitivity"] for s in train_stats], [s["sensitivity"] for s in val_stats], (0, 1)),
+        ("Specificity", [s["specificity"] for s in train_stats], [s["specificity"] for s in val_stats], (0, 1)),
         ("MCC", [s["mcc"] for s in train_stats], [s["mcc"] for s in val_stats], (-1, 1)),
     ]
 

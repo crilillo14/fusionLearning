@@ -1,147 +1,161 @@
 """
 Base-model roster for TOMPEI-CMMD binary classification benchmarking.
 
-10 timm architecture families x 10 variants each = 100 configs, for later use as
-diverse base-model predictions feeding into fusion methods (fusionLearning/fusion/).
+10 architecture families x 4 depth tiers x 3 resolution tiers = 120 configs.
 
-Variant axes per family:
-  - encoder capacity: distinct timm model names spanning small -> large within the family
-    (verified importable + carrying default ImageNet-pretrained weights via
-    `timm.list_models(pretrained=True)` as of timm==1.0.25)
-  - hyperparameters: peak LR decreases ~3%/variant as capacity grows (standard fine-tuning
-    practice - larger pretrained backbones get a gentler peak LR), batch size is tiered by
-    parameter count so a fixed 500x500x3-input batch roughly fits typical GPU memory
-    (unmeasured guess - tune against the actual remote GPU, see notes/tompei_cmmd_classification_spec.md)
-  - densenet only has 5 distinct architectures with default pretrained weights in timm's
-    registry, so its 10 slots are 5 archs x 2 explicit LR settings each - a genuine
-    LR-sensitivity comparison rather than padding.
+This replaces the previous 100-config roster (10 families x 10 capacity/LR
+variants, all at a single fixed 512x512 resolution). The new grid varies two
+axes deliberately instead of one:
 
-family -> grad-cam strategy (see inference_cls.py):
-  "cnn_staged"        - CNN backbones with spatially-meaningful per-stage feature maps
-  "transformer_final"  - patch/window transformers; only the final block is spatially
-                          interpretable via reshape_transform
+  - depth tier (tiny/small/medium/large): a real timm checkpoint per family
+    per tier, chosen to stay in a *realistic in-house* capacity range (train
+    set is only 2892 images) rather than reaching for each family's largest
+    available pretrained checkpoint - e.g. ViT stops at vit_base (85.8M), not
+    vit_large (303M); ConvNeXt stops at convnext_small (49.5M), not
+    convnext_large (196M). Transformer/hybrid families (Swin, MaxViT, CoAtNet)
+    don't have meaningfully smaller-than-~15-30M pretrained checkpoints, so
+    their "tiny" tier sits higher in absolute params than CNN families' tiny
+    tier - an inherent property of those architectures, not a modeling choice.
+
+  - resolution tier (lo/mid/hi = 384/512/768px, see consts.RESOLUTION_TIERS_CLS):
+    lesion regions are small relative to the ~2000x2000 native mammogram, so
+    downsampling too aggressively risks losing the signal entirely. Sized
+    against confirmed remote hardware (4x NVIDIA L40S, 48GB each) - real
+    memory profiling on that hardware is still needed before trusting the
+    large-depth x hi-res combos not to OOM (batch sizes below are best-guess
+    estimates, same caveat the previous roster carried for its batch sizes).
+
+Naming: variant_id = f"{family}_{depth_char}{res_digit}", e.g. "resnet_S2"
+(small depth, mid res), "maxvit_L3" (large depth, hi res). depth_char in
+{T,S,M,L}, res_digit in {1,2,3} for {lo,mid,hi} - kept as a digit (not a
+letter) specifically to avoid collision with the depth-tier letters.
+
+Architecture note: classic Inception-v3 (and Inception-ResNet-v2, InceptionNeXt)
+were all considered for the 10th slot and rejected - Inception-v3's timm
+checkpoints are all the *same* architecture with different training recipes
+(no size variants), and every alternative that does provide 4 real capacity
+points turned out to require mixing genuinely different architectures per
+depth tier, which breaks the controlled-variable premise of the depth axis
+(every other family holds architecture fixed and varies only scale - this one
+must too). Xception is used instead: a single, consistent, pure-CNN
+architecture (no attention, no token mixing) built entirely on depthwise
+separable convolutions - a spatial (depthwise) conv followed by a pointwise
+1x1 "cross-channel" conv - with a genuine single-architecture depth ladder in
+timm (legacy_xception -> xception41 -> xception65 -> xception71: 20.8/24.9/
+37.9/40.3M), scaling purely via middle-flow block count, same as every other
+family's depth tiers.
+
+family -> grad-cam strategy (see inference_cls.py, unchanged by this pivot):
+  "cnn_staged"        - spatially-meaningful per-stage feature maps via
+                         features_only=True (works for any architecture that
+                         keeps a spatial grid through its stages - includes
+                         the hybrid conv+windowed-attention families MaxViT/
+                         CoAtNet, not just pure CNNs; unverified against a
+                         real trained checkpoint, flag if gradcam_from_paths_cls
+                         fails for these two families and fall back to
+                         "transformer_final" if so)
+  "transformer_final"  - only the final block is spatially interpretable
+                          (pure patch/window transformers - ViT, Swin)
 """
 
 from __future__ import annotations
 
+from fusionLearning.models.consts import RESOLUTION_TIERS_CLS
+
 GRADCAM_FAMILY_TYPE: dict[str, str] = {
     "resnet": "cnn_staged",
-    "resnext": "cnn_staged",
-    "seresnet": "cnn_staged",
     "densenet": "cnn_staged",
+    "xception": "cnn_staged",
     "efficientnet": "cnn_staged",
-    "mobilenet": "cnn_staged",
-    "regnet": "cnn_staged",
     "convnext": "cnn_staged",
+    "regnet": "cnn_staged",
     "vit": "transformer_final",
     "swin": "transformer_final",
+    "maxvit": "cnn_staged",
+    "coatnet": "cnn_staged",
 }
 
-MODEL_CONFIGS: list[dict] = [
-    {"variant_id": "resnet_00", "family": "resnet", "timm_name": "resnet18", "params_m": 11.18, "lr": 0.01, "batch_size": 16},
-    {"variant_id": "resnet_01", "family": "resnet", "timm_name": "resnet26", "params_m": 13.95, "lr": 0.0097, "batch_size": 16},
-    {"variant_id": "resnet_02", "family": "resnet", "timm_name": "resnet34", "params_m": 21.29, "lr": 0.0094, "batch_size": 16},
-    {"variant_id": "resnet_03", "family": "resnet", "timm_name": "resnet50", "params_m": 23.51, "lr": 0.0091, "batch_size": 16},
-    {"variant_id": "resnet_04", "family": "resnet", "timm_name": "resnet50d", "params_m": 23.53, "lr": 0.0088, "batch_size": 16},
-    {"variant_id": "resnet_05", "family": "resnet", "timm_name": "resnet101", "params_m": 42.5, "lr": 0.0085, "batch_size": 10},
-    {"variant_id": "resnet_06", "family": "resnet", "timm_name": "resnet101d", "params_m": 42.52, "lr": 0.0082, "batch_size": 10},
-    {"variant_id": "resnet_07", "family": "resnet", "timm_name": "resnet152", "params_m": 58.15, "lr": 0.0079, "batch_size": 10},
-    {"variant_id": "resnet_08", "family": "resnet", "timm_name": "resnet152d", "params_m": 58.17, "lr": 0.0076, "batch_size": 10},
-    {"variant_id": "resnet_09", "family": "resnet", "timm_name": "resnet200d", "params_m": 62.65, "lr": 0.0073, "batch_size": 6},
-    {"variant_id": "resnext_00", "family": "resnext", "timm_name": "resnext26ts", "params_m": 8.25, "lr": 0.01, "batch_size": 24},
-    {"variant_id": "resnext_01", "family": "resnext", "timm_name": "resnext50_32x4d", "params_m": 22.98, "lr": 0.0097, "batch_size": 16},
-    {"variant_id": "resnext_02", "family": "resnext", "timm_name": "resnext50d_32x4d", "params_m": 23.0, "lr": 0.0094, "batch_size": 16},
-    {"variant_id": "resnext_03", "family": "resnext", "timm_name": "cspresnext50", "params_m": 18.52, "lr": 0.0091, "batch_size": 16},
-    {"variant_id": "resnext_04", "family": "resnext", "timm_name": "eca_resnext26ts", "params_m": 8.25, "lr": 0.0088, "batch_size": 24},
-    {"variant_id": "resnext_05", "family": "resnext", "timm_name": "gcresnext50ts", "params_m": 13.62, "lr": 0.0085, "batch_size": 16},
-    {"variant_id": "resnext_06", "family": "resnext", "timm_name": "skresnext50_32x4d", "params_m": 25.43, "lr": 0.0082, "batch_size": 16},
-    {"variant_id": "resnext_07", "family": "resnext", "timm_name": "resnext101_32x4d", "params_m": 42.13, "lr": 0.0079, "batch_size": 10},
-    {"variant_id": "resnext_08", "family": "resnext", "timm_name": "resnext101_32x8d", "params_m": 86.74, "lr": 0.0076, "batch_size": 6},
-    {"variant_id": "resnext_09", "family": "resnext", "timm_name": "resnext101_64x4d", "params_m": 81.41, "lr": 0.0073, "batch_size": 6},
-    {"variant_id": "seresnet_00", "family": "seresnet", "timm_name": "legacy_seresnet18", "params_m": 11.27, "lr": 0.01, "batch_size": 16},
-    {"variant_id": "seresnet_01", "family": "seresnet", "timm_name": "legacy_seresnet34", "params_m": 21.45, "lr": 0.0097, "batch_size": 16},
-    {"variant_id": "seresnet_02", "family": "seresnet", "timm_name": "legacy_seresnet50", "params_m": 26.04, "lr": 0.0094, "batch_size": 16},
-    {"variant_id": "seresnet_03", "family": "seresnet", "timm_name": "legacy_seresnet101", "params_m": 47.28, "lr": 0.0091, "batch_size": 10},
-    {"variant_id": "seresnet_04", "family": "seresnet", "timm_name": "legacy_seresnet152", "params_m": 64.77, "lr": 0.0088, "batch_size": 6},
-    {"variant_id": "seresnet_05", "family": "seresnet", "timm_name": "legacy_senet154", "params_m": 113.04, "lr": 0.0085, "batch_size": 6},
-    {"variant_id": "seresnet_06", "family": "seresnet", "timm_name": "ecaresnet26t", "params_m": 13.96, "lr": 0.0082, "batch_size": 16},
-    {"variant_id": "seresnet_07", "family": "seresnet", "timm_name": "ecaresnet50d", "params_m": 23.53, "lr": 0.0079, "batch_size": 16},
-    {"variant_id": "seresnet_08", "family": "seresnet", "timm_name": "ecaresnet50t", "params_m": 23.53, "lr": 0.0076, "batch_size": 16},
-    {"variant_id": "seresnet_09", "family": "seresnet", "timm_name": "ecaresnet101d", "params_m": 42.52, "lr": 0.0073, "batch_size": 10},
-    {"variant_id": "densenet_00", "family": "densenet", "timm_name": "densenet121", "params_m": 6.95, "lr": 0.01, "batch_size": 24},
-    {"variant_id": "densenet_01", "family": "densenet", "timm_name": "densenet121", "params_m": 6.95, "lr": 0.00485, "batch_size": 24},
-    {"variant_id": "densenet_02", "family": "densenet", "timm_name": "densenet161", "params_m": 26.47, "lr": 0.0094, "batch_size": 16},
-    {"variant_id": "densenet_03", "family": "densenet", "timm_name": "densenet161", "params_m": 26.47, "lr": 0.00455, "batch_size": 16},
-    {"variant_id": "densenet_04", "family": "densenet", "timm_name": "densenet169", "params_m": 12.49, "lr": 0.0088, "batch_size": 16},
-    {"variant_id": "densenet_05", "family": "densenet", "timm_name": "densenet169", "params_m": 12.49, "lr": 0.00425, "batch_size": 16},
-    {"variant_id": "densenet_06", "family": "densenet", "timm_name": "densenet201", "params_m": 18.09, "lr": 0.0082, "batch_size": 16},
-    {"variant_id": "densenet_07", "family": "densenet", "timm_name": "densenet201", "params_m": 18.09, "lr": 0.00395, "batch_size": 16},
-    {"variant_id": "densenet_08", "family": "densenet", "timm_name": "densenetblur121d", "params_m": 6.97, "lr": 0.0076, "batch_size": 24},
-    {"variant_id": "densenet_09", "family": "densenet", "timm_name": "densenetblur121d", "params_m": 6.97, "lr": 0.00365, "batch_size": 24},
-    {"variant_id": "efficientnet_00", "family": "efficientnet", "timm_name": "efficientnet_b0", "params_m": 4.01, "lr": 0.01, "batch_size": 24},
-    {"variant_id": "efficientnet_01", "family": "efficientnet", "timm_name": "efficientnet_b1", "params_m": 6.51, "lr": 0.0097, "batch_size": 24},
-    {"variant_id": "efficientnet_02", "family": "efficientnet", "timm_name": "efficientnet_b2", "params_m": 7.7, "lr": 0.0094, "batch_size": 24},
-    {"variant_id": "efficientnet_03", "family": "efficientnet", "timm_name": "efficientnet_b3", "params_m": 10.7, "lr": 0.0091, "batch_size": 16},
-    {"variant_id": "efficientnet_04", "family": "efficientnet", "timm_name": "efficientnet_b4", "params_m": 17.55, "lr": 0.0088, "batch_size": 16},
-    {"variant_id": "efficientnet_05", "family": "efficientnet", "timm_name": "efficientnet_b5", "params_m": 28.34, "lr": 0.0085, "batch_size": 16},
-    {"variant_id": "efficientnet_06", "family": "efficientnet", "timm_name": "tf_efficientnet_b6", "params_m": 40.74, "lr": 0.0082, "batch_size": 10},
-    {"variant_id": "efficientnet_07", "family": "efficientnet", "timm_name": "tf_efficientnet_b7", "params_m": 63.79, "lr": 0.0079, "batch_size": 6},
-    {"variant_id": "efficientnet_08", "family": "efficientnet", "timm_name": "efficientnetv2_rw_s", "params_m": 22.15, "lr": 0.0076, "batch_size": 16},
-    {"variant_id": "efficientnet_09", "family": "efficientnet", "timm_name": "efficientnetv2_rw_m", "params_m": 51.09, "lr": 0.0073, "batch_size": 10},
-    {"variant_id": "mobilenet_00", "family": "mobilenet", "timm_name": "mobilenetv2_050", "params_m": 0.69, "lr": 0.01, "batch_size": 24},
-    {"variant_id": "mobilenet_01", "family": "mobilenet", "timm_name": "mobilenetv2_100", "params_m": 2.23, "lr": 0.0097, "batch_size": 24},
-    {"variant_id": "mobilenet_02", "family": "mobilenet", "timm_name": "mobilenetv2_140", "params_m": 4.32, "lr": 0.0094, "batch_size": 24},
-    {"variant_id": "mobilenet_03", "family": "mobilenet", "timm_name": "mobilenetv3_small_050", "params_m": 0.57, "lr": 0.0091, "batch_size": 24},
-    {"variant_id": "mobilenet_04", "family": "mobilenet", "timm_name": "mobilenetv3_small_100", "params_m": 1.52, "lr": 0.0088, "batch_size": 24},
-    {"variant_id": "mobilenet_05", "family": "mobilenet", "timm_name": "mobilenetv3_large_100", "params_m": 4.2, "lr": 0.0085, "batch_size": 24},
-    {"variant_id": "mobilenet_06", "family": "mobilenet", "timm_name": "mobilenetv3_large_150d", "params_m": 13.34, "lr": 0.0082, "batch_size": 16},
-    {"variant_id": "mobilenet_07", "family": "mobilenet", "timm_name": "mobilenetv4_conv_small", "params_m": 2.49, "lr": 0.0079, "batch_size": 24},
-    {"variant_id": "mobilenet_08", "family": "mobilenet", "timm_name": "mobilenetv4_conv_medium", "params_m": 8.44, "lr": 0.0076, "batch_size": 24},
-    {"variant_id": "mobilenet_09", "family": "mobilenet", "timm_name": "mobilenetv4_conv_large", "params_m": 31.31, "lr": 0.0073, "batch_size": 10},
-    {"variant_id": "regnet_00", "family": "regnet", "timm_name": "regnety_002", "params_m": 2.79, "lr": 0.01, "batch_size": 24},
-    {"variant_id": "regnet_01", "family": "regnet", "timm_name": "regnety_004", "params_m": 3.9, "lr": 0.0097, "batch_size": 24},
-    {"variant_id": "regnet_02", "family": "regnet", "timm_name": "regnety_008", "params_m": 5.49, "lr": 0.0094, "batch_size": 24},
-    {"variant_id": "regnet_03", "family": "regnet", "timm_name": "regnety_016", "params_m": 10.31, "lr": 0.0091, "batch_size": 16},
-    {"variant_id": "regnet_04", "family": "regnet", "timm_name": "regnety_032", "params_m": 17.92, "lr": 0.0088, "batch_size": 16},
-    {"variant_id": "regnet_05", "family": "regnet", "timm_name": "regnety_040", "params_m": 19.56, "lr": 0.0085, "batch_size": 16},
-    {"variant_id": "regnet_06", "family": "regnet", "timm_name": "regnety_064", "params_m": 29.29, "lr": 0.0082, "batch_size": 16},
-    {"variant_id": "regnet_07", "family": "regnet", "timm_name": "regnety_080", "params_m": 37.17, "lr": 0.0079, "batch_size": 10},
-    {"variant_id": "regnet_08", "family": "regnet", "timm_name": "regnety_120", "params_m": 49.58, "lr": 0.0076, "batch_size": 10},
-    {"variant_id": "regnet_09", "family": "regnet", "timm_name": "regnety_160", "params_m": 80.57, "lr": 0.0073, "batch_size": 6},
-    {"variant_id": "convnext_00", "family": "convnext", "timm_name": "convnext_atto", "params_m": 3.37, "lr": 0.01, "batch_size": 24},
-    {"variant_id": "convnext_01", "family": "convnext", "timm_name": "convnext_femto", "params_m": 4.83, "lr": 0.0097, "batch_size": 24},
-    {"variant_id": "convnext_02", "family": "convnext", "timm_name": "convnext_pico", "params_m": 8.53, "lr": 0.0094, "batch_size": 24},
-    {"variant_id": "convnext_03", "family": "convnext", "timm_name": "convnext_nano", "params_m": 14.95, "lr": 0.0091, "batch_size": 16},
-    {"variant_id": "convnext_04", "family": "convnext", "timm_name": "convnext_tiny", "params_m": 27.82, "lr": 0.0088, "batch_size": 16},
-    {"variant_id": "convnext_05", "family": "convnext", "timm_name": "convnext_small", "params_m": 49.46, "lr": 0.0085, "batch_size": 10},
-    {"variant_id": "convnext_06", "family": "convnext", "timm_name": "convnext_base", "params_m": 87.57, "lr": 0.0082, "batch_size": 6},
-    {"variant_id": "convnext_07", "family": "convnext", "timm_name": "convnext_large", "params_m": 196.23, "lr": 0.0079, "batch_size": 4},
-    {"variant_id": "convnext_08", "family": "convnext", "timm_name": "convnextv2_tiny", "params_m": 27.87, "lr": 0.0076, "batch_size": 16},
-    {"variant_id": "convnext_09", "family": "convnext", "timm_name": "convnextv2_base", "params_m": 87.69, "lr": 0.0073, "batch_size": 6},
-    {"variant_id": "vit_00", "family": "vit", "timm_name": "vit_tiny_patch16_224", "params_m": 5.52, "lr": 0.01, "batch_size": 24},
-    {"variant_id": "vit_01", "family": "vit", "timm_name": "vit_small_patch16_224", "params_m": 21.67, "lr": 0.0097, "batch_size": 16},
-    {"variant_id": "vit_02", "family": "vit", "timm_name": "vit_small_patch32_224", "params_m": 22.49, "lr": 0.0094, "batch_size": 16},
-    {"variant_id": "vit_03", "family": "vit", "timm_name": "vit_base_patch16_224", "params_m": 85.8, "lr": 0.0091, "batch_size": 6},
-    {"variant_id": "vit_04", "family": "vit", "timm_name": "vit_base_patch32_224", "params_m": 87.46, "lr": 0.0088, "batch_size": 6},
-    {"variant_id": "vit_05", "family": "vit", "timm_name": "vit_base_patch16_224_miil", "params_m": 85.77, "lr": 0.0085, "batch_size": 6},
-    {"variant_id": "vit_06", "family": "vit", "timm_name": "vit_large_patch16_224", "params_m": 303.3, "lr": 0.0082, "batch_size": 4},
-    {"variant_id": "vit_07", "family": "vit", "timm_name": "vit_medium_patch16_gap_240", "params_m": 38.33, "lr": 0.0079, "batch_size": 10},
-    {"variant_id": "vit_08", "family": "vit", "timm_name": "vit_relpos_small_patch16_224", "params_m": 21.6, "lr": 0.0076, "batch_size": 16},
-    {"variant_id": "vit_09", "family": "vit", "timm_name": "vit_relpos_medium_patch16_224", "params_m": 38.23, "lr": 0.0073, "batch_size": 10},
-    {"variant_id": "swin_00", "family": "swin", "timm_name": "swin_tiny_patch4_window7_224", "params_m": 27.52, "lr": 0.01, "batch_size": 16},
-    {"variant_id": "swin_01", "family": "swin", "timm_name": "swin_small_patch4_window7_224", "params_m": 48.84, "lr": 0.0097, "batch_size": 10},
-    {"variant_id": "swin_02", "family": "swin", "timm_name": "swin_base_patch4_window7_224", "params_m": 86.74, "lr": 0.0094, "batch_size": 6},
-    {"variant_id": "swin_03", "family": "swin", "timm_name": "swin_base_patch4_window12_384", "params_m": 86.88, "lr": 0.0091, "batch_size": 6},
-    {"variant_id": "swin_04", "family": "swin", "timm_name": "swin_large_patch4_window7_224", "params_m": 195.0, "lr": 0.0088, "batch_size": 4},
-    {"variant_id": "swin_05", "family": "swin", "timm_name": "swin_large_patch4_window12_384", "params_m": 195.2, "lr": 0.0085, "batch_size": 4},
-    {"variant_id": "swin_06", "family": "swin", "timm_name": "swin_s3_tiny_224", "params_m": 27.56, "lr": 0.0082, "batch_size": 16},
-    {"variant_id": "swin_07", "family": "swin", "timm_name": "swin_s3_small_224", "params_m": 48.97, "lr": 0.0079, "batch_size": 10},
-    {"variant_id": "swin_08", "family": "swin", "timm_name": "swin_s3_base_224", "params_m": 70.36, "lr": 0.0076, "batch_size": 6},
-    {"variant_id": "swin_09", "family": "swin", "timm_name": "swin_tiny_patch4_window7_224", "params_m": 27.52, "lr": 0.00365, "batch_size": 16},
-]
+# depth tier -> real timm checkpoint name, one per family, in tiny->large order.
+FAMILY_TIMM_NAMES: dict[str, list[str]] = {
+    "resnet":         ["resnet18", "resnet34", "resnet50", "resnet101"],
+    "densenet":       ["densenet121", "densenet169", "densenet201", "densenet161"],
+    "xception":       ["legacy_xception", "xception41", "xception65", "xception71"],
+    "efficientnet":   ["efficientnet_b0", "efficientnet_b2", "efficientnet_b4", "efficientnet_b5"],
+    "convnext":       ["convnext_atto", "convnext_nano", "convnext_tiny", "convnext_small"],
+    "regnet":         ["regnety_004", "regnety_016", "regnety_032", "regnety_080"],
+    "vit":            ["vit_tiny_patch16_224", "vit_small_patch16_224", "vit_medium_patch16_gap_240", "vit_base_patch16_224"],
+    "swin":           ["swin_tiny_patch4_window7_224", "swin_small_patch4_window7_224", "swin_s3_base_224", "swin_base_patch4_window7_224"],
+    "maxvit":         ["maxvit_nano_rw_256", "maxvit_tiny_tf_224", "maxvit_small_tf_224", "maxvit_base_tf_224"],
+    "coatnet":        ["coatnet_nano_rw_224", "coatnet_0_rw_224", "coatnet_1_rw_224", "coatnet_2_rw_224"],
+}
 
+# Approximate params_m per family per depth tier (verified via
+# `timm.create_model(name, num_classes=1)` param counts at authoring time -
+# for reference/reporting only, not consumed by training code).
+FAMILY_PARAMS_M: dict[str, list[float]] = {
+    "resnet":         [11.18, 21.29, 23.51, 42.50],
+    "densenet":       [6.95, 12.49, 18.09, 26.47],
+    "xception":       [20.81, 24.92, 37.87, 40.29],
+    "efficientnet":   [4.01, 7.70, 17.55, 28.34],
+    "convnext":       [3.37, 14.95, 27.82, 49.46],
+    "regnet":         [3.90, 10.31, 17.92, 37.17],
+    "vit":            [5.52, 21.67, 38.33, 85.80],
+    "swin":           [27.52, 48.84, 70.36, 86.74],
+    "maxvit":         [14.94, 30.40, 68.16, 118.70],
+    "coatnet":        [14.63, 26.67, 40.95, 72.84],
+}
+
+DEPTH_TIERS: list[str] = ["tiny", "small", "medium", "large"]
+DEPTH_CHAR: dict[str, str] = {"tiny": "T", "small": "S", "medium": "M", "large": "L"}
+
+RESOLUTION_TIERS: list[str] = ["lo", "mid", "hi"]
+RESOLUTION_DIGIT: dict[str, str] = {"lo": "1", "mid": "2", "hi": "3"}
+
+# Base per-GPU batch size at mid (512px) resolution, by depth tier - reuses the
+# previous roster's capacity-tiering precedent (24/16/10/6). Scaled by a
+# resolution multiplier below (activation memory scales roughly with pixel
+# count, i.e. ~(mid/res)^2) and rounded to a clean number. UNMEASURED - tune
+# against the actual remote L40S boxes before a full 120-model unattended run.
+BASE_BATCH_SIZE_BY_DEPTH: dict[str, int] = {"tiny": 24, "small": 16, "medium": 10, "large": 6}
+
+BATCH_SIZE_TABLE: dict[str, dict[str, int]] = {
+    "tiny":   {"lo": 32, "mid": 24, "hi": 10},
+    "small":  {"lo": 24, "mid": 16, "hi": 8},
+    "medium": {"lo": 16, "mid": 10, "hi": 6},
+    "large":  {"lo": 10, "mid": 6, "hi": 4},
+}
+
+# Peak LR by depth tier only (not resolution) - larger pretrained backbones get
+# a gentler peak LR for fine-tuning, same rationale as the previous roster.
+LR_BY_DEPTH: dict[str, float] = {"tiny": 0.01, "small": 0.008, "medium": 0.006, "large": 0.004}
+
+FAMILIES: list[str] = sorted(FAMILY_TIMM_NAMES.keys())
+
+
+def _build_model_configs() -> list[dict]:
+    configs = []
+    for family in FAMILIES:
+        timm_names = FAMILY_TIMM_NAMES[family]
+        params = FAMILY_PARAMS_M[family]
+        for depth_idx, depth_tier in enumerate(DEPTH_TIERS):
+            for res_tier in RESOLUTION_TIERS:
+                variant_id = f"{family}_{DEPTH_CHAR[depth_tier]}{RESOLUTION_DIGIT[res_tier]}"
+                configs.append({
+                    "variant_id": variant_id,
+                    "family": family,
+                    "timm_name": timm_names[depth_idx],
+                    "depth_tier": depth_tier,
+                    "resolution_tier": res_tier,
+                    "resolution_px": RESOLUTION_TIERS_CLS[res_tier],
+                    "params_m": params[depth_idx],
+                    "lr": LR_BY_DEPTH[depth_tier],
+                    "batch_size": BATCH_SIZE_TABLE[depth_tier][res_tier],
+                })
+    return configs
+
+
+MODEL_CONFIGS: list[dict] = _build_model_configs()
 MODEL_CONFIGS_BY_ID: dict[str, dict] = {c["variant_id"]: c for c in MODEL_CONFIGS}
-FAMILIES: list[str] = sorted({c["family"] for c in MODEL_CONFIGS})
 
 
 def get_config(variant_id: str) -> dict:
@@ -155,9 +169,10 @@ def gradcam_strategy(family: str) -> str:
 
 
 if __name__ == "__main__":
-    assert len(MODEL_CONFIGS) == 100
+    assert len(MODEL_CONFIGS) == 120, f"expected 120 configs, got {len(MODEL_CONFIGS)}"
     assert len(FAMILIES) == 10
     for fam in FAMILIES:
         n = sum(1 for c in MODEL_CONFIGS if c["family"] == fam)
-        assert n == 10, f"{fam} has {n} variants, expected 10"
+        assert n == 12, f"{fam} has {n} variants, expected 12"
+    assert len(MODEL_CONFIGS_BY_ID) == 120, "variant_id collision detected"
     print(f"{len(MODEL_CONFIGS)} configs across {len(FAMILIES)} families, all OK")

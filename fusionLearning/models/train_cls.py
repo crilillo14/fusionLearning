@@ -1,3 +1,4 @@
+import math
 import os
 import json
 import time
@@ -6,7 +7,7 @@ from datetime import datetime
 import torch
 from torch.utils.data import DataLoader
 import torch.distributed as dist
-from torchmetrics.classification import BinaryConfusionMatrix
+from torchmetrics.classification import BinaryConfusionMatrix, BinaryAUROC
 from tqdm import tqdm
 
 DEBUG_TRAIN_CLS = False
@@ -25,16 +26,41 @@ def _accuracy_from_cm(cm: torch.Tensor) -> float:
     return correct / total
 
 
+def _extended_metrics_from_cm(cm) -> dict:
+    """
+    precision/recall(=sensitivity)/specificity/F1/MCC from a [[tn, fp], [fn, tp]]
+    confusion matrix (nested list or tensor) - the metrics your PI's guidelines
+    name explicitly (AUC/ACC/sensitivity/specificity/F1) beyond what a plain
+    accuracy/AUC pair covers. Shared by test_cls.py (test set) and vis_cls.py
+    (train/val plotting) so the definitions can't drift between the two.
+    """
+    if hasattr(cm, "tolist"):
+        cm = cm.tolist()
+    (tn, fp), (fn, tp) = cm
+    tn, fp, fn, tp = float(tn), float(fp), float(fn), float(tp)
+
+    precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+    recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0  # sensitivity
+    specificity = tn / (tn + fp) if (tn + fp) > 0 else 0.0
+    f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
+
+    mcc_denom = math.sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
+    mcc = (tp * tn - fp * fn) / mcc_denom if mcc_denom > 0 else 0.0
+
+    return {
+        "precision": precision,
+        "recall": recall,
+        "sensitivity": recall,
+        "specificity": specificity,
+        "f1": f1,
+        "mcc": mcc,
+    }
+
+
 def _reduce_avg(val: float, device) -> float:
     t = torch.tensor(val, device=device)
     dist.all_reduce(t, op=dist.ReduceOp.AVG)
     return t.item()
-
-
-def _reduce_sum_cm(cm: torch.Tensor, device) -> torch.Tensor:
-    t = cm.to(device)
-    dist.all_reduce(t, op=dist.ReduceOp.SUM)
-    return t
 
 
 def train_dist_cls(
@@ -49,7 +75,15 @@ def train_dist_cls(
     maxepochs: int,
     arch: str = "",
     dataset: str = "TOMPEI-CMMD",
+    config: dict | None = None,
 ):
+    """
+    `config`, if given, is the full roster_cls.py config dict for this variant
+    (variant_id/family/timm_name/depth_tier/resolution_tier/resolution_px/lr/
+    batch_size/params_m) - recorded verbatim into meta so each model's full
+    hyperparameter configuration lives alongside its results, not only in the
+    roster module.
+    """
     device = f"cuda:{rank}"
 
     if rank == 0:
@@ -63,6 +97,7 @@ def train_dist_cls(
                 "dataset": dataset,
                 "num_classes": 1,
                 "total_params": sum(p.numel() for p in model.parameters()),
+                "config": config or {},
                 "started_at": datetime.now().isoformat(timespec="seconds"),
                 "completed_at": None,
             },
@@ -82,6 +117,7 @@ def train_dist_cls(
         model.train()
         train_loss = 0.0
         train_cm = BinaryConfusionMatrix().to(device)
+        train_auroc = BinaryAUROC().to(device)
 
         loader = (
             tqdm(training_dataloader, desc=f"Epoch {epoch}/{maxepochs} [Train]",
@@ -99,6 +135,7 @@ def train_dist_cls(
             train_loss += loss.item()
             preds = torch.sigmoid(logits.detach())
             train_cm.update(preds.reshape(-1), labels.reshape(-1).long())
+            train_auroc.update(preds.reshape(-1), labels.reshape(-1).long())
 
         scheduler.step()
 
@@ -108,6 +145,7 @@ def train_dist_cls(
         model.eval()
         val_loss = 0.0
         val_cm = BinaryConfusionMatrix().to(device)
+        val_auroc = BinaryAUROC().to(device)
 
         vloader = (
             tqdm(validation_dataloader, desc=f"Epoch {epoch}/{maxepochs} [Val]",
@@ -122,14 +160,21 @@ def train_dist_cls(
                 val_loss += lossFunc(logits, labels).item()
                 preds = torch.sigmoid(logits)
                 val_cm.update(preds.reshape(-1), labels.reshape(-1).long())
+                val_auroc.update(preds.reshape(-1), labels.reshape(-1).long())
 
         avg_val_loss = val_loss / len(validation_dataloader)
 
         # ── Reduce across ranks ───────────────────────────────────────────────
+        # BinaryConfusionMatrix defaults to sync_on_compute=True, so .compute()
+        # already all-gathers and sums state across every DDP rank internally -
+        # each rank gets back the same globally-aggregated matrix. Only the plain
+        # float losses (not torchmetrics-tracked) need a manual reduction.
         avg_train_loss = _reduce_avg(avg_train_loss, device)
         avg_val_loss = _reduce_avg(avg_val_loss, device)
-        train_cm_t = _reduce_sum_cm(train_cm.compute(), device)
-        val_cm_t = _reduce_sum_cm(val_cm.compute(), device)
+        train_cm_t = train_cm.compute()
+        val_cm_t = val_cm.compute()
+        train_auc = train_auroc.compute().item()
+        val_auc = val_auroc.compute().item()
 
         is_best = avg_val_loss < best_val_loss
 
@@ -147,9 +192,11 @@ def train_dist_cls(
                 "duration_s": round(time.time() - t0, 1),
                 "train_loss": round(avg_train_loss, 6),
                 "train_acc": round(_accuracy_from_cm(train_cm_t), 6),
+                "train_auc": round(train_auc, 6),
                 "train_cm": _cm_to_nested(train_cm_t),
                 "val_loss": round(avg_val_loss, 6),
                 "val_acc": round(_accuracy_from_cm(val_cm_t), 6),
+                "val_auc": round(val_auc, 6),
                 "val_cm": _cm_to_nested(val_cm_t),
                 "lr": round(scheduler.get_last_lr()[0], 8),
                 "best": is_best,
@@ -164,8 +211,8 @@ def train_dist_cls(
 
             print(
                 f"Epoch {epoch:2d} | "
-                f"Train  loss={avg_train_loss:.4f}  acc={record['train_acc']:.4f} | "
-                f"Val    loss={avg_val_loss:.4f}  acc={record['val_acc']:.4f}"
+                f"Train  loss={avg_train_loss:.4f}  acc={record['train_acc']:.4f}  auc={train_auc:.4f} | "
+                f"Val    loss={avg_val_loss:.4f}  acc={record['val_acc']:.4f}  auc={val_auc:.4f}"
                 + ("  ✓" if is_best else "")
             )
 

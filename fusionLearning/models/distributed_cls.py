@@ -74,22 +74,26 @@ def record_failure_cls(variant_id: str, error: str) -> None:
         json.dump(sorted(skip), f, indent=2)
 
 
-def create_classifier(timm_name: str, family: str, num_classes: int = 1) -> torch.nn.Module:
+def create_classifier(timm_name: str, family: str, resolution: int, num_classes: int = 1) -> torch.nn.Module:
     """
-    Instantiates a timm classifier for INPUT_SIZE_TOMPEI_CMMD x INPUT_SIZE_TOMPEI_CMMD
-    input. ViT accepts non-native resolution via dynamic_img_size (position embeddings
-    interpolated at forward time); a handful of ViT variants (e.g. relpos family) don't
-    support that kwarg and need img_size fixed at construction instead. Swin always
-    needs img_size fixed at construction (no dynamic-resolution support in timm).
+    Instantiates a timm classifier for `resolution` x `resolution` input (per-variant,
+    from roster_cls.py's depth x resolution grid). ViT accepts non-native resolution via
+    dynamic_img_size (position embeddings interpolated at forward time); a handful of ViT
+    variants (e.g. relpos family) don't support that kwarg and need img_size fixed at
+    construction instead. Swin/MaxViT/CoAtNet don't support dynamic_img_size at all, but
+    (confirmed empirically against timm==1.0.28) accept an explicit img_size= kwarg at
+    construction for arbitrary resolutions - including ones not evenly divisible by
+    patch_size*window_size - without erroring, so no manual window-size arithmetic is
+    needed for these windowed-attention families.
     """
     kwargs = dict(pretrained=True, num_classes=num_classes, in_chans=3)
     if family == "vit":
         try:
             return timm.create_model(timm_name, dynamic_img_size=True, **kwargs)
         except TypeError:
-            return timm.create_model(timm_name, img_size=INPUT_SIZE_TOMPEI_CMMD, **kwargs)
-    if family == "swin":
-        return timm.create_model(timm_name, img_size=INPUT_SIZE_TOMPEI_CMMD, **kwargs)
+            return timm.create_model(timm_name, img_size=resolution, **kwargs)
+    if family in ("swin", "maxvit", "coatnet"):
+        return timm.create_model(timm_name, img_size=resolution, **kwargs)
     return timm.create_model(timm_name, **kwargs)
 
 
@@ -104,11 +108,11 @@ def main(rank, world_size, variant_id, dset="TOMPEI-CMMD"):
 
         cfg = get_config(variant_id)
         timm_name, family = cfg["timm_name"], cfg["family"]
-        lr, batch_size = cfg["lr"], cfg["batch_size"]
+        lr, batch_size, resolution = cfg["lr"], cfg["batch_size"], cfg["resolution_px"]
 
         num_classes = dataset_metadata_cls[dset]["num_classes"]
 
-        model = create_classifier(timm_name, family, num_classes=num_classes).to(device)
+        model = create_classifier(timm_name, family, resolution, num_classes=num_classes).to(device)
         model = DDP(model, device_ids=[rank], find_unused_parameters=True)
 
         optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=MOMENTUM)
@@ -120,6 +124,7 @@ def main(rank, world_size, variant_id, dset="TOMPEI-CMMD"):
             TOMPEI_CMMD_VAL, TOMPEI_CMMD_VAL_LABEL,
             TOMPEI_CMMD_TEST, TOMPEI_CMMD_TEST_LABEL,
             batch_size=batch_size,
+            resolution=resolution,
             num_workers=4,
         )
 
@@ -129,6 +134,14 @@ def main(rank, world_size, variant_id, dset="TOMPEI-CMMD"):
         os.makedirs(modelDir + "metrics", exist_ok=True)
         os.makedirs(modelDir + "figures", exist_ok=True)
         os.makedirs(modelDir + "weights", exist_ok=True)
+
+        if rank == 0:
+            # Full roster config saved standalone (not only inside epoch_metrics.json's
+            # meta block) so it's readable without a training run ever happening -
+            # e.g. for the aggregation script, or a model reloaded from an already-trained
+            # checkpoint (skips train_dist_cls entirely, see `trained` branch below).
+            with open(os.path.join(modelDir, "metrics", "config.json"), "w") as f:
+                json.dump(cfg, f, indent=2)
 
         trained = os.path.exists(modelDir + "weights/best_model.pth")
 
@@ -144,7 +157,8 @@ def main(rank, world_size, variant_id, dset="TOMPEI-CMMD"):
                 print("Starting training process...")
             train_dist_cls(modelDir, model, optimizer, scheduler, lossFunc,
                             training_dataloader, validation_dataloader, rank,
-                            maxepochs=MAXEPOCHS_CLS, arch=timm_name, dataset=dset)
+                            maxepochs=MAXEPOCHS_CLS, arch=timm_name, dataset=dset,
+                            config=cfg)
             if rank == 0:
                 print("\nStarting testing process...")
             test_loss = test_dist_cls(modelDir, model, test_dataloader, lossFunc, rank)
@@ -167,6 +181,14 @@ def main(rank, world_size, variant_id, dset="TOMPEI-CMMD"):
             record_failure_cls(variant_id, str(e))
         print(f"[rank {rank}] Error: {e}")
         traceback.print_exc()
+        # Re-raise (every rank, not just rank 0) so mp.spawn's join=True actually
+        # notices the failure - previously this was swallowed here, so mp.spawn saw
+        # every rank "return normally" regardless of what happened, and callers
+        # (launch_training_cls / orchestrator_cls.run_variant) had no way to tell a
+        # totally-failed run from a real success. mp.spawn already terminates the
+        # sibling processes when any one of them raises, so this doesn't introduce a
+        # new hang risk - it makes the existing fail-fast behavior actually reachable.
+        raise
 
     finally:
         if dist.is_initialized():

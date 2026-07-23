@@ -79,13 +79,15 @@ class TOMPEICMMDDataset(Dataset):
     """
     Binary lesion/normal classification over TOMPEI-CMMD mammography DICOMs.
 
-    Returns (image_tensor [3, INPUT_SIZE_TOMPEI_CMMD, INPUT_SIZE_TOMPEI_CMMD] float32,
+    Returns (image_tensor [3, resolution, resolution] float32,
              label_tensor [1] float32, filename).
     """
 
-    def __init__(self, image_dir: str, label_dir: str, train: bool = False):
+    def __init__(self, image_dir: str, label_dir: str, resolution: int = INPUT_SIZE_TOMPEI_CMMD,
+                 train: bool = False):
         self.image_paths = get_dcm_paths(image_dir)
         self.label_dir = label_dir
+        self.resolution = resolution
         self.train = train
 
         stems = [os.path.splitext(os.path.basename(p))[0] for p in self.image_paths]
@@ -108,7 +110,7 @@ class TOMPEICMMDDataset(Dataset):
         image_tensor = torch.from_numpy(arr).unsqueeze(0)  # [1, H, W]
         image_tensor = v2.functional.resize(
             image_tensor,
-            [INPUT_SIZE_TOMPEI_CMMD, INPUT_SIZE_TOMPEI_CMMD],
+            [self.resolution, self.resolution],
             interpolation=InterpolationMode.BICUBIC,
         )
 
@@ -133,17 +135,19 @@ def create_tompei_cmmd_loaders_distributed(
     test_dir: str,
     test_label_dir: str,
     batch_size: int = 16,
+    resolution: int = INPUT_SIZE_TOMPEI_CMMD,
     num_workers: int = 4,
 ):
     """
     Builds train/val/test DataLoaders directly from TOMPEI-CMMD's pre-made,
     patient-disjoint split directories. All images are resized to a fixed square
-    size before batching, so (unlike the segmentation loaders) no pad_collate is
-    needed - default collation is used.
+    size (per `resolution`, varies per roster variant - see roster_cls.py's
+    depth x resolution grid) before batching, so (unlike the segmentation
+    loaders) no pad_collate is needed - default collation is used.
     """
-    train_dataset = TOMPEICMMDDataset(train_dir, train_label_dir, train=True)
-    val_dataset = TOMPEICMMDDataset(val_dir, val_label_dir, train=False)
-    test_dataset = TOMPEICMMDDataset(test_dir, test_label_dir, train=False)
+    train_dataset = TOMPEICMMDDataset(train_dir, train_label_dir, resolution=resolution, train=True)
+    val_dataset = TOMPEICMMDDataset(val_dir, val_label_dir, resolution=resolution, train=False)
+    test_dataset = TOMPEICMMDDataset(test_dir, test_label_dir, resolution=resolution, train=False)
 
     train_sampler = DistributedSampler(train_dataset, shuffle=True)
     val_sampler = DistributedSampler(val_dataset, shuffle=False)
