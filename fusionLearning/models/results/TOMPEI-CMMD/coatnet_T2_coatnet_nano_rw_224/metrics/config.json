@@ -1,0 +1,11 @@
+{
+  "variant_id": "coatnet_T2",
+  "family": "coatnet",
+  "timm_name": "coatnet_nano_rw_224",
+  "depth_tier": "tiny",
+  "resolution_tier": "mid",
+  "resolution_px": 512,
+  "params_m": 14.63,
+  "lr": 0.01,
+  "batch_size": 24
+}

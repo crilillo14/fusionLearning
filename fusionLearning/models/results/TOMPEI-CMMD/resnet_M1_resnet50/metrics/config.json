@@ -1,0 +1,11 @@
+{
+  "variant_id": "resnet_M1",
+  "family": "resnet",
+  "timm_name": "resnet50",
+  "depth_tier": "medium",
+  "resolution_tier": "lo",
+  "resolution_px": 384,
+  "params_m": 23.51,
+  "lr": 0.006,
+  "batch_size": 16
+}

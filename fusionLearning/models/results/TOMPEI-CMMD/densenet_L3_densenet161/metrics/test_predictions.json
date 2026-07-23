@@ -1,0 +1,4974 @@
+{
+  "n_samples": 828,
+  "tested_at": "2026-07-23T09:04:54",
+  "predictions": [
+    {
+      "filename": "D1-0003_07-18-2011-NA-NA-25491_1.000000-NA-24283_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.329489,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0003_07-18-2011-NA-NA-25491_1.000000-NA-24283_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.246011,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0007_07-18-2010-NA-NA-58107_1.000000-NA-32740_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.405368,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0007_07-18-2010-NA-NA-58107_1.000000-NA-32740_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.352425,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0013_07-18-2011-NA-NA-47246_1.000000-NA-95456_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.58399,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0013_07-18-2011-NA-NA-47246_1.000000-NA-95456_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.662988,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0017_07-18-2010-NA-NA-55122_1.000000-NA-46048_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.544613,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0017_07-18-2010-NA-NA-55122_1.000000-NA-46048_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.32145,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0020_07-18-2010-NA-NA-83233_1.000000-NA-90171_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.554848,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0020_07-18-2010-NA-NA-83233_1.000000-NA-90171_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.628021,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0021_07-18-2010-NA-NA-45484_1.000000-NA-37894_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.636781,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0021_07-18-2010-NA-NA-45484_1.000000-NA-37894_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.685141,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0022_07-18-2010-NA-NA-75525_1.000000-NA-91472_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.527473,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0022_07-18-2010-NA-NA-75525_1.000000-NA-91472_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.612746,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0023_07-18-2010-NA-NA-42892_1.000000-NA-76639_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.596244,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0023_07-18-2010-NA-NA-42892_1.000000-NA-76639_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.324056,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0035_07-18-2011-NA-NA-29334_1.000000-NA-69702_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.476895,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0035_07-18-2011-NA-NA-29334_1.000000-NA-69702_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.756814,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0037_07-18-2011-NA-NA-19827_1.000000-NA-14308_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.708259,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0037_07-18-2011-NA-NA-19827_1.000000-NA-14308_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.603625,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0053_07-18-2010-NA-NA-94559_1.000000-NA-60987_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.92221,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0053_07-18-2010-NA-NA-94559_1.000000-NA-60987_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.98952,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0087_07-18-2010-NA-NA-34194_1.000000-NA-99089_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.519583,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0087_07-18-2010-NA-NA-34194_1.000000-NA-99089_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.553366,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0091_07-18-2010-NA-NA-16258_1.000000-NA-24895_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.994822,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0091_07-18-2010-NA-NA-16258_1.000000-NA-24895_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.84953,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0116_07-18-2010-NA-NA-99871_1.000000-NA-35730_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.580766,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0116_07-18-2010-NA-NA-99871_1.000000-NA-35730_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.739684,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0120_07-18-2010-NA-NA-14691_1.000000-NA-78940_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.757411,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0120_07-18-2010-NA-NA-14691_1.000000-NA-78940_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.86453,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0122_07-18-2010-NA-NA-41816_1.000000-NA-47933_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.797573,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0122_07-18-2010-NA-NA-41816_1.000000-NA-47933_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.712086,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0130_07-18-2011-NA-NA-49480_1.000000-NA-73016_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.692232,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0130_07-18-2011-NA-NA-49480_1.000000-NA-73016_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.757971,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0134_07-18-2011-NA-NA-45187_1.000000-NA-47266_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.407688,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0134_07-18-2011-NA-NA-45187_1.000000-NA-47266_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.461983,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0140_07-18-2011-NA-NA-40281_1.000000-NA-35664_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.776883,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0140_07-18-2011-NA-NA-40281_1.000000-NA-35664_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.931164,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0143_07-18-2011-NA-NA-57718_1.000000-NA-17569_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.975952,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0143_07-18-2011-NA-NA-57718_1.000000-NA-17569_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.879296,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0149_07-18-2011-NA-NA-41952_1.000000-NA-82301_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.658242,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0149_07-18-2011-NA-NA-41952_1.000000-NA-82301_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.688943,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0161_07-18-2011-NA-NA-01867_1.000000-NA-09056_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.684891,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0161_07-18-2011-NA-NA-01867_1.000000-NA-09056_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.681629,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0162_07-18-2011-NA-NA-60749_1.000000-NA-35996_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.988977,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0162_07-18-2011-NA-NA-60749_1.000000-NA-35996_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.5351,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0168_07-18-2011-NA-NA-65570_1.000000-NA-52416_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.706631,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0168_07-18-2011-NA-NA-65570_1.000000-NA-52416_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.883265,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0181_07-18-2011-NA-NA-39704_1.000000-NA-04350_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.401247,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0181_07-18-2011-NA-NA-39704_1.000000-NA-04350_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.211019,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0188_07-18-2011-NA-NA-72259_1.000000-NA-33711_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.406007,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0188_07-18-2011-NA-NA-72259_1.000000-NA-33711_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.686218,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0202_07-18-2011-NA-NA-26294_1.000000-NA-31072_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.543651,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0202_07-18-2011-NA-NA-26294_1.000000-NA-31072_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.790455,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0203_07-18-2011-NA-NA-11294_1.000000-NA-20468_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.434423,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0203_07-18-2011-NA-NA-11294_1.000000-NA-20468_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.892744,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0204_07-18-2011-NA-NA-26332_1.000000-NA-75911_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.977145,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0204_07-18-2011-NA-NA-26332_1.000000-NA-75911_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.93698,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0220_07-18-2011-NA-NA-13435_1.000000-NA-85780_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.610677,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0220_07-18-2011-NA-NA-13435_1.000000-NA-85780_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.757565,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0223_07-18-2011-NA-NA-84904_1.000000-NA-00922_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.709271,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0223_07-18-2011-NA-NA-84904_1.000000-NA-00922_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.887803,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0232_07-17-2012-NA-NA-80869_1.000000-NA-63102_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.579686,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0232_07-17-2012-NA-NA-80869_1.000000-NA-63102_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.794603,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0250_07-18-2010-NA-NA-82120_1.000000-NA-78668_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.526766,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0250_07-18-2010-NA-NA-82120_1.000000-NA-78668_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.636038,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0254_07-18-2010-NA-NA-32830_1.000000-NA-30181_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.778209,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0254_07-18-2010-NA-NA-32830_1.000000-NA-30181_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.508531,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0255_07-18-2011-NA-NA-13767_1.000000-NA-62173_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.411488,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0255_07-18-2011-NA-NA-13767_1.000000-NA-62173_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.402475,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0258_07-18-2010-NA-NA-84047_1.000000-NA-74288_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.969964,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0258_07-18-2010-NA-NA-84047_1.000000-NA-74288_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.874032,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0281_07-18-2011-NA-NA-44321_1.000000-NA-44827_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.751343,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0281_07-18-2011-NA-NA-44321_1.000000-NA-44827_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.934867,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0287_07-18-2011-NA-NA-72228_1.000000-NA-13583_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.463632,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0287_07-18-2011-NA-NA-72228_1.000000-NA-13583_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.663358,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0291_07-18-2011-NA-NA-42742_1.000000-NA-12159_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.405271,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0291_07-18-2011-NA-NA-42742_1.000000-NA-12159_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.714764,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0295_07-18-2011-NA-NA-17984_1.000000-NA-27439_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.995394,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0295_07-18-2011-NA-NA-17984_1.000000-NA-27439_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.683073,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0304_07-18-2011-NA-NA-10451_1.000000-NA-74336_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.812472,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0304_07-18-2011-NA-NA-10451_1.000000-NA-74336_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.774442,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0326_07-18-2010-NA-NA-89731_1.000000-NA-48101_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.876739,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0326_07-18-2010-NA-NA-89731_1.000000-NA-48101_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.852767,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0342_07-18-2010-NA-NA-07579_1.000000-NA-87375_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.618486,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0342_07-18-2010-NA-NA-07579_1.000000-NA-87375_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.935892,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0344_07-18-2010-NA-NA-29059_1.000000-NA-11573_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.986394,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0344_07-18-2010-NA-NA-29059_1.000000-NA-11573_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.986836,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0374_07-18-2010-NA-NA-25514_1.000000-NA-94276_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.682556,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0374_07-18-2010-NA-NA-25514_1.000000-NA-94276_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.898425,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0389_07-18-2010-NA-NA-81491_1.000000-NA-80813_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.977269,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0389_07-18-2010-NA-NA-81491_1.000000-NA-80813_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.885564,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0396_07-18-2010-NA-NA-45476_1.000000-NA-25654_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.965279,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0396_07-18-2010-NA-NA-45476_1.000000-NA-25654_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.921055,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0427_07-18-2010-NA-NA-10491_1.000000-NA-03010_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.907571,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0427_07-18-2010-NA-NA-10491_1.000000-NA-03010_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.832776,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0449_07-18-2010-NA-NA-26283_1.000000-NA-01659_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.796287,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0449_07-18-2010-NA-NA-26283_1.000000-NA-01659_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.696922,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0462_07-18-2010-NA-NA-73031_1.000000-NA-24440_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.676408,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0462_07-18-2010-NA-NA-73031_1.000000-NA-24440_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.736721,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0501_07-18-2011-NA-NA-95743_1.000000-NA-19347_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.974794,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0501_07-18-2011-NA-NA-95743_1.000000-NA-19347_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.872049,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0508_07-18-2011-NA-NA-86276_1.000000-NA-48756_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.896899,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0508_07-18-2011-NA-NA-86276_1.000000-NA-48756_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.525123,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0511_07-18-2011-NA-NA-82702_1.000000-NA-85937_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.270428,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0511_07-18-2011-NA-NA-82702_1.000000-NA-85937_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.339758,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0513_07-18-2011-NA-NA-34243_1.000000-NA-51216_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.969366,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0513_07-18-2011-NA-NA-34243_1.000000-NA-51216_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.996965,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0515_07-18-2011-NA-NA-39765_1.000000-NA-85886_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.988737,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0515_07-18-2011-NA-NA-39765_1.000000-NA-85886_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.85915,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0522_07-18-2011-NA-NA-65116_1.000000-NA-18568_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.798725,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0522_07-18-2011-NA-NA-65116_1.000000-NA-18568_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.958447,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0531_07-18-2011-NA-NA-72652_1.000000-NA-97691_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.699776,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0531_07-18-2011-NA-NA-72652_1.000000-NA-97691_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.332092,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0552_07-18-2011-NA-NA-60231_1.000000-NA-80074_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.949375,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0552_07-18-2011-NA-NA-60231_1.000000-NA-80074_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.899866,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0569_07-18-2011-NA-NA-52048_1.000000-NA-45884_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.709885,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0569_07-18-2011-NA-NA-52048_1.000000-NA-45884_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.91004,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0649_07-18-2011-NA-NA-15348_1.000000-NA-66146_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.964847,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0649_07-18-2011-NA-NA-15348_1.000000-NA-66146_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.774761,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0677_07-17-2012-NA-NA-87371_1.000000-NA-81226_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.429337,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0677_07-17-2012-NA-NA-87371_1.000000-NA-81226_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.981724,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0682_07-18-2011-NA-NA-92556_1.000000-NA-15815_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.500662,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0682_07-18-2011-NA-NA-92556_1.000000-NA-15815_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.688606,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0684_07-18-2011-NA-NA-51340_1.000000-NA-35539_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.4606,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0684_07-18-2011-NA-NA-51340_1.000000-NA-35539_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.892394,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0696_07-18-2011-NA-NA-50929_1.000000-NA-70003_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.624885,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0696_07-18-2011-NA-NA-50929_1.000000-NA-70003_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.524079,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0698_07-18-2010-NA-NA-94399_1.000000-NA-97127_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.59878,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0698_07-18-2010-NA-NA-94399_1.000000-NA-97127_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.340029,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0714_07-18-2010-NA-NA-75115_1.000000-NA-42884_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.585935,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0714_07-18-2010-NA-NA-75115_1.000000-NA-42884_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.942114,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0716_07-18-2010-NA-NA-46459_1.000000-NA-12935_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.900706,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0716_07-18-2010-NA-NA-46459_1.000000-NA-12935_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.973062,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0722_07-18-2010-NA-NA-79271_1.000000-NA-14286_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.358324,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0722_07-18-2010-NA-NA-79271_1.000000-NA-14286_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.711887,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0757_07-18-2010-NA-NA-41605_1.000000-NA-03997_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.564097,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0757_07-18-2010-NA-NA-41605_1.000000-NA-03997_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.657331,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0801_07-18-2010-NA-NA-48022_1.000000-NA-43820_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.933747,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0801_07-18-2010-NA-NA-48022_1.000000-NA-43820_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.960836,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0807_07-18-2010-NA-NA-08305_1.000000-NA-71081_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.425809,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0807_07-18-2010-NA-NA-08305_1.000000-NA-71081_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.369124,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0809_07-18-2010-NA-NA-15809_1.000000-NA-65268_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.98396,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0809_07-18-2010-NA-NA-15809_1.000000-NA-65268_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.962591,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0815_07-18-2010-NA-NA-14387_1.000000-NA-57710_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.882885,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0815_07-18-2010-NA-NA-14387_1.000000-NA-57710_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.993839,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0816_07-18-2010-NA-NA-37809_1.000000-NA-76622_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.731375,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0816_07-18-2010-NA-NA-37809_1.000000-NA-76622_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.84026,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0818_07-18-2010-NA-NA-71241_1.000000-NA-13264_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.856655,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0818_07-18-2010-NA-NA-71241_1.000000-NA-13264_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.457183,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0821_07-18-2010-NA-NA-39339_1.000000-NA-69229_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.722861,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0821_07-18-2010-NA-NA-39339_1.000000-NA-69229_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.858873,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0823_07-18-2010-NA-NA-72706_1.000000-NA-09860_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.999392,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0823_07-18-2010-NA-NA-72706_1.000000-NA-09860_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.975239,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0840_07-18-2010-NA-NA-59742_1.000000-NA-21691_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.803645,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0840_07-18-2010-NA-NA-59742_1.000000-NA-21691_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.468753,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-0843_07-18-2010-NA-NA-17531_1.000000-NA-11161_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.808207,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0843_07-18-2010-NA-NA-17531_1.000000-NA-11161_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.853594,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0845_07-18-2010-NA-NA-14992_1.000000-NA-99767_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.966946,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0845_07-18-2010-NA-NA-14992_1.000000-NA-99767_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.992686,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0869_07-18-2011-NA-NA-85415_1.000000-NA-47672_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.685267,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0869_07-18-2011-NA-NA-85415_1.000000-NA-47672_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.900556,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0885_07-18-2011-NA-NA-96546_1.000000-NA-37096_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.527776,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0885_07-18-2011-NA-NA-96546_1.000000-NA-37096_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.59696,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0889_07-18-2011-NA-NA-52434_1.000000-NA-00950_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.505728,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0889_07-18-2011-NA-NA-52434_1.000000-NA-00950_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.833724,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0891_07-18-2011-NA-NA-31837_1.000000-NA-63197_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.956873,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0891_07-18-2011-NA-NA-31837_1.000000-NA-63197_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.843177,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0902_07-18-2011-NA-NA-29012_1.000000-NA-49116_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.599314,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0902_07-18-2011-NA-NA-29012_1.000000-NA-49116_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.680607,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0904_07-18-2011-NA-NA-30325_1.000000-NA-83237_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.750256,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0904_07-18-2011-NA-NA-30325_1.000000-NA-83237_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.76045,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0906_07-18-2011-NA-NA-35342_1.000000-NA-95787_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.722354,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0906_07-18-2011-NA-NA-35342_1.000000-NA-95787_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.969854,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0919_07-18-2011-NA-NA-66966_1.000000-NA-93288_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.690949,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0919_07-18-2011-NA-NA-66966_1.000000-NA-93288_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.704858,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0930_07-18-2011-NA-NA-08426_1.000000-NA-75850_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.744241,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0930_07-18-2011-NA-NA-08426_1.000000-NA-75850_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.508036,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0938_07-18-2011-NA-NA-73987_1.000000-NA-11411_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.810715,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0938_07-18-2011-NA-NA-73987_1.000000-NA-11411_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.574436,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0963_07-18-2011-NA-NA-84181_1.000000-NA-89228_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.810891,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0963_07-18-2011-NA-NA-84181_1.000000-NA-89228_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.819108,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0970_07-18-2011-NA-NA-69591_1.000000-NA-70979_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.588523,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0970_07-18-2011-NA-NA-69591_1.000000-NA-70979_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.770399,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0991_07-18-2011-NA-NA-63304_1.000000-NA-18722_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.690607,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0991_07-18-2011-NA-NA-63304_1.000000-NA-18722_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.71705,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0993_07-18-2011-NA-NA-06778_1.000000-NA-49810_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.516285,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-0993_07-18-2011-NA-NA-06778_1.000000-NA-49810_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.810248,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1006_07-18-2011-NA-NA-17476_1.000000-NA-98871_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.426804,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-1006_07-18-2011-NA-NA-17476_1.000000-NA-98871_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.607088,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1015_07-18-2011-NA-NA-81556_1.000000-NA-21618_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.521203,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1015_07-18-2011-NA-NA-81556_1.000000-NA-21618_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.923972,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1030_07-18-2011-NA-NA-82643_1.000000-NA-62335_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.870748,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1030_07-18-2011-NA-NA-82643_1.000000-NA-62335_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.983691,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1061_07-18-2011-NA-NA-52688_1.000000-NA-89685_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.601537,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1061_07-18-2011-NA-NA-52688_1.000000-NA-89685_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.62403,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1080_07-18-2010-NA-NA-53851_1.000000-NA-82302_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.999372,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1080_07-18-2010-NA-NA-53851_1.000000-NA-82302_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.999008,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1111_07-18-2010-NA-NA-30333_1.000000-NA-02089_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.65259,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1111_07-18-2010-NA-NA-30333_1.000000-NA-02089_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.641889,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1170_07-18-2010-NA-NA-74339_1.000000-NA-79396_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.819772,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1170_07-18-2010-NA-NA-74339_1.000000-NA-79396_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.890684,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1187_07-18-2010-NA-NA-50861_1.000000-NA-52501_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.940858,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1187_07-18-2010-NA-NA-50861_1.000000-NA-52501_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.836125,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1196_07-18-2010-NA-NA-09707_1.000000-NA-52162_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.983146,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1196_07-18-2010-NA-NA-09707_1.000000-NA-52162_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.990417,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1206_07-18-2010-NA-NA-13334_1.000000-NA-61684_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.982014,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1206_07-18-2010-NA-NA-13334_1.000000-NA-61684_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.87332,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1249_07-18-2010-NA-NA-38349_1.000000-NA-24643_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.964965,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1249_07-18-2010-NA-NA-38349_1.000000-NA-24643_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.987691,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1260_07-18-2010-NA-NA-23277_1.000000-NA-68958_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.991261,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1260_07-18-2010-NA-NA-23277_1.000000-NA-68958_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.997865,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1286_07-18-2010-NA-NA-60911_1.000000-NA-94991_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.732442,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1286_07-18-2010-NA-NA-60911_1.000000-NA-94991_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.329805,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-1308_07-18-2010-NA-NA-97945_1.000000-NA-99020_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.383689,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-1308_07-18-2010-NA-NA-97945_1.000000-NA-99020_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.492464,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-1311_07-18-2010-NA-NA-35634_1.000000-NA-91562_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.933552,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1311_07-18-2010-NA-NA-35634_1.000000-NA-91562_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.971933,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1318_07-18-2010-NA-NA-56895_1.000000-NA-83872_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.410023,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-1318_07-18-2010-NA-NA-56895_1.000000-NA-83872_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.641958,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1319_07-18-2011-NA-NA-56127_1.000000-NA-51722_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.669221,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1319_07-18-2011-NA-NA-56127_1.000000-NA-51722_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.967972,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1340_07-18-2010-NA-NA-90118_1.000000-NA-56236_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.993658,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1340_07-18-2010-NA-NA-90118_1.000000-NA-56236_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.854779,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1357_07-18-2010-NA-NA-88122_1.000000-NA-92451_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.984743,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1357_07-18-2010-NA-NA-88122_1.000000-NA-92451_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.998997,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1379_07-18-2010-NA-NA-04248_1.000000-NA-87227_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.996523,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1379_07-18-2010-NA-NA-04248_1.000000-NA-87227_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.989831,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1397_07-18-2010-NA-NA-67333_1.000000-NA-05437_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.46836,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-1397_07-18-2010-NA-NA-67333_1.000000-NA-05437_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.393189,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-1405_07-18-2011-NA-NA-07047_1.000000-NA-95002_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.933333,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1405_07-18-2011-NA-NA-07047_1.000000-NA-95002_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.895299,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1411_07-18-2010-NA-NA-07191_1.000000-NA-38888_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.998139,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1411_07-18-2010-NA-NA-07191_1.000000-NA-38888_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.912568,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1413_07-18-2010-NA-NA-02460_1.000000-NA-89405_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.776422,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1413_07-18-2010-NA-NA-02460_1.000000-NA-89405_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.778464,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1435_07-18-2010-NA-NA-07024_1.000000-NA-88927_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.98866,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1435_07-18-2010-NA-NA-07024_1.000000-NA-88927_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.87365,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1438_07-18-2010-NA-NA-10509_1.000000-NA-97979_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.909409,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1438_07-18-2010-NA-NA-10509_1.000000-NA-97979_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.879373,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1452_07-18-2011-NA-NA-53778_1.000000-NA-56961_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.917423,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1452_07-18-2011-NA-NA-53778_1.000000-NA-56961_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.831893,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1470_07-18-2011-NA-NA-96965_1.000000-NA-70178_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.917663,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1470_07-18-2011-NA-NA-96965_1.000000-NA-70178_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.881735,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1480_07-18-2011-NA-NA-09506_1.000000-NA-59260_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.995379,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1480_07-18-2011-NA-NA-09506_1.000000-NA-59260_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.977183,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1483_07-18-2011-NA-NA-43623_1.000000-NA-71857_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.996682,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1483_07-18-2011-NA-NA-43623_1.000000-NA-71857_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.975086,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1493_07-18-2011-NA-NA-19891_1.000000-NA-02173_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.813689,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1493_07-18-2011-NA-NA-19891_1.000000-NA-02173_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.484672,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-1510_07-18-2011-NA-NA-60981_1.000000-NA-53464_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.991047,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1510_07-18-2011-NA-NA-60981_1.000000-NA-53464_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.804724,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1519_07-18-2011-NA-NA-97996_1.000000-NA-53867_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.592097,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1519_07-18-2011-NA-NA-97996_1.000000-NA-53867_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.311703,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-1532_07-18-2011-NA-NA-12237_1.000000-NA-31786_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.972736,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1532_07-18-2011-NA-NA-12237_1.000000-NA-31786_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.946051,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1544_07-18-2011-NA-NA-22172_1.000000-NA-88915_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.42631,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-1544_07-18-2011-NA-NA-22172_1.000000-NA-88915_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.609514,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1555_07-18-2011-NA-NA-67784_1.000000-NA-08316_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.803872,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1555_07-18-2011-NA-NA-67784_1.000000-NA-08316_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.664283,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1558_07-18-2011-NA-NA-30673_1.000000-NA-97335_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.53522,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1558_07-18-2011-NA-NA-30673_1.000000-NA-97335_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.604845,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1562_07-18-2011-NA-NA-41459_1.000000-NA-99492_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.939435,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1562_07-18-2011-NA-NA-41459_1.000000-NA-99492_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.998732,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1563_07-18-2011-NA-NA-70128_1.000000-NA-28911_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.781197,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1563_07-18-2011-NA-NA-70128_1.000000-NA-28911_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.954357,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1569_07-18-2011-NA-NA-25731_1.000000-NA-44597_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.962648,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1569_07-18-2011-NA-NA-25731_1.000000-NA-44597_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.754478,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1578_07-18-2011-NA-NA-97482_1.000000-NA-53025_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.789189,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1578_07-18-2011-NA-NA-97482_1.000000-NA-53025_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.684547,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1590_07-18-2011-NA-NA-19060_1.000000-NA-69896_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.942893,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1590_07-18-2011-NA-NA-19060_1.000000-NA-69896_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.996772,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1590_07-18-2011-NA-NA-19060_1.000000-NA-69896_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.966114,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1590_07-18-2011-NA-NA-19060_1.000000-NA-69896_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.912873,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1614_07-18-2011-NA-NA-97978_1.000000-NA-46097_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.964467,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1614_07-18-2011-NA-NA-97978_1.000000-NA-46097_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.871012,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1623_07-18-2011-NA-NA-79808_1.000000-NA-62994_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.239257,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-1623_07-18-2011-NA-NA-79808_1.000000-NA-62994_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.864225,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1666_07-18-2011-NA-NA-42560_1.000000-NA-61125_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.95052,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1666_07-18-2011-NA-NA-42560_1.000000-NA-61125_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.825824,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1693_07-18-2011-NA-NA-58060_1.000000-NA-01897_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.715446,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1693_07-18-2011-NA-NA-58060_1.000000-NA-01897_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.593685,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1713_07-18-2011-NA-NA-40919_1.000000-NA-49657_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.552031,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1713_07-18-2011-NA-NA-40919_1.000000-NA-49657_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.361462,
+      "pred_label": 0
+    },
+    {
+      "filename": "D1-1719_07-18-2011-NA-NA-22063_1.000000-NA-70708_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.83318,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1719_07-18-2011-NA-NA-22063_1.000000-NA-70708_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.989277,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1726_07-18-2011-NA-NA-07276_1.000000-NA-80906_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.963665,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1726_07-18-2011-NA-NA-07276_1.000000-NA-80906_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.993763,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1727_07-18-2011-NA-NA-92061_1.000000-NA-71522_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.935316,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1727_07-18-2011-NA-NA-92061_1.000000-NA-71522_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.992406,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1740_07-18-2011-NA-NA-68973_1.000000-NA-23720_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.992416,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1740_07-18-2011-NA-NA-68973_1.000000-NA-23720_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.95132,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1746_07-18-2011-NA-NA-91475_1.000000-NA-05153_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.565308,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1746_07-18-2011-NA-NA-91475_1.000000-NA-05153_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.808935,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1752_07-18-2011-NA-NA-33105_1.000000-NA-07611_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.752053,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1752_07-18-2011-NA-NA-33105_1.000000-NA-07611_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.561379,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1765_07-18-2011-NA-NA-76500_1.000000-NA-65444_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.511317,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1765_07-18-2011-NA-NA-76500_1.000000-NA-65444_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.645715,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1766_07-18-2011-NA-NA-39177_1.000000-NA-90158_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.917815,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1766_07-18-2011-NA-NA-39177_1.000000-NA-90158_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.821242,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1769_07-18-2011-NA-NA-25613_1.000000-NA-33079_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.670049,
+      "pred_label": 1
+    },
+    {
+      "filename": "D1-1769_07-18-2011-NA-NA-25613_1.000000-NA-33079_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.45634,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0001_07-18-2011-NA-NA-75485_1.000000-NA-12786_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.367193,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0001_07-18-2011-NA-NA-75485_1.000000-NA-12786_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.423336,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0002_07-18-2010-NA-NA-26354_1.000000-NA-32501_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.318582,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0002_07-18-2010-NA-NA-26354_1.000000-NA-32501_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.373506,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0006_07-18-2010-NA-NA-69394_1.000000-NA-45236_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.565314,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0006_07-18-2010-NA-NA-69394_1.000000-NA-45236_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.350431,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0007_07-18-2010-NA-NA-39940_1.000000-NA-88925_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.722322,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0007_07-18-2010-NA-NA-39940_1.000000-NA-88925_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.660707,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0012_07-18-2010-NA-NA-02689_1.000000-NA-46289_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.740002,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0012_07-18-2010-NA-NA-02689_1.000000-NA-46289_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.834631,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0014_07-18-2010-NA-NA-37304_1.000000-NA-79119_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.711351,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0014_07-18-2010-NA-NA-37304_1.000000-NA-79119_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.719896,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0018_07-18-2010-NA-NA-78654_1.000000-NA-00515_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.956748,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0018_07-18-2010-NA-NA-78654_1.000000-NA-00515_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.99742,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0020_07-18-2010-NA-NA-86493_1.000000-NA-30847_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.787777,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0020_07-18-2010-NA-NA-86493_1.000000-NA-30847_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.397634,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0024_07-18-2010-NA-NA-44943_1.000000-NA-01610_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.491369,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0024_07-18-2010-NA-NA-44943_1.000000-NA-01610_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.657208,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0028_07-18-2010-NA-NA-57665_1.000000-NA-84533_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.85023,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0028_07-18-2010-NA-NA-57665_1.000000-NA-84533_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.460014,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0031_07-18-2010-NA-NA-73156_1.000000-NA-96263_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.610323,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0031_07-18-2010-NA-NA-73156_1.000000-NA-96263_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.733114,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0032_07-18-2010-NA-NA-49155_1.000000-NA-92065_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.863685,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0032_07-18-2010-NA-NA-49155_1.000000-NA-92065_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.532935,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0033_07-18-2010-NA-NA-86608_1.000000-NA-08657_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.59624,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0033_07-18-2010-NA-NA-86608_1.000000-NA-08657_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.767208,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0037_07-18-2010-NA-NA-76051_1.000000-NA-70383_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.973857,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0037_07-18-2010-NA-NA-76051_1.000000-NA-70383_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.895935,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0039_07-18-2010-NA-NA-42117_1.000000-NA-09944_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.745853,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0039_07-18-2010-NA-NA-42117_1.000000-NA-09944_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.639621,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0039_07-18-2010-NA-NA-42117_1.000000-NA-09944_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.878209,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0039_07-18-2010-NA-NA-42117_1.000000-NA-09944_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.866366,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0042_07-18-2010-NA-NA-48126_1.000000-NA-01123_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.656538,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0042_07-18-2010-NA-NA-48126_1.000000-NA-01123_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.657758,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0043_07-18-2010-NA-NA-48635_1.000000-NA-16624_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.594879,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0043_07-18-2010-NA-NA-48635_1.000000-NA-16624_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.765975,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0046_07-18-2011-NA-NA-03249_1.000000-NA-05854_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.778103,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0046_07-18-2011-NA-NA-03249_1.000000-NA-05854_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.62798,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0048_07-18-2011-NA-NA-93312_1.000000-NA-49275_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.747809,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0048_07-18-2011-NA-NA-93312_1.000000-NA-49275_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.823658,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0049_07-18-2011-NA-NA-04560_1.000000-NA-48849_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.872567,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0049_07-18-2011-NA-NA-04560_1.000000-NA-48849_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.815255,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0051_07-18-2011-NA-NA-78412_1.000000-NA-19130_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.69688,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0051_07-18-2011-NA-NA-78412_1.000000-NA-19130_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.886735,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0054_07-18-2011-NA-NA-26142_1.000000-NA-21273_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.995689,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0054_07-18-2011-NA-NA-26142_1.000000-NA-21273_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.535344,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0055_07-18-2011-NA-NA-37599_1.000000-NA-00814_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.435982,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0055_07-18-2011-NA-NA-37599_1.000000-NA-00814_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.398096,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0056_07-18-2011-NA-NA-19932_1.000000-NA-53401_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.626256,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0056_07-18-2011-NA-NA-19932_1.000000-NA-53401_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.615892,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0063_07-18-2011-NA-NA-89621_1.000000-NA-82395_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.65193,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0063_07-18-2011-NA-NA-89621_1.000000-NA-82395_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.600364,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0072_07-18-2011-NA-NA-63429_1.000000-NA-80548_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.945279,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0072_07-18-2011-NA-NA-63429_1.000000-NA-80548_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.948778,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0075_07-18-2011-NA-NA-37784_1.000000-NA-22984_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.546238,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0075_07-18-2011-NA-NA-37784_1.000000-NA-22984_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.60446,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0076_07-18-2011-NA-NA-02619_1.000000-NA-62186_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.663611,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0076_07-18-2011-NA-NA-02619_1.000000-NA-62186_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.616195,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0082_07-18-2011-NA-NA-14284_1.000000-NA-95077_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.602325,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0082_07-18-2011-NA-NA-14284_1.000000-NA-95077_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.328159,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0087_07-18-2011-NA-NA-40945_1.000000-NA-01075_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.633847,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0087_07-18-2011-NA-NA-40945_1.000000-NA-01075_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.777531,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0087_07-18-2011-NA-NA-40945_1.000000-NA-01075_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.860373,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0087_07-18-2011-NA-NA-40945_1.000000-NA-01075_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.897396,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0088_07-18-2011-NA-NA-08450_1.000000-NA-94574_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.55915,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0088_07-18-2011-NA-NA-08450_1.000000-NA-94574_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.672985,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0091_07-18-2011-NA-NA-58289_1.000000-NA-81180_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.495707,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0091_07-18-2011-NA-NA-58289_1.000000-NA-81180_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.508025,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0093_07-17-2012-NA-NA-78766_1.000000-NA-80960_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.617608,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0093_07-17-2012-NA-NA-78766_1.000000-NA-80960_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.581729,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0094_07-17-2012-NA-NA-52565_1.000000-NA-43554_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.536974,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0094_07-17-2012-NA-NA-52565_1.000000-NA-43554_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.281551,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0098_07-17-2012-NA-NA-41401_1.000000-NA-75737_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.330857,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0098_07-17-2012-NA-NA-41401_1.000000-NA-75737_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.518383,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0100_07-18-2011-NA-NA-01793_1.000000-NA-52039_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.588347,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0100_07-18-2011-NA-NA-01793_1.000000-NA-52039_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.6566,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0111_07-18-2010-NA-NA-49690_1.000000-NA-35817_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.606421,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0111_07-18-2010-NA-NA-49690_1.000000-NA-35817_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.755033,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0119_07-18-2010-NA-NA-90016_1.000000-NA-69943_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.490251,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0119_07-18-2010-NA-NA-90016_1.000000-NA-69943_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.469325,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0123_07-18-2010-NA-NA-91385_1.000000-NA-49403_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.615582,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0123_07-18-2010-NA-NA-91385_1.000000-NA-49403_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.998586,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0125_07-18-2010-NA-NA-32715_1.000000-NA-15576_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.362309,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0125_07-18-2010-NA-NA-32715_1.000000-NA-15576_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.264953,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0125_07-18-2010-NA-NA-32715_1.000000-NA-15576_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.729325,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0125_07-18-2010-NA-NA-32715_1.000000-NA-15576_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.453159,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0128_07-18-2010-NA-NA-61490_1.000000-NA-65552_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.942814,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0128_07-18-2010-NA-NA-61490_1.000000-NA-65552_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.82334,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0138_07-18-2010-NA-NA-24617_1.000000-NA-74308_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.999722,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0138_07-18-2010-NA-NA-24617_1.000000-NA-74308_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.988421,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0139_07-18-2010-NA-NA-21317_1.000000-NA-72304_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.96598,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0139_07-18-2010-NA-NA-21317_1.000000-NA-72304_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.967012,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0142_07-18-2010-NA-NA-16234_1.000000-NA-95242_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.619718,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0142_07-18-2010-NA-NA-16234_1.000000-NA-95242_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.772828,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0143_07-18-2010-NA-NA-62418_1.000000-NA-92194_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.326421,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0143_07-18-2010-NA-NA-62418_1.000000-NA-92194_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.417181,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0144_07-18-2010-NA-NA-03734_1.000000-NA-01091_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.64379,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0144_07-18-2010-NA-NA-03734_1.000000-NA-01091_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.911077,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0147_07-18-2010-NA-NA-29236_1.000000-NA-43992_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.984121,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0147_07-18-2010-NA-NA-29236_1.000000-NA-43992_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.920382,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0151_07-18-2010-NA-NA-30224_1.000000-NA-56725_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.536755,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0151_07-18-2010-NA-NA-30224_1.000000-NA-56725_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.359204,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0151_07-18-2010-NA-NA-30224_1.000000-NA-56725_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.998661,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0151_07-18-2010-NA-NA-30224_1.000000-NA-56725_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.870878,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0156_07-18-2010-NA-NA-91327_1.000000-NA-82701_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.988823,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0156_07-18-2010-NA-NA-91327_1.000000-NA-82701_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.982618,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0159_07-18-2010-NA-NA-49757_1.000000-NA-58115_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.776286,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0159_07-18-2010-NA-NA-49757_1.000000-NA-58115_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.749591,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0160_07-18-2010-NA-NA-86160_1.000000-NA-85987_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.837495,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0160_07-18-2010-NA-NA-86160_1.000000-NA-85987_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.420876,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0182_07-18-2010-NA-NA-75432_1.000000-NA-81559_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.557482,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0182_07-18-2010-NA-NA-75432_1.000000-NA-81559_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.603797,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0185_07-18-2010-NA-NA-46683_1.000000-NA-43380_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.669081,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0185_07-18-2010-NA-NA-46683_1.000000-NA-43380_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.33369,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0186_07-18-2010-NA-NA-85402_1.000000-NA-13953_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.380248,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0186_07-18-2010-NA-NA-85402_1.000000-NA-13953_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.382543,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0187_07-18-2010-NA-NA-87727_1.000000-NA-31556_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.621127,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0187_07-18-2010-NA-NA-87727_1.000000-NA-31556_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.479293,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0188_07-18-2010-NA-NA-35756_1.000000-NA-17272_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.424481,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0188_07-18-2010-NA-NA-35756_1.000000-NA-17272_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.415487,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0191_07-18-2011-NA-NA-68432_1.000000-NA-61800_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.887944,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0191_07-18-2011-NA-NA-68432_1.000000-NA-61800_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.830479,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0191_07-18-2011-NA-NA-68432_1.000000-NA-61800_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.981864,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0191_07-18-2011-NA-NA-68432_1.000000-NA-61800_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.676099,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0194_07-18-2010-NA-NA-60451_1.000000-NA-56664_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.782723,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0194_07-18-2010-NA-NA-60451_1.000000-NA-56664_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.865816,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0195_07-18-2010-NA-NA-32352_1.000000-NA-72254_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.907066,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0195_07-18-2010-NA-NA-32352_1.000000-NA-72254_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.961712,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0196_07-18-2010-NA-NA-09485_1.000000-NA-46467_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.827294,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0196_07-18-2010-NA-NA-09485_1.000000-NA-46467_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.883574,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0197_07-18-2010-NA-NA-23248_1.000000-NA-20579_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.454873,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0197_07-18-2010-NA-NA-23248_1.000000-NA-20579_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.504913,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0200_07-18-2010-NA-NA-93170_1.000000-NA-53693_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.285563,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0200_07-18-2010-NA-NA-93170_1.000000-NA-53693_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.333563,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0201_07-18-2010-NA-NA-39395_1.000000-NA-52295_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.97537,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0201_07-18-2010-NA-NA-39395_1.000000-NA-52295_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.995777,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0203_07-18-2010-NA-NA-61052_1.000000-NA-11951_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.619379,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0203_07-18-2010-NA-NA-61052_1.000000-NA-11951_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.544802,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0207_07-18-2010-NA-NA-05717_1.000000-NA-74851_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.396487,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0207_07-18-2010-NA-NA-05717_1.000000-NA-74851_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.904518,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0211_07-18-2010-NA-NA-75470_1.000000-NA-34640_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.995517,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0211_07-18-2010-NA-NA-75470_1.000000-NA-34640_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.997403,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0212_07-18-2010-NA-NA-38459_1.000000-NA-42586_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.40693,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0212_07-18-2010-NA-NA-38459_1.000000-NA-42586_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.250927,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0217_07-18-2011-NA-NA-27222_1.000000-NA-87181_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.253925,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0217_07-18-2011-NA-NA-27222_1.000000-NA-87181_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.146044,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0217_07-18-2011-NA-NA-27222_1.000000-NA-87181_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.990874,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0217_07-18-2011-NA-NA-27222_1.000000-NA-87181_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.890464,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0223_07-18-2011-NA-NA-60002_1.000000-NA-46342_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.709848,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0223_07-18-2011-NA-NA-60002_1.000000-NA-46342_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.799572,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0224_07-18-2011-NA-NA-79476_1.000000-NA-89338_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.408284,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0224_07-18-2011-NA-NA-79476_1.000000-NA-89338_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.961484,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0235_07-18-2011-NA-NA-64989_1.000000-NA-73472_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.627893,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0235_07-18-2011-NA-NA-64989_1.000000-NA-73472_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.340547,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0236_07-18-2011-NA-NA-23299_1.000000-NA-94109_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.516738,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0236_07-18-2011-NA-NA-23299_1.000000-NA-94109_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.390538,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0237_07-18-2011-NA-NA-59575_1.000000-NA-81431_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.535424,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0237_07-18-2011-NA-NA-59575_1.000000-NA-81431_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.568828,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0238_07-18-2011-NA-NA-92372_1.000000-NA-25926_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.27988,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0238_07-18-2011-NA-NA-92372_1.000000-NA-25926_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.303161,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0240_07-18-2011-NA-NA-57679_1.000000-NA-68947_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.78763,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0240_07-18-2011-NA-NA-57679_1.000000-NA-68947_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.792185,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0241_07-18-2011-NA-NA-17667_1.000000-NA-75099_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.695629,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0241_07-18-2011-NA-NA-17667_1.000000-NA-75099_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.728131,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0243_07-18-2011-NA-NA-14392_1.000000-NA-44913_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.957424,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0243_07-18-2011-NA-NA-14392_1.000000-NA-44913_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.985149,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0243_07-18-2011-NA-NA-14392_1.000000-NA-44913_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.205727,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0243_07-18-2011-NA-NA-14392_1.000000-NA-44913_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.108864,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0246_07-18-2011-NA-NA-21706_1.000000-NA-65726_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.550522,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0246_07-18-2011-NA-NA-21706_1.000000-NA-65726_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.52039,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0247_07-18-2011-NA-NA-04637_1.000000-NA-44583_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.254813,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0247_07-18-2011-NA-NA-04637_1.000000-NA-44583_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.151306,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0248_07-18-2011-NA-NA-71382_1.000000-NA-19006_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.183715,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0248_07-18-2011-NA-NA-71382_1.000000-NA-19006_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.32859,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0257_07-18-2011-NA-NA-57728_1.000000-NA-56212_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.914147,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0257_07-18-2011-NA-NA-57728_1.000000-NA-56212_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.981912,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0257_07-18-2011-NA-NA-57728_1.000000-NA-56212_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.483951,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0257_07-18-2011-NA-NA-57728_1.000000-NA-56212_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.437065,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0258_07-18-2011-NA-NA-79306_1.000000-NA-65515_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.64934,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0258_07-18-2011-NA-NA-79306_1.000000-NA-65515_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.451387,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0260_07-18-2011-NA-NA-93733_1.000000-NA-79193_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.819389,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0260_07-18-2011-NA-NA-93733_1.000000-NA-79193_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.766019,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0268_07-18-2011-NA-NA-09073_1.000000-NA-01094_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.166306,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0268_07-18-2011-NA-NA-09073_1.000000-NA-01094_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.119772,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0269_07-18-2011-NA-NA-65243_1.000000-NA-06644_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.959406,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0269_07-18-2011-NA-NA-65243_1.000000-NA-06644_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.740255,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0271_07-18-2011-NA-NA-85374_1.000000-NA-07505_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.416447,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0271_07-18-2011-NA-NA-85374_1.000000-NA-07505_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.401726,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0273_07-18-2011-NA-NA-41297_1.000000-NA-40412_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.389743,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0273_07-18-2011-NA-NA-41297_1.000000-NA-40412_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.364562,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0275_07-18-2011-NA-NA-22061_1.000000-NA-57666_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.578883,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0275_07-18-2011-NA-NA-22061_1.000000-NA-57666_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.681816,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0279_07-18-2011-NA-NA-31128_1.000000-NA-58484_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.5737,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0279_07-18-2011-NA-NA-31128_1.000000-NA-58484_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.865888,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0279_07-18-2011-NA-NA-31128_1.000000-NA-58484_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.427043,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0279_07-18-2011-NA-NA-31128_1.000000-NA-58484_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.434039,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0282_07-18-2011-NA-NA-74018_1.000000-NA-65054_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.765129,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0282_07-18-2011-NA-NA-74018_1.000000-NA-65054_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.704108,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0284_07-18-2011-NA-NA-78825_1.000000-NA-98151_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.61401,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0284_07-18-2011-NA-NA-78825_1.000000-NA-98151_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.707997,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0292_07-18-2011-NA-NA-52080_1.000000-NA-77206_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.311606,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0292_07-18-2011-NA-NA-52080_1.000000-NA-77206_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.254096,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0294_07-18-2011-NA-NA-72539_1.000000-NA-45085_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.595832,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0294_07-18-2011-NA-NA-72539_1.000000-NA-45085_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.545264,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0297_07-18-2011-NA-NA-21648_1.000000-NA-49535_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.763932,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0297_07-18-2011-NA-NA-21648_1.000000-NA-49535_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.861652,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0298_07-18-2011-NA-NA-15504_1.000000-NA-71349_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.65275,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0298_07-18-2011-NA-NA-15504_1.000000-NA-71349_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.492637,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0299_07-18-2011-NA-NA-36682_1.000000-NA-16437_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.981272,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0299_07-18-2011-NA-NA-36682_1.000000-NA-16437_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.996555,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0300_07-18-2011-NA-NA-92239_1.000000-NA-79265_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.266476,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0300_07-18-2011-NA-NA-92239_1.000000-NA-79265_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.221828,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0303_07-18-2011-NA-NA-39404_1.000000-NA-45380_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.591492,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0303_07-18-2011-NA-NA-39404_1.000000-NA-45380_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.479925,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0309_07-18-2011-NA-NA-17350_1.000000-NA-43877_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.952313,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0309_07-18-2011-NA-NA-17350_1.000000-NA-43877_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.796901,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0310_07-18-2011-NA-NA-19638_1.000000-NA-27947_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.804743,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0310_07-18-2011-NA-NA-19638_1.000000-NA-27947_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.880253,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0311_07-18-2011-NA-NA-32024_1.000000-NA-19898_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.543276,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0311_07-18-2011-NA-NA-32024_1.000000-NA-19898_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.536194,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0320_07-18-2011-NA-NA-09886_1.000000-NA-18361_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.521861,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0320_07-18-2011-NA-NA-09886_1.000000-NA-18361_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.653096,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0322_07-18-2011-NA-NA-34064_1.000000-NA-69994_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.265382,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0322_07-18-2011-NA-NA-34064_1.000000-NA-69994_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.269245,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0324_07-17-2012-NA-NA-13284_1.000000-NA-65425_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.896345,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0324_07-17-2012-NA-NA-13284_1.000000-NA-65425_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.836853,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0324_07-17-2012-NA-NA-13284_1.000000-NA-65425_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.673735,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0324_07-17-2012-NA-NA-13284_1.000000-NA-65425_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.509247,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0325_07-17-2012-NA-NA-74123_1.000000-NA-72784_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.711023,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0325_07-17-2012-NA-NA-74123_1.000000-NA-72784_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.244621,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0328_07-17-2012-NA-NA-82945_1.000000-NA-03640_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.394468,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0328_07-17-2012-NA-NA-82945_1.000000-NA-03640_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.17146,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0329_07-17-2012-NA-NA-16433_1.000000-NA-96818_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.644856,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0329_07-17-2012-NA-NA-16433_1.000000-NA-96818_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.6276,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0329_07-17-2012-NA-NA-16433_1.000000-NA-96818_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.885475,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0329_07-17-2012-NA-NA-16433_1.000000-NA-96818_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.507359,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0332_07-17-2012-NA-NA-89934_1.000000-NA-34804_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.853763,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0332_07-17-2012-NA-NA-89934_1.000000-NA-34804_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.821602,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0342_07-18-2011-NA-NA-54835_1.000000-NA-34247_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.875829,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0342_07-18-2011-NA-NA-54835_1.000000-NA-34247_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.161497,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0345_07-18-2011-NA-NA-20418_1.000000-NA-88321_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.581062,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0345_07-18-2011-NA-NA-20418_1.000000-NA-88321_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.394825,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0347_07-18-2010-NA-NA-38291_1.000000-NA-86191_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.949094,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0347_07-18-2010-NA-NA-38291_1.000000-NA-86191_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.977231,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0348_07-18-2010-NA-NA-22919_1.000000-NA-19898_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.494965,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0348_07-18-2010-NA-NA-22919_1.000000-NA-19898_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.544974,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0350_07-18-2010-NA-NA-14814_1.000000-NA-24403_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.90234,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0350_07-18-2010-NA-NA-14814_1.000000-NA-24403_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.78715,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0356_07-18-2010-NA-NA-42373_1.000000-NA-19974_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.448911,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0356_07-18-2010-NA-NA-42373_1.000000-NA-19974_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.318991,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0359_07-18-2010-NA-NA-52950_1.000000-NA-41613_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.576793,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0359_07-18-2010-NA-NA-52950_1.000000-NA-41613_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.594126,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0362_07-18-2010-NA-NA-66132_1.000000-NA-29650_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.390579,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0362_07-18-2010-NA-NA-66132_1.000000-NA-29650_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.771037,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0363_07-18-2010-NA-NA-17175_1.000000-NA-70742_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.548025,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0363_07-18-2010-NA-NA-17175_1.000000-NA-70742_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.292343,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0363_07-18-2010-NA-NA-17175_1.000000-NA-70742_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.758808,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0363_07-18-2010-NA-NA-17175_1.000000-NA-70742_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.947267,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0364_07-18-2010-NA-NA-31176_1.000000-NA-04625_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.326398,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0364_07-18-2010-NA-NA-31176_1.000000-NA-04625_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.341302,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0365_07-18-2010-NA-NA-49844_1.000000-NA-46276_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.600448,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0365_07-18-2010-NA-NA-49844_1.000000-NA-46276_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.422228,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0374_07-18-2010-NA-NA-60423_1.000000-NA-58485_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.114012,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0374_07-18-2010-NA-NA-60423_1.000000-NA-58485_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.078099,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0377_07-18-2010-NA-NA-14878_1.000000-NA-67336_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.997522,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0377_07-18-2010-NA-NA-14878_1.000000-NA-67336_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.984509,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0377_07-18-2010-NA-NA-14878_1.000000-NA-67336_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.519118,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0377_07-18-2010-NA-NA-14878_1.000000-NA-67336_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.615906,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0378_07-18-2010-NA-NA-60618_1.000000-NA-75877_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.917911,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0378_07-18-2010-NA-NA-60618_1.000000-NA-75877_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.775835,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0379_07-18-2010-NA-NA-31785_1.000000-NA-75349_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.984396,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0379_07-18-2010-NA-NA-31785_1.000000-NA-75349_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.55492,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0382_07-18-2010-NA-NA-89782_1.000000-NA-33747_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.989096,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0382_07-18-2010-NA-NA-89782_1.000000-NA-33747_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.996516,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0386_07-18-2010-NA-NA-18013_1.000000-NA-11314_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.993573,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0386_07-18-2010-NA-NA-18013_1.000000-NA-11314_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.99852,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0389_07-18-2010-NA-NA-16410_1.000000-NA-56177_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.757281,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0389_07-18-2010-NA-NA-16410_1.000000-NA-56177_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.476544,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0391_07-18-2010-NA-NA-78762_1.000000-NA-94724_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.971395,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0391_07-18-2010-NA-NA-78762_1.000000-NA-94724_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.758733,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0395_07-18-2010-NA-NA-27452_1.000000-NA-18787_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.87744,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0395_07-18-2010-NA-NA-27452_1.000000-NA-18787_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.518029,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0411_07-18-2010-NA-NA-57380_1.000000-NA-16957_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.568109,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0411_07-18-2010-NA-NA-57380_1.000000-NA-16957_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.424565,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0416_07-18-2010-NA-NA-17627_1.000000-NA-70492_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.517457,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0416_07-18-2010-NA-NA-17627_1.000000-NA-70492_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.709678,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0417_07-18-2010-NA-NA-76594_1.000000-NA-75973_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.558896,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0417_07-18-2010-NA-NA-76594_1.000000-NA-75973_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.729798,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0419_07-18-2010-NA-NA-06534_1.000000-NA-38353_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.237225,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0419_07-18-2010-NA-NA-06534_1.000000-NA-38353_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.233863,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0420_07-18-2010-NA-NA-31067_1.000000-NA-36518_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.71854,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0420_07-18-2010-NA-NA-31067_1.000000-NA-36518_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.569898,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0422_07-18-2010-NA-NA-64691_1.000000-NA-85728_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.439764,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0422_07-18-2010-NA-NA-64691_1.000000-NA-85728_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.834263,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0428_07-18-2010-NA-NA-86343_1.000000-NA-89703_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.872467,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0428_07-18-2010-NA-NA-86343_1.000000-NA-89703_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.886269,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0428_07-18-2010-NA-NA-86343_1.000000-NA-89703_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.715555,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0428_07-18-2010-NA-NA-86343_1.000000-NA-89703_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.842044,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0429_07-18-2010-NA-NA-37839_1.000000-NA-48472_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.585656,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0429_07-18-2010-NA-NA-37839_1.000000-NA-48472_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.718759,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0433_07-18-2010-NA-NA-10622_1.000000-NA-09129_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.557658,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0433_07-18-2010-NA-NA-10622_1.000000-NA-09129_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.613501,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0435_07-18-2010-NA-NA-57873_1.000000-NA-97688_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.883035,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0435_07-18-2010-NA-NA-57873_1.000000-NA-97688_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.726031,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0437_07-18-2010-NA-NA-24645_1.000000-NA-98997_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.974555,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0437_07-18-2010-NA-NA-24645_1.000000-NA-98997_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.994882,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0437_07-18-2010-NA-NA-24645_1.000000-NA-98997_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.11524,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0437_07-18-2010-NA-NA-24645_1.000000-NA-98997_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.128588,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0439_07-18-2010-NA-NA-35320_1.000000-NA-28808_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.335092,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0439_07-18-2010-NA-NA-35320_1.000000-NA-28808_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.964038,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0440_07-18-2010-NA-NA-33327_1.000000-NA-11382_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.351011,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0440_07-18-2010-NA-NA-33327_1.000000-NA-11382_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.57215,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0447_07-18-2010-NA-NA-37053_1.000000-NA-91503_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.15392,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0447_07-18-2010-NA-NA-37053_1.000000-NA-91503_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.073858,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0447_07-18-2010-NA-NA-37053_1.000000-NA-91503_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.998237,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0447_07-18-2010-NA-NA-37053_1.000000-NA-91503_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.895143,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0449_07-18-2010-NA-NA-91842_1.000000-NA-78339_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.800328,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0449_07-18-2010-NA-NA-91842_1.000000-NA-78339_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.978243,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0455_07-18-2010-NA-NA-72742_1.000000-NA-28687_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.972685,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0455_07-18-2010-NA-NA-72742_1.000000-NA-28687_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.970131,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0456_07-18-2010-NA-NA-10354_1.000000-NA-55837_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.710923,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0456_07-18-2010-NA-NA-10354_1.000000-NA-55837_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.978726,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0457_07-18-2010-NA-NA-00503_1.000000-NA-60972_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.570315,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0457_07-18-2010-NA-NA-00503_1.000000-NA-60972_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.491652,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0468_07-18-2010-NA-NA-27287_1.000000-NA-89580_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.910223,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0468_07-18-2010-NA-NA-27287_1.000000-NA-89580_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.855044,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0471_07-18-2010-NA-NA-34203_1.000000-NA-98677_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.160242,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0471_07-18-2010-NA-NA-34203_1.000000-NA-98677_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.1075,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0481_07-18-2011-NA-NA-87915_1.000000-NA-75676_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.41427,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0481_07-18-2011-NA-NA-87915_1.000000-NA-75676_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.227503,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0484_07-18-2010-NA-NA-53350_1.000000-NA-09806_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.422538,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0484_07-18-2010-NA-NA-53350_1.000000-NA-09806_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.305474,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0484_07-18-2010-NA-NA-53350_1.000000-NA-09806_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.38241,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0484_07-18-2010-NA-NA-53350_1.000000-NA-09806_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.781136,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0485_07-18-2010-NA-NA-17137_1.000000-NA-03977_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.388181,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0485_07-18-2010-NA-NA-17137_1.000000-NA-03977_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.360184,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0487_07-18-2010-NA-NA-79055_1.000000-NA-73296_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.308102,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0487_07-18-2010-NA-NA-79055_1.000000-NA-73296_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.293857,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0492_07-18-2010-NA-NA-62623_1.000000-NA-47862_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.352857,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0492_07-18-2010-NA-NA-62623_1.000000-NA-47862_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.445038,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0493_07-18-2010-NA-NA-55291_1.000000-NA-23144_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.550934,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0493_07-18-2010-NA-NA-55291_1.000000-NA-23144_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.548694,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0493_07-18-2010-NA-NA-55291_1.000000-NA-23144_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.638933,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0493_07-18-2010-NA-NA-55291_1.000000-NA-23144_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.836096,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0497_07-18-2010-NA-NA-36721_1.000000-NA-20706_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.259099,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0497_07-18-2010-NA-NA-36721_1.000000-NA-20706_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.268269,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0503_07-18-2010-NA-NA-03444_1.000000-NA-08412_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.811966,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0503_07-18-2010-NA-NA-03444_1.000000-NA-08412_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.866092,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0504_07-18-2010-NA-NA-27339_1.000000-NA-42598_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.483516,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0504_07-18-2010-NA-NA-27339_1.000000-NA-42598_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.722147,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0510_07-18-2010-NA-NA-00999_1.000000-NA-60180_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.689003,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0510_07-18-2010-NA-NA-00999_1.000000-NA-60180_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.773918,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0511_07-18-2010-NA-NA-60753_1.000000-NA-98638_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.485103,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0511_07-18-2010-NA-NA-60753_1.000000-NA-98638_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.455637,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0516_07-18-2010-NA-NA-15124_1.000000-NA-09845_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.675992,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0516_07-18-2010-NA-NA-15124_1.000000-NA-09845_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.562394,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0517_07-18-2010-NA-NA-01987_1.000000-NA-45673_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.676243,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0517_07-18-2010-NA-NA-01987_1.000000-NA-45673_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.868891,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0518_07-18-2010-NA-NA-38749_1.000000-NA-32457_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.72559,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0518_07-18-2010-NA-NA-38749_1.000000-NA-32457_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.492575,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0524_07-18-2010-NA-NA-06795_1.000000-NA-03883_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.998523,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0524_07-18-2010-NA-NA-06795_1.000000-NA-03883_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.992021,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0530_07-18-2010-NA-NA-45239_1.000000-NA-70010_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.950829,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0530_07-18-2010-NA-NA-45239_1.000000-NA-70010_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.949003,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0541_07-18-2010-NA-NA-38786_1.000000-NA-66222_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.64759,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0541_07-18-2010-NA-NA-38786_1.000000-NA-66222_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.389773,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0544_07-18-2010-NA-NA-08923_1.000000-NA-64995_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.581809,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0544_07-18-2010-NA-NA-08923_1.000000-NA-64995_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.326307,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0546_07-18-2010-NA-NA-56468_1.000000-NA-43403_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.661845,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0546_07-18-2010-NA-NA-56468_1.000000-NA-43403_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.38924,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0546_07-18-2010-NA-NA-56468_1.000000-NA-43403_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.281079,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0546_07-18-2010-NA-NA-56468_1.000000-NA-43403_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.246758,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0548_07-18-2010-NA-NA-21810_1.000000-NA-57644_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.560133,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0548_07-18-2010-NA-NA-21810_1.000000-NA-57644_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.915443,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0549_07-18-2010-NA-NA-53134_1.000000-NA-66213_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.968627,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0549_07-18-2010-NA-NA-53134_1.000000-NA-66213_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.965982,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0555_07-18-2010-NA-NA-62093_1.000000-NA-24905_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.618645,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0555_07-18-2010-NA-NA-62093_1.000000-NA-24905_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.557658,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0555_07-18-2010-NA-NA-62093_1.000000-NA-24905_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.584243,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0555_07-18-2010-NA-NA-62093_1.000000-NA-24905_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.469807,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0561_07-18-2010-NA-NA-90228_1.000000-NA-65684_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.726678,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0561_07-18-2010-NA-NA-90228_1.000000-NA-65684_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.862352,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0562_07-18-2010-NA-NA-82721_1.000000-NA-76056_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.816442,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0562_07-18-2010-NA-NA-82721_1.000000-NA-76056_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.902257,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0564_07-18-2011-NA-NA-19553_1.000000-NA-38840_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.61272,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0564_07-18-2011-NA-NA-19553_1.000000-NA-38840_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.81805,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0567_07-18-2011-NA-NA-88610_1.000000-NA-28440_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.426488,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0567_07-18-2011-NA-NA-88610_1.000000-NA-28440_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.506928,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0570_07-18-2011-NA-NA-70898_1.000000-NA-88497_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.396158,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0570_07-18-2011-NA-NA-70898_1.000000-NA-88497_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.31124,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0572_07-18-2011-NA-NA-34964_1.000000-NA-75879_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.739484,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0572_07-18-2011-NA-NA-34964_1.000000-NA-75879_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.530872,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0573_07-18-2011-NA-NA-34219_1.000000-NA-25297_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.637927,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0573_07-18-2011-NA-NA-34219_1.000000-NA-25297_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.145793,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0579_07-18-2011-NA-NA-52446_1.000000-NA-95772_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.318603,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0579_07-18-2011-NA-NA-52446_1.000000-NA-95772_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.394807,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0580_07-18-2011-NA-NA-08927_1.000000-NA-50159_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.57073,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0580_07-18-2011-NA-NA-08927_1.000000-NA-50159_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.603132,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0581_07-18-2011-NA-NA-65825_1.000000-NA-76637_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.994209,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0581_07-18-2011-NA-NA-65825_1.000000-NA-76637_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.986117,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0584_07-18-2011-NA-NA-15946_1.000000-NA-80482_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.241891,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0584_07-18-2011-NA-NA-15946_1.000000-NA-80482_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.648912,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0585_07-18-2011-NA-NA-23549_1.000000-NA-04341_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.437488,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0585_07-18-2011-NA-NA-23549_1.000000-NA-04341_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.332305,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0588_07-18-2011-NA-NA-89379_1.000000-NA-46777_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.987055,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0588_07-18-2011-NA-NA-89379_1.000000-NA-46777_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.715434,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0589_07-18-2011-NA-NA-43745_1.000000-NA-78174_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.979034,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0589_07-18-2011-NA-NA-43745_1.000000-NA-78174_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.998084,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0590_07-18-2011-NA-NA-05182_1.000000-NA-83512_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.802442,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0590_07-18-2011-NA-NA-05182_1.000000-NA-83512_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.641579,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0591_07-18-2011-NA-NA-92077_1.000000-NA-59815_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.68245,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0591_07-18-2011-NA-NA-92077_1.000000-NA-59815_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.64562,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0593_07-18-2011-NA-NA-27272_1.000000-NA-87240_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.315534,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0593_07-18-2011-NA-NA-27272_1.000000-NA-87240_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.97801,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0597_07-18-2011-NA-NA-88914_1.000000-NA-46694_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.395741,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0597_07-18-2011-NA-NA-88914_1.000000-NA-46694_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.395501,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0601_07-18-2011-NA-NA-08876_1.000000-NA-85267_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.575059,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0601_07-18-2011-NA-NA-08876_1.000000-NA-85267_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.61045,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0607_07-18-2011-NA-NA-50564_1.000000-NA-11040_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.143815,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0607_07-18-2011-NA-NA-50564_1.000000-NA-11040_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.115428,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0611_07-18-2011-NA-NA-24261_1.000000-NA-26927_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.472577,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0611_07-18-2011-NA-NA-24261_1.000000-NA-26927_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.739317,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0613_07-18-2011-NA-NA-56307_1.000000-NA-94969_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.956277,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0613_07-18-2011-NA-NA-56307_1.000000-NA-94969_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.996958,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0615_07-18-2011-NA-NA-69995_1.000000-NA-32333_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.900104,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0615_07-18-2011-NA-NA-69995_1.000000-NA-32333_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.749301,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0617_07-18-2011-NA-NA-07980_1.000000-NA-30077_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.991043,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0617_07-18-2011-NA-NA-07980_1.000000-NA-30077_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.954187,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0620_07-18-2011-NA-NA-38314_1.000000-NA-75737_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.113077,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0620_07-18-2011-NA-NA-38314_1.000000-NA-75737_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.29966,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0622_07-18-2011-NA-NA-02755_1.000000-NA-66922_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.967506,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0622_07-18-2011-NA-NA-02755_1.000000-NA-66922_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.946041,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0624_07-18-2011-NA-NA-11448_1.000000-NA-56155_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.408004,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0624_07-18-2011-NA-NA-11448_1.000000-NA-56155_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.32037,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0628_07-18-2011-NA-NA-74688_1.000000-NA-62276_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.298439,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0628_07-18-2011-NA-NA-74688_1.000000-NA-62276_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.294504,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0630_07-18-2011-NA-NA-26415_1.000000-NA-53425_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.491555,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0630_07-18-2011-NA-NA-26415_1.000000-NA-53425_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.386236,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0633_07-18-2011-NA-NA-08473_1.000000-NA-11523_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.704159,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0633_07-18-2011-NA-NA-08473_1.000000-NA-11523_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.469093,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0635_07-18-2011-NA-NA-83398_1.000000-NA-15292_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.545789,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0635_07-18-2011-NA-NA-83398_1.000000-NA-15292_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.385612,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0637_07-18-2011-NA-NA-86052_1.000000-NA-62326_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.918629,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0637_07-18-2011-NA-NA-86052_1.000000-NA-62326_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.858055,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0639_07-18-2011-NA-NA-22745_1.000000-NA-78857_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.547655,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0639_07-18-2011-NA-NA-22745_1.000000-NA-78857_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.483794,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0640_07-18-2011-NA-NA-78604_1.000000-NA-49073_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.457826,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0640_07-18-2011-NA-NA-78604_1.000000-NA-49073_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.395028,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0645_07-18-2011-NA-NA-34588_1.000000-NA-02549_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.930115,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0645_07-18-2011-NA-NA-34588_1.000000-NA-02549_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.955772,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0646_07-18-2011-NA-NA-48017_1.000000-NA-55226_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.380885,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0646_07-18-2011-NA-NA-48017_1.000000-NA-55226_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.61649,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0651_07-18-2011-NA-NA-12946_1.000000-NA-82469_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.07053,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0651_07-18-2011-NA-NA-12946_1.000000-NA-82469_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.407883,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0656_07-18-2011-NA-NA-93743_1.000000-NA-88168_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.382166,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0656_07-18-2011-NA-NA-93743_1.000000-NA-88168_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.198116,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0656_07-18-2011-NA-NA-93743_1.000000-NA-88168_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.968097,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0656_07-18-2011-NA-NA-93743_1.000000-NA-88168_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.991753,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0663_07-18-2011-NA-NA-97635_1.000000-NA-88905_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.866897,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0663_07-18-2011-NA-NA-97635_1.000000-NA-88905_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.657109,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0666_07-18-2011-NA-NA-17155_1.000000-NA-20792_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.98948,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0666_07-18-2011-NA-NA-17155_1.000000-NA-20792_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.991259,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0667_07-18-2011-NA-NA-39568_1.000000-NA-15823_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.547716,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0667_07-18-2011-NA-NA-39568_1.000000-NA-15823_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.484989,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0669_07-18-2011-NA-NA-70200_1.000000-NA-39923_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.77121,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0669_07-18-2011-NA-NA-70200_1.000000-NA-39923_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.72713,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0669_07-18-2011-NA-NA-70200_1.000000-NA-39923_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.26797,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0669_07-18-2011-NA-NA-70200_1.000000-NA-39923_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.208947,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0672_07-18-2011-NA-NA-27209_1.000000-NA-49611_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.556542,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0672_07-18-2011-NA-NA-27209_1.000000-NA-49611_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.506393,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0675_07-18-2011-NA-NA-26608_1.000000-NA-20150_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.502843,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0675_07-18-2011-NA-NA-26608_1.000000-NA-20150_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.438349,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0676_07-18-2011-NA-NA-85886_1.000000-NA-27883_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.290358,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0676_07-18-2011-NA-NA-85886_1.000000-NA-27883_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.286125,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0679_07-18-2011-NA-NA-27963_1.000000-NA-83304_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.410362,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0679_07-18-2011-NA-NA-27963_1.000000-NA-83304_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.349864,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0682_07-18-2011-NA-NA-35170_1.000000-NA-47103_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.745315,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0682_07-18-2011-NA-NA-35170_1.000000-NA-47103_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.437346,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0684_07-18-2011-NA-NA-36682_1.000000-NA-90229_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.435198,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0684_07-18-2011-NA-NA-36682_1.000000-NA-90229_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.631934,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0684_07-18-2011-NA-NA-36682_1.000000-NA-90229_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.939294,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0684_07-18-2011-NA-NA-36682_1.000000-NA-90229_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.932115,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0687_07-18-2011-NA-NA-59283_1.000000-NA-67873_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.550691,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0687_07-18-2011-NA-NA-59283_1.000000-NA-67873_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.214815,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0700_07-18-2011-NA-NA-66524_1.000000-NA-89532_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.576868,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0700_07-18-2011-NA-NA-66524_1.000000-NA-89532_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.436317,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0701_07-18-2011-NA-NA-10395_1.000000-NA-54124_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.466516,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0701_07-18-2011-NA-NA-10395_1.000000-NA-54124_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.515155,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0703_07-18-2011-NA-NA-04972_1.000000-NA-06199_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.418142,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0703_07-18-2011-NA-NA-04972_1.000000-NA-06199_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.596673,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0704_07-18-2011-NA-NA-25372_1.000000-NA-35763_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.997716,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0704_07-18-2011-NA-NA-25372_1.000000-NA-35763_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.971989,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0705_07-18-2011-NA-NA-49729_1.000000-NA-72535_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.462817,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0705_07-18-2011-NA-NA-49729_1.000000-NA-72535_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.838684,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0710_07-18-2011-NA-NA-35541_1.000000-NA-50084_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.346291,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0710_07-18-2011-NA-NA-35541_1.000000-NA-50084_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.342676,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0710_07-18-2011-NA-NA-35541_1.000000-NA-50084_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.969985,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0710_07-18-2011-NA-NA-35541_1.000000-NA-50084_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.93915,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0718_07-18-2011-NA-NA-87676_1.000000-NA-03963_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.250421,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0718_07-18-2011-NA-NA-87676_1.000000-NA-03963_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.192756,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0718_07-18-2011-NA-NA-87676_1.000000-NA-03963_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.909739,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0718_07-18-2011-NA-NA-87676_1.000000-NA-03963_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.969594,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0719_07-18-2011-NA-NA-09157_1.000000-NA-72443_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.270888,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0719_07-18-2011-NA-NA-09157_1.000000-NA-72443_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.108594,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0722_07-18-2011-NA-NA-00061_1.000000-NA-35564_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.814914,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0722_07-18-2011-NA-NA-00061_1.000000-NA-35564_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.682883,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0722_07-18-2011-NA-NA-00061_1.000000-NA-35564_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.449397,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0722_07-18-2011-NA-NA-00061_1.000000-NA-35564_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.193953,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0725_07-18-2011-NA-NA-02340_1.000000-NA-81678_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.342013,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0725_07-18-2011-NA-NA-02340_1.000000-NA-81678_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.291622,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0728_07-18-2011-NA-NA-69216_1.000000-NA-22310_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.370285,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0728_07-18-2011-NA-NA-69216_1.000000-NA-22310_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.734718,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0729_07-18-2011-NA-NA-91467_1.000000-NA-75906_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.682361,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0729_07-18-2011-NA-NA-91467_1.000000-NA-75906_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.473912,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0735_07-18-2011-NA-NA-09273_1.000000-NA-76285_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.097417,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0735_07-18-2011-NA-NA-09273_1.000000-NA-76285_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.109936,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0739_07-18-2011-NA-NA-11794_1.000000-NA-28498_1-1.dcm",
+      "true_label": 0,
+      "pred_prob": 0.374695,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0739_07-18-2011-NA-NA-11794_1.000000-NA-28498_1-2.dcm",
+      "true_label": 0,
+      "pred_prob": 0.339412,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0741_07-18-2011-NA-NA-36897_1.000000-NA-33945_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.892033,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0741_07-18-2011-NA-NA-36897_1.000000-NA-33945_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.644329,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0746_07-18-2011-NA-NA-61307_1.000000-NA-36363_1-3.dcm",
+      "true_label": 1,
+      "pred_prob": 0.723742,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0746_07-18-2011-NA-NA-61307_1.000000-NA-36363_1-4.dcm",
+      "true_label": 1,
+      "pred_prob": 0.94155,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0749_07-17-2012-NA-NA-85032_1.000000-NA-15082_1-1.dcm",
+      "true_label": 1,
+      "pred_prob": 0.66227,
+      "pred_label": 1
+    },
+    {
+      "filename": "D2-0749_07-17-2012-NA-NA-85032_1.000000-NA-15082_1-2.dcm",
+      "true_label": 1,
+      "pred_prob": 0.46167,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0749_07-17-2012-NA-NA-85032_1.000000-NA-15082_1-3.dcm",
+      "true_label": 0,
+      "pred_prob": 0.28616,
+      "pred_label": 0
+    },
+    {
+      "filename": "D2-0749_07-17-2012-NA-NA-85032_1.000000-NA-15082_1-4.dcm",
+      "true_label": 0,
+      "pred_prob": 0.283643,
+      "pred_label": 0
+    }
+  ]
+}

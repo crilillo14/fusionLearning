@@ -1,0 +1,11 @@
+{
+  "variant_id": "maxvit_L2",
+  "family": "maxvit",
+  "timm_name": "maxvit_base_tf_224",
+  "depth_tier": "large",
+  "resolution_tier": "mid",
+  "resolution_px": 512,
+  "params_m": 118.7,
+  "lr": 0.004,
+  "batch_size": 6
+}

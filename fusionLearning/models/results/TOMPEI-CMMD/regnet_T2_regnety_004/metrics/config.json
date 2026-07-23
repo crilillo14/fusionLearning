@@ -1,0 +1,11 @@
+{
+  "variant_id": "regnet_T2",
+  "family": "regnet",
+  "timm_name": "regnety_004",
+  "depth_tier": "tiny",
+  "resolution_tier": "mid",
+  "resolution_px": 512,
+  "params_m": 3.9,
+  "lr": 0.01,
+  "batch_size": 24
+}

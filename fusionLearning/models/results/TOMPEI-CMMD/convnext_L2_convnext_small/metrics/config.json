@@ -1,0 +1,11 @@
+{
+  "variant_id": "convnext_L2",
+  "family": "convnext",
+  "timm_name": "convnext_small",
+  "depth_tier": "large",
+  "resolution_tier": "mid",
+  "resolution_px": 512,
+  "params_m": 49.46,
+  "lr": 0.004,
+  "batch_size": 6
+}

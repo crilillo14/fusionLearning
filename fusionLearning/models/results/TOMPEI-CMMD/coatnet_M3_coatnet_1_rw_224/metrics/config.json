@@ -1,0 +1,11 @@
+{
+  "variant_id": "coatnet_M3",
+  "family": "coatnet",
+  "timm_name": "coatnet_1_rw_224",
+  "depth_tier": "medium",
+  "resolution_tier": "hi",
+  "resolution_px": 768,
+  "params_m": 40.95,
+  "lr": 0.006,
+  "batch_size": 6
+}

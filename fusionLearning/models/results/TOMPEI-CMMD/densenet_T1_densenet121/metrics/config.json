@@ -1,0 +1,11 @@
+{
+  "variant_id": "densenet_T1",
+  "family": "densenet",
+  "timm_name": "densenet121",
+  "depth_tier": "tiny",
+  "resolution_tier": "lo",
+  "resolution_px": 384,
+  "params_m": 6.95,
+  "lr": 0.01,
+  "batch_size": 32
+}

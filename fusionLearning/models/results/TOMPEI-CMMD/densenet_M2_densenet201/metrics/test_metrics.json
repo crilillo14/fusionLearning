@@ -1,0 +1,21 @@
+{
+  "test_loss": 0.441975,
+  "test_acc": 0.781401,
+  "test_auc": 0.849416,
+  "test_precision": 0.812395,
+  "test_sensitivity": 0.875451,
+  "test_specificity": 0.591241,
+  "test_f1": 0.842745,
+  "test_mcc": 0.489629,
+  "test_cm": [
+    [
+      162,
+      112
+    ],
+    [
+      69,
+      485
+    ]
+  ],
+  "tested_at": "2026-07-23T08:04:49"
+}

@@ -1,0 +1,11 @@
+{
+  "variant_id": "resnet_L2",
+  "family": "resnet",
+  "timm_name": "resnet101",
+  "depth_tier": "large",
+  "resolution_tier": "mid",
+  "resolution_px": 512,
+  "params_m": 42.5,
+  "lr": 0.004,
+  "batch_size": 6
+}

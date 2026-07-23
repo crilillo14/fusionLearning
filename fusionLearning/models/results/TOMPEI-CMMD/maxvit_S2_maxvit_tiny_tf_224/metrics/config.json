@@ -1,0 +1,11 @@
+{
+  "variant_id": "maxvit_S2",
+  "family": "maxvit",
+  "timm_name": "maxvit_tiny_tf_224",
+  "depth_tier": "small",
+  "resolution_tier": "mid",
+  "resolution_px": 512,
+  "params_m": 30.4,
+  "lr": 0.008,
+  "batch_size": 16
+}

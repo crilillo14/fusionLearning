@@ -1,0 +1,11 @@
+{
+  "variant_id": "efficientnet_L2",
+  "family": "efficientnet",
+  "timm_name": "efficientnet_b5",
+  "depth_tier": "large",
+  "resolution_tier": "mid",
+  "resolution_px": 512,
+  "params_m": 28.34,
+  "lr": 0.004,
+  "batch_size": 6
+}

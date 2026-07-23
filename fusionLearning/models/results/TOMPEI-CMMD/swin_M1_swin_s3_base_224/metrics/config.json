@@ -1,0 +1,11 @@
+{
+  "variant_id": "swin_M1",
+  "family": "swin",
+  "timm_name": "swin_s3_base_224",
+  "depth_tier": "medium",
+  "resolution_tier": "lo",
+  "resolution_px": 384,
+  "params_m": 70.36,
+  "lr": 0.006,
+  "batch_size": 16
+}

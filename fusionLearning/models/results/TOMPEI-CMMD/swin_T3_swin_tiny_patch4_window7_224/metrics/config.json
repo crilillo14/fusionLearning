@@ -1,0 +1,11 @@
+{
+  "variant_id": "swin_T3",
+  "family": "swin",
+  "timm_name": "swin_tiny_patch4_window7_224",
+  "depth_tier": "tiny",
+  "resolution_tier": "hi",
+  "resolution_px": 768,
+  "params_m": 27.52,
+  "lr": 0.01,
+  "batch_size": 10
+}

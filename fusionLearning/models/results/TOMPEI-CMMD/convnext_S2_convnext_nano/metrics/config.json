@@ -1,0 +1,11 @@
+{
+  "variant_id": "convnext_S2",
+  "family": "convnext",
+  "timm_name": "convnext_nano",
+  "depth_tier": "small",
+  "resolution_tier": "mid",
+  "resolution_px": 512,
+  "params_m": 14.95,
+  "lr": 0.008,
+  "batch_size": 16
+}

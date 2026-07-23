@@ -1,0 +1,11 @@
+{
+  "variant_id": "densenet_S2",
+  "family": "densenet",
+  "timm_name": "densenet169",
+  "depth_tier": "small",
+  "resolution_tier": "mid",
+  "resolution_px": 512,
+  "params_m": 12.49,
+  "lr": 0.008,
+  "batch_size": 16
+}

@@ -1,0 +1,11 @@
+{
+  "variant_id": "maxvit_T3",
+  "family": "maxvit",
+  "timm_name": "maxvit_nano_rw_256",
+  "depth_tier": "tiny",
+  "resolution_tier": "hi",
+  "resolution_px": 768,
+  "params_m": 14.94,
+  "lr": 0.01,
+  "batch_size": 10
+}

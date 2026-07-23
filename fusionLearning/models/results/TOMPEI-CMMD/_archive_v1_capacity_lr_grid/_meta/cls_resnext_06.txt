@@ -1,0 +1,44 @@
+
+============================================================
+Cannot send a request, as the client has been closed.
+Traceback (most recent call last):
+  File "/home/cal390/fusionLearning/fusionLearning/models/distributed_cls.py", line 111, in main
+    model = create_classifier(timm_name, family, num_classes=num_classes).to(device)
+  File "/home/cal390/fusionLearning/fusionLearning/models/distributed_cls.py", line 93, in create_classifier
+    return timm.create_model(timm_name, **kwargs)
+  File "/home/cal390/fusionLearning/.venv/lib/python3.10/site-packages/timm/models/_factory.py", line 138, in create_model
+    model = create_fn(
+  File "/home/cal390/fusionLearning/.venv/lib/python3.10/site-packages/timm/models/sknet.py", line 268, in skresnext50_32x4d
+    return _create_skresnet('skresnext50_32x4d', pretrained, **dict(model_args, **kwargs))
+  File "/home/cal390/fusionLearning/.venv/lib/python3.10/site-packages/timm/models/sknet.py", line 173, in _create_skresnet
+    return build_model_with_cfg(
+  File "/home/cal390/fusionLearning/.venv/lib/python3.10/site-packages/timm/models/_builder.py", line 457, in build_model_with_cfg
+    load_pretrained(
+  File "/home/cal390/fusionLearning/.venv/lib/python3.10/site-packages/timm/models/_builder.py", line 226, in load_pretrained
+    state_dict = load_state_dict_from_hf(pretrained_loc, weights_only=True, cache_dir=cache_dir)
+  File "/home/cal390/fusionLearning/.venv/lib/python3.10/site-packages/timm/models/_hub.py", line 226, in load_state_dict_from_hf
+    cached_safe_file = hf_hub_download(
+  File "/home/cal390/fusionLearning/.venv/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/cal390/fusionLearning/.venv/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 986, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+  File "/home/cal390/fusionLearning/.venv/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1119, in _hf_hub_download_to_cache_dir
+    _get_metadata_or_catch_error(
+  File "/home/cal390/fusionLearning/.venv/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1653, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+  File "/home/cal390/fusionLearning/.venv/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/cal390/fusionLearning/.venv/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1576, in get_hf_file_metadata
+    response = _httpx_follow_relative_redirects_with_backoff(
+  File "/home/cal390/fusionLearning/.venv/lib/python3.10/site-packages/huggingface_hub/utils/_http.py", line 685, in _httpx_follow_relative_redirects_with_backoff
+    response = http_backoff(
+  File "/home/cal390/fusionLearning/.venv/lib/python3.10/site-packages/huggingface_hub/utils/_http.py", line 559, in http_backoff
+    return next(
+  File "/home/cal390/fusionLearning/.venv/lib/python3.10/site-packages/huggingface_hub/utils/_http.py", line 467, in _http_backoff_base
+    response = client.request(method=method, url=url, **kwargs)
+  File "/home/cal390/fusionLearning/.venv/lib/python3.10/site-packages/httpx/_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+  File "/home/cal390/fusionLearning/.venv/lib/python3.10/site-packages/httpx/_client.py", line 901, in send
+    raise RuntimeError("Cannot send a request, as the client has been closed.")
+RuntimeError: Cannot send a request, as the client has been closed.
+

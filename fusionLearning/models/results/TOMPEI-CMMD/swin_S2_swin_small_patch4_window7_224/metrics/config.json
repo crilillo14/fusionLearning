@@ -1,0 +1,11 @@
+{
+  "variant_id": "swin_S2",
+  "family": "swin",
+  "timm_name": "swin_small_patch4_window7_224",
+  "depth_tier": "small",
+  "resolution_tier": "mid",
+  "resolution_px": 512,
+  "params_m": 48.84,
+  "lr": 0.008,
+  "batch_size": 16
+}
