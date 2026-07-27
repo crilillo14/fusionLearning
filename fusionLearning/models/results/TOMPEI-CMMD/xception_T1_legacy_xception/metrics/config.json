@@ -1,0 +1,11 @@
+{
+  "variant_id": "xception_T1",
+  "family": "xception",
+  "timm_name": "legacy_xception",
+  "depth_tier": "tiny",
+  "resolution_tier": "lo",
+  "resolution_px": 384,
+  "params_m": 20.81,
+  "lr": 0.01,
+  "batch_size": 32
+}

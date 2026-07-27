@@ -16,7 +16,7 @@ The two-stage pipeline is:
 1. **Base model training** — train individual SMP segmentation models on CUB-200-2011 bird segmentation
 2. **Fusion benchmarking** — fuse the output masks from multiple trained base models
 
-> IMPORTANT: This projects exists in a macbook, no NVIDIA drivers or GPU is available. All training and inference must be done on remote, so do not attempt anything GPU related on this machine. This is only for code development and testing; I will push to origin and then pull on remote. 
+> IMPORTANT: I now work directly on the remote box (4x NVIDIA L40S, CUDA available) — this is no longer a GPU-less macbook dev-only setup. Training and inference can be run directly here when asked.
 
 Also, I sometimes work on remote too, so whenever you are working check `git fetch` before making changes to avoid conflicts.
 

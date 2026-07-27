@@ -9,7 +9,26 @@
     "params_m": 14.63,
     "lr": 0.01,
     "batch_size": 32,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.619725,
+    "test_acc": 0.699275,
+    "test_auc": 0.626123,
+    "test_precision": 0.696774,
+    "test_sensitivity": 0.974729,
+    "test_specificity": 0.142336,
+    "test_f1": 0.812641,
+    "test_mcc": 0.225045,
+    "test_cm": [
+      [
+        39,
+        235
+      ],
+      [
+        14,
+        540
+      ]
+    ],
+    "tested_at": "2026-07-22T23:26:04"
   },
   {
     "variant_id": "coatnet_T2",
@@ -21,7 +40,26 @@
     "params_m": 14.63,
     "lr": 0.01,
     "batch_size": 24,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.621512,
+    "test_acc": 0.689614,
+    "test_auc": 0.619763,
+    "test_precision": 0.684932,
+    "test_sensitivity": 0.99278,
+    "test_specificity": 0.076642,
+    "test_f1": 0.810612,
+    "test_mcc": 0.190898,
+    "test_cm": [
+      [
+        21,
+        253
+      ],
+      [
+        4,
+        550
+      ]
+    ],
+    "tested_at": "2026-07-22T23:37:12"
   },
   {
     "variant_id": "coatnet_T3",
@@ -33,7 +71,26 @@
     "params_m": 14.63,
     "lr": 0.01,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.615135,
+    "test_acc": 0.698068,
+    "test_auc": 0.621103,
+    "test_precision": 0.695373,
+    "test_sensitivity": 0.976534,
+    "test_specificity": 0.135036,
+    "test_f1": 0.812312,
+    "test_mcc": 0.220397,
+    "test_cm": [
+      [
+        37,
+        237
+      ],
+      [
+        13,
+        541
+      ]
+    ],
+    "tested_at": "2026-07-22T23:57:06"
   },
   {
     "variant_id": "coatnet_S1",
@@ -45,7 +102,26 @@
     "params_m": 26.67,
     "lr": 0.008,
     "batch_size": 24,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.618246,
+    "test_acc": 0.688406,
+    "test_auc": 0.625181,
+    "test_precision": 0.695767,
+    "test_sensitivity": 0.949458,
+    "test_specificity": 0.160584,
+    "test_f1": 0.803053,
+    "test_mcc": 0.183765,
+    "test_cm": [
+      [
+        44,
+        230
+      ],
+      [
+        28,
+        526
+      ]
+    ],
+    "tested_at": "2026-07-23T00:08:48"
   },
   {
     "variant_id": "coatnet_S2",
@@ -57,7 +133,26 @@
     "params_m": 26.67,
     "lr": 0.008,
     "batch_size": 16,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.609251,
+    "test_acc": 0.698068,
+    "test_auc": 0.633627,
+    "test_precision": 0.703753,
+    "test_sensitivity": 0.947653,
+    "test_specificity": 0.193431,
+    "test_f1": 0.807692,
+    "test_mcc": 0.222245,
+    "test_cm": [
+      [
+        53,
+        221
+      ],
+      [
+        29,
+        525
+      ]
+    ],
+    "tested_at": "2026-07-23T00:21:03"
   },
   {
     "variant_id": "coatnet_S3",
@@ -69,7 +164,26 @@
     "params_m": 26.67,
     "lr": 0.008,
     "batch_size": 8,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.617643,
+    "test_acc": 0.700483,
+    "test_auc": 0.614278,
+    "test_precision": 0.694656,
+    "test_sensitivity": 0.98556,
+    "test_specificity": 0.124088,
+    "test_f1": 0.814925,
+    "test_mcc": 0.235121,
+    "test_cm": [
+      [
+        34,
+        240
+      ],
+      [
+        8,
+        546
+      ]
+    ],
+    "tested_at": "2026-07-23T00:46:59"
   },
   {
     "variant_id": "coatnet_M1",
@@ -81,7 +195,26 @@
     "params_m": 40.95,
     "lr": 0.006,
     "batch_size": 16,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.612221,
+    "test_acc": 0.692029,
+    "test_auc": 0.628179,
+    "test_precision": 0.694915,
+    "test_sensitivity": 0.962094,
+    "test_specificity": 0.145985,
+    "test_f1": 0.806964,
+    "test_mcc": 0.194675,
+    "test_cm": [
+      [
+        40,
+        234
+      ],
+      [
+        21,
+        533
+      ]
+    ],
+    "tested_at": "2026-07-23T00:58:40"
   },
   {
     "variant_id": "coatnet_M2",
@@ -93,7 +226,26 @@
     "params_m": 40.95,
     "lr": 0.006,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.617304,
+    "test_acc": 0.688406,
+    "test_auc": 0.629318,
+    "test_precision": 0.703857,
+    "test_sensitivity": 0.922383,
+    "test_specificity": 0.215328,
+    "test_f1": 0.798437,
+    "test_mcc": 0.197165,
+    "test_cm": [
+      [
+        59,
+        215
+      ],
+      [
+        43,
+        511
+      ]
+    ],
+    "tested_at": "2026-07-23T01:14:03"
   },
   {
     "variant_id": "coatnet_M3",
@@ -105,7 +257,26 @@
     "params_m": 40.95,
     "lr": 0.006,
     "batch_size": 6,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.611562,
+    "test_acc": 0.699275,
+    "test_auc": 0.628218,
+    "test_precision": 0.704698,
+    "test_sensitivity": 0.947653,
+    "test_specificity": 0.19708,
+    "test_f1": 0.808314,
+    "test_mcc": 0.226768,
+    "test_cm": [
+      [
+        54,
+        220
+      ],
+      [
+        29,
+        525
+      ]
+    ],
+    "tested_at": "2026-07-23T02:03:00"
   },
   {
     "variant_id": "coatnet_L1",
@@ -117,7 +288,26 @@
     "params_m": 72.84,
     "lr": 0.004,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.534495,
+    "test_acc": 0.698068,
+    "test_auc": 0.751693,
+    "test_precision": 0.762069,
+    "test_sensitivity": 0.797834,
+    "test_specificity": 0.49635,
+    "test_f1": 0.779541,
+    "test_mcc": 0.302211,
+    "test_cm": [
+      [
+        136,
+        138
+      ],
+      [
+        112,
+        442
+      ]
+    ],
+    "tested_at": "2026-07-23T02:16:40"
   },
   {
     "variant_id": "coatnet_L2",
@@ -129,7 +319,26 @@
     "params_m": 72.84,
     "lr": 0.004,
     "batch_size": 6,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.597167,
+    "test_acc": 0.692029,
+    "test_auc": 0.658878,
+    "test_precision": 0.707351,
+    "test_sensitivity": 0.920578,
+    "test_specificity": 0.229927,
+    "test_f1": 0.8,
+    "test_mcc": 0.211116,
+    "test_cm": [
+      [
+        63,
+        211
+      ],
+      [
+        44,
+        510
+      ]
+    ],
+    "tested_at": "2026-07-23T02:39:43"
   },
   {
     "variant_id": "coatnet_L3",
@@ -141,7 +350,26 @@
     "params_m": 72.84,
     "lr": 0.004,
     "batch_size": 4,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.612562,
+    "test_acc": 0.693237,
+    "test_auc": 0.621644,
+    "test_precision": 0.699468,
+    "test_sensitivity": 0.949458,
+    "test_specificity": 0.175182,
+    "test_f1": 0.805513,
+    "test_mcc": 0.203131,
+    "test_cm": [
+      [
+        48,
+        226
+      ],
+      [
+        28,
+        526
+      ]
+    ],
+    "tested_at": "2026-07-23T03:54:09"
   },
   {
     "variant_id": "convnext_T1",
@@ -153,7 +381,26 @@
     "params_m": 3.37,
     "lr": 0.01,
     "batch_size": 32,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.645438,
+    "test_acc": 0.669082,
+    "test_auc": 0.587189,
+    "test_precision": 0.669082,
+    "test_sensitivity": 1.0,
+    "test_specificity": 0.0,
+    "test_f1": 0.801737,
+    "test_mcc": 0.0,
+    "test_cm": [
+      [
+        0,
+        274
+      ],
+      [
+        0,
+        554
+      ]
+    ],
+    "tested_at": "2026-07-23T04:05:03"
   },
   {
     "variant_id": "convnext_T2",
@@ -165,7 +412,26 @@
     "params_m": 3.37,
     "lr": 0.01,
     "batch_size": 24,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.640751,
+    "test_acc": 0.669082,
+    "test_auc": 0.579179,
+    "test_precision": 0.669082,
+    "test_sensitivity": 1.0,
+    "test_specificity": 0.0,
+    "test_f1": 0.801737,
+    "test_mcc": 0.0,
+    "test_cm": [
+      [
+        0,
+        274
+      ],
+      [
+        0,
+        554
+      ]
+    ],
+    "tested_at": "2026-07-23T04:16:33"
   },
   {
     "variant_id": "convnext_T3",
@@ -177,7 +443,26 @@
     "params_m": 3.37,
     "lr": 0.01,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.637251,
+    "test_acc": 0.669082,
+    "test_auc": 0.5,
+    "test_precision": 0.669082,
+    "test_sensitivity": 1.0,
+    "test_specificity": 0.0,
+    "test_f1": 0.801737,
+    "test_mcc": 0.0,
+    "test_cm": [
+      [
+        0,
+        274
+      ],
+      [
+        0,
+        554
+      ]
+    ],
+    "tested_at": "2026-07-23T04:28:09"
   },
   {
     "variant_id": "convnext_S1",
@@ -189,7 +474,26 @@
     "params_m": 14.95,
     "lr": 0.008,
     "batch_size": 24,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.64089,
+    "test_acc": 0.669082,
+    "test_auc": 0.54012,
+    "test_precision": 0.669082,
+    "test_sensitivity": 1.0,
+    "test_specificity": 0.0,
+    "test_f1": 0.801737,
+    "test_mcc": 0.0,
+    "test_cm": [
+      [
+        0,
+        274
+      ],
+      [
+        0,
+        554
+      ]
+    ],
+    "tested_at": "2026-07-23T04:39:35"
   },
   {
     "variant_id": "convnext_S2",
@@ -201,7 +505,26 @@
     "params_m": 14.95,
     "lr": 0.008,
     "batch_size": 16,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.635512,
+    "test_acc": 0.669082,
+    "test_auc": 0.5,
+    "test_precision": 0.669082,
+    "test_sensitivity": 1.0,
+    "test_specificity": 0.0,
+    "test_f1": 0.801737,
+    "test_mcc": 0.0,
+    "test_cm": [
+      [
+        0,
+        274
+      ],
+      [
+        0,
+        554
+      ]
+    ],
+    "tested_at": "2026-07-23T04:50:56"
   },
   {
     "variant_id": "convnext_S3",
@@ -213,7 +536,26 @@
     "params_m": 14.95,
     "lr": 0.008,
     "batch_size": 8,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.635638,
+    "test_acc": 0.669082,
+    "test_auc": 0.5,
+    "test_precision": 0.669082,
+    "test_sensitivity": 1.0,
+    "test_specificity": 0.0,
+    "test_f1": 0.801737,
+    "test_mcc": 0.0,
+    "test_cm": [
+      [
+        0,
+        274
+      ],
+      [
+        0,
+        554
+      ]
+    ],
+    "tested_at": "2026-07-23T05:03:05"
   },
   {
     "variant_id": "convnext_M1",
@@ -225,7 +567,26 @@
     "params_m": 27.82,
     "lr": 0.006,
     "batch_size": 16,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.635524,
+    "test_acc": 0.669082,
+    "test_auc": 0.54483,
+    "test_precision": 0.669082,
+    "test_sensitivity": 1.0,
+    "test_specificity": 0.0,
+    "test_f1": 0.801737,
+    "test_mcc": 0.0,
+    "test_cm": [
+      [
+        0,
+        274
+      ],
+      [
+        0,
+        554
+      ]
+    ],
+    "tested_at": "2026-07-23T05:14:18"
   },
   {
     "variant_id": "convnext_M2",
@@ -237,7 +598,26 @@
     "params_m": 27.82,
     "lr": 0.006,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.637249,
+    "test_acc": 0.669082,
+    "test_auc": 0.507168,
+    "test_precision": 0.669082,
+    "test_sensitivity": 1.0,
+    "test_specificity": 0.0,
+    "test_f1": 0.801737,
+    "test_mcc": 0.0,
+    "test_cm": [
+      [
+        0,
+        274
+      ],
+      [
+        0,
+        554
+      ]
+    ],
+    "tested_at": "2026-07-23T05:26:16"
   },
   {
     "variant_id": "convnext_M3",
@@ -249,7 +629,26 @@
     "params_m": 27.82,
     "lr": 0.006,
     "batch_size": 6,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.636514,
+    "test_acc": 0.669082,
+    "test_auc": 0.571369,
+    "test_precision": 0.669082,
+    "test_sensitivity": 1.0,
+    "test_specificity": 0.0,
+    "test_f1": 0.801737,
+    "test_mcc": 0.0,
+    "test_cm": [
+      [
+        0,
+        274
+      ],
+      [
+        0,
+        554
+      ]
+    ],
+    "tested_at": "2026-07-23T05:40:32"
   },
   {
     "variant_id": "convnext_L1",
@@ -261,7 +660,26 @@
     "params_m": 49.46,
     "lr": 0.004,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.63725,
+    "test_acc": 0.669082,
+    "test_auc": 0.543891,
+    "test_precision": 0.669082,
+    "test_sensitivity": 1.0,
+    "test_specificity": 0.0,
+    "test_f1": 0.801737,
+    "test_mcc": 0.0,
+    "test_cm": [
+      [
+        0,
+        274
+      ],
+      [
+        0,
+        554
+      ]
+    ],
+    "tested_at": "2026-07-23T05:51:51"
   },
   {
     "variant_id": "convnext_L2",
@@ -273,7 +691,26 @@
     "params_m": 49.46,
     "lr": 0.004,
     "batch_size": 6,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.63652,
+    "test_acc": 0.669082,
+    "test_auc": 0.595095,
+    "test_precision": 0.669082,
+    "test_sensitivity": 1.0,
+    "test_specificity": 0.0,
+    "test_f1": 0.801737,
+    "test_mcc": 0.0,
+    "test_cm": [
+      [
+        0,
+        274
+      ],
+      [
+        0,
+        554
+      ]
+    ],
+    "tested_at": "2026-07-23T06:07:00"
   },
   {
     "variant_id": "convnext_L3",
@@ -285,7 +722,26 @@
     "params_m": 49.46,
     "lr": 0.004,
     "batch_size": 4,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.635399,
+    "test_acc": 0.669082,
+    "test_auc": 0.523268,
+    "test_precision": 0.669082,
+    "test_sensitivity": 1.0,
+    "test_specificity": 0.0,
+    "test_f1": 0.801737,
+    "test_mcc": 0.0,
+    "test_cm": [
+      [
+        0,
+        274
+      ],
+      [
+        0,
+        554
+      ]
+    ],
+    "tested_at": "2026-07-23T06:30:43"
   },
   {
     "variant_id": "densenet_T1",
@@ -297,7 +753,26 @@
     "params_m": 6.95,
     "lr": 0.01,
     "batch_size": 32,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.559245,
+    "test_acc": 0.778986,
+    "test_auc": 0.840694,
+    "test_precision": 0.82149,
+    "test_sensitivity": 0.855596,
+    "test_specificity": 0.624088,
+    "test_f1": 0.838196,
+    "test_mcc": 0.491089,
+    "test_cm": [
+      [
+        171,
+        103
+      ],
+      [
+        80,
+        474
+      ]
+    ],
+    "tested_at": "2026-07-23T06:42:08"
   },
   {
     "variant_id": "densenet_T2",
@@ -309,7 +784,26 @@
     "params_m": 6.95,
     "lr": 0.01,
     "batch_size": 24,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.457207,
+    "test_acc": 0.794686,
+    "test_auc": 0.864061,
+    "test_precision": 0.827645,
+    "test_sensitivity": 0.875451,
+    "test_specificity": 0.631387,
+    "test_f1": 0.850877,
+    "test_mcc": 0.524376,
+    "test_cm": [
+      [
+        173,
+        101
+      ],
+      [
+        69,
+        485
+      ]
+    ],
+    "tested_at": "2026-07-23T06:54:00"
   },
   {
     "variant_id": "densenet_T3",
@@ -321,7 +815,26 @@
     "params_m": 6.95,
     "lr": 0.01,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.486719,
+    "test_acc": 0.757246,
+    "test_auc": 0.812782,
+    "test_precision": 0.783307,
+    "test_sensitivity": 0.880866,
+    "test_specificity": 0.507299,
+    "test_f1": 0.829227,
+    "test_mcc": 0.423181,
+    "test_cm": [
+      [
+        139,
+        135
+      ],
+      [
+        66,
+        488
+      ]
+    ],
+    "tested_at": "2026-07-23T07:06:11"
   },
   {
     "variant_id": "densenet_S1",
@@ -333,7 +846,26 @@
     "params_m": 12.49,
     "lr": 0.008,
     "batch_size": 24,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.454475,
+    "test_acc": 0.775362,
+    "test_auc": 0.85082,
+    "test_precision": 0.80363,
+    "test_sensitivity": 0.879061,
+    "test_specificity": 0.565693,
+    "test_f1": 0.839655,
+    "test_mcc": 0.472431,
+    "test_cm": [
+      [
+        155,
+        119
+      ],
+      [
+        67,
+        487
+      ]
+    ],
+    "tested_at": "2026-07-23T07:17:09"
   },
   {
     "variant_id": "densenet_S2",
@@ -345,7 +877,26 @@
     "params_m": 12.49,
     "lr": 0.008,
     "batch_size": 16,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.465206,
+    "test_acc": 0.77657,
+    "test_auc": 0.833961,
+    "test_precision": 0.817556,
+    "test_sensitivity": 0.857401,
+    "test_specificity": 0.613139,
+    "test_f1": 0.837004,
+    "test_mcc": 0.483938,
+    "test_cm": [
+      [
+        168,
+        106
+      ],
+      [
+        79,
+        475
+      ]
+    ],
+    "tested_at": "2026-07-23T07:28:47"
   },
   {
     "variant_id": "densenet_S3",
@@ -357,7 +908,26 @@
     "params_m": 12.49,
     "lr": 0.008,
     "batch_size": 8,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.482741,
+    "test_acc": 0.757246,
+    "test_auc": 0.816622,
+    "test_precision": 0.780604,
+    "test_sensitivity": 0.886282,
+    "test_specificity": 0.49635,
+    "test_f1": 0.830093,
+    "test_mcc": 0.421366,
+    "test_cm": [
+      [
+        136,
+        138
+      ],
+      [
+        63,
+        491
+      ]
+    ],
+    "tested_at": "2026-07-23T07:42:00"
   },
   {
     "variant_id": "densenet_M1",
@@ -369,7 +939,26 @@
     "params_m": 18.09,
     "lr": 0.006,
     "batch_size": 16,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.433557,
+    "test_acc": 0.780193,
+    "test_auc": 0.864443,
+    "test_precision": 0.838182,
+    "test_sensitivity": 0.83213,
+    "test_specificity": 0.675182,
+    "test_f1": 0.835145,
+    "test_mcc": 0.505478,
+    "test_cm": [
+      [
+        185,
+        89
+      ],
+      [
+        93,
+        461
+      ]
+    ],
+    "tested_at": "2026-07-23T07:53:17"
   },
   {
     "variant_id": "densenet_M2",
@@ -381,7 +970,26 @@
     "params_m": 18.09,
     "lr": 0.006,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.441975,
+    "test_acc": 0.781401,
+    "test_auc": 0.849416,
+    "test_precision": 0.812395,
+    "test_sensitivity": 0.875451,
+    "test_specificity": 0.591241,
+    "test_f1": 0.842745,
+    "test_mcc": 0.489629,
+    "test_cm": [
+      [
+        162,
+        112
+      ],
+      [
+        69,
+        485
+      ]
+    ],
+    "tested_at": "2026-07-23T08:04:49"
   },
   {
     "variant_id": "densenet_M3",
@@ -393,7 +1001,26 @@
     "params_m": 18.09,
     "lr": 0.006,
     "batch_size": 6,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.490938,
+    "test_acc": 0.748792,
+    "test_auc": 0.805206,
+    "test_precision": 0.772013,
+    "test_sensitivity": 0.886282,
+    "test_specificity": 0.470803,
+    "test_f1": 0.82521,
+    "test_mcc": 0.398127,
+    "test_cm": [
+      [
+        129,
+        145
+      ],
+      [
+        63,
+        491
+      ]
+    ],
+    "tested_at": "2026-07-23T08:21:31"
   },
   {
     "variant_id": "densenet_L1",
@@ -405,7 +1032,26 @@
     "params_m": 26.47,
     "lr": 0.004,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.461881,
+    "test_acc": 0.762077,
+    "test_auc": 0.828269,
+    "test_precision": 0.809359,
+    "test_sensitivity": 0.84296,
+    "test_specificity": 0.59854,
+    "test_f1": 0.825818,
+    "test_mcc": 0.451998,
+    "test_cm": [
+      [
+        164,
+        110
+      ],
+      [
+        87,
+        467
+      ]
+    ],
+    "tested_at": "2026-07-23T08:32:49"
   },
   {
     "variant_id": "densenet_L2",
@@ -417,7 +1063,26 @@
     "params_m": 26.47,
     "lr": 0.004,
     "batch_size": 6,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.49445,
+    "test_acc": 0.753623,
+    "test_auc": 0.813487,
+    "test_precision": 0.762763,
+    "test_sensitivity": 0.916968,
+    "test_specificity": 0.423358,
+    "test_f1": 0.832787,
+    "test_mcc": 0.403673,
+    "test_cm": [
+      [
+        116,
+        158
+      ],
+      [
+        46,
+        508
+      ]
+    ],
+    "tested_at": "2026-07-23T08:44:41"
   },
   {
     "variant_id": "densenet_L3",
@@ -429,7 +1094,26 @@
     "params_m": 26.47,
     "lr": 0.004,
     "batch_size": 4,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.472536,
+    "test_acc": 0.764493,
+    "test_auc": 0.824508,
+    "test_precision": 0.798669,
+    "test_sensitivity": 0.866426,
+    "test_specificity": 0.558394,
+    "test_f1": 0.831169,
+    "test_mcc": 0.44811,
+    "test_cm": [
+      [
+        153,
+        121
+      ],
+      [
+        74,
+        480
+      ]
+    ],
+    "tested_at": "2026-07-23T09:04:54"
   },
   {
     "variant_id": "efficientnet_T1",
@@ -441,7 +1125,26 @@
     "params_m": 4.01,
     "lr": 0.01,
     "batch_size": 32,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.497187,
+    "test_acc": 0.76087,
+    "test_auc": 0.829943,
+    "test_precision": 0.817857,
+    "test_sensitivity": 0.826715,
+    "test_specificity": 0.627737,
+    "test_f1": 0.822262,
+    "test_mcc": 0.457043,
+    "test_cm": [
+      [
+        172,
+        102
+      ],
+      [
+        96,
+        458
+      ]
+    ],
+    "tested_at": "2026-07-23T09:16:13"
   },
   {
     "variant_id": "efficientnet_T2",
@@ -453,7 +1156,26 @@
     "params_m": 4.01,
     "lr": 0.01,
     "batch_size": 24,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.463787,
+    "test_acc": 0.753623,
+    "test_auc": 0.836122,
+    "test_precision": 0.799658,
+    "test_sensitivity": 0.84296,
+    "test_specificity": 0.572993,
+    "test_f1": 0.820738,
+    "test_mcc": 0.429312,
+    "test_cm": [
+      [
+        157,
+        117
+      ],
+      [
+        87,
+        467
+      ]
+    ],
+    "tested_at": "2026-07-23T09:27:24"
   },
   {
     "variant_id": "efficientnet_T3",
@@ -465,7 +1187,26 @@
     "params_m": 4.01,
     "lr": 0.01,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.457694,
+    "test_acc": 0.753623,
+    "test_auc": 0.841485,
+    "test_precision": 0.788779,
+    "test_sensitivity": 0.862816,
+    "test_specificity": 0.532847,
+    "test_f1": 0.824138,
+    "test_mcc": 0.420284,
+    "test_cm": [
+      [
+        146,
+        128
+      ],
+      [
+        76,
+        478
+      ]
+    ],
+    "tested_at": "2026-07-23T09:38:57"
   },
   {
     "variant_id": "efficientnet_S1",
@@ -477,7 +1218,26 @@
     "params_m": 7.7,
     "lr": 0.008,
     "batch_size": 24,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.485493,
+    "test_acc": 0.742754,
+    "test_auc": 0.806405,
+    "test_precision": 0.797557,
+    "test_sensitivity": 0.82491,
+    "test_specificity": 0.576642,
+    "test_f1": 0.811003,
+    "test_mcc": 0.409284,
+    "test_cm": [
+      [
+        158,
+        116
+      ],
+      [
+        97,
+        457
+      ]
+    ],
+    "tested_at": "2026-07-23T09:49:14"
   },
   {
     "variant_id": "efficientnet_S2",
@@ -489,7 +1249,26 @@
     "params_m": 7.7,
     "lr": 0.008,
     "batch_size": 16,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.489709,
+    "test_acc": 0.7343,
+    "test_auc": 0.812116,
+    "test_precision": 0.796099,
+    "test_sensitivity": 0.810469,
+    "test_specificity": 0.580292,
+    "test_f1": 0.80322,
+    "test_mcc": 0.394548,
+    "test_cm": [
+      [
+        159,
+        115
+      ],
+      [
+        105,
+        449
+      ]
+    ],
+    "tested_at": "2026-07-23T10:00:45"
   },
   {
     "variant_id": "efficientnet_S3",
@@ -501,7 +1280,26 @@
     "params_m": 7.7,
     "lr": 0.008,
     "batch_size": 8,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.489197,
+    "test_acc": 0.746377,
+    "test_auc": 0.817156,
+    "test_precision": 0.793515,
+    "test_sensitivity": 0.83935,
+    "test_specificity": 0.558394,
+    "test_f1": 0.815789,
+    "test_mcc": 0.411507,
+    "test_cm": [
+      [
+        153,
+        121
+      ],
+      [
+        89,
+        465
+      ]
+    ],
+    "tested_at": "2026-07-23T10:13:22"
   },
   {
     "variant_id": "efficientnet_M1",
@@ -513,7 +1311,26 @@
     "params_m": 17.55,
     "lr": 0.006,
     "batch_size": 16,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.620273,
+    "test_acc": 0.772947,
+    "test_auc": 0.865326,
+    "test_precision": 0.889362,
+    "test_sensitivity": 0.754513,
+    "test_specificity": 0.810219,
+    "test_f1": 0.816406,
+    "test_mcc": 0.536391,
+    "test_cm": [
+      [
+        222,
+        52
+      ],
+      [
+        136,
+        418
+      ]
+    ],
+    "tested_at": "2026-07-23T10:26:55"
   },
   {
     "variant_id": "efficientnet_M2",
@@ -525,7 +1342,26 @@
     "params_m": 17.55,
     "lr": 0.006,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.757249,
+    "test_acc": 0.786232,
+    "test_auc": 0.866202,
+    "test_precision": 0.873267,
+    "test_sensitivity": 0.796029,
+    "test_specificity": 0.766423,
+    "test_f1": 0.832861,
+    "test_mcc": 0.542586,
+    "test_cm": [
+      [
+        210,
+        64
+      ],
+      [
+        113,
+        441
+      ]
+    ],
+    "tested_at": "2026-07-23T10:38:13"
   },
   {
     "variant_id": "efficientnet_M3",
@@ -537,7 +1373,26 @@
     "params_m": 17.55,
     "lr": 0.006,
     "batch_size": 6,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.631893,
+    "test_acc": 0.823671,
+    "test_auc": 0.900735,
+    "test_precision": 0.896887,
+    "test_sensitivity": 0.83213,
+    "test_specificity": 0.806569,
+    "test_f1": 0.863296,
+    "test_mcc": 0.619413,
+    "test_cm": [
+      [
+        221,
+        53
+      ],
+      [
+        93,
+        461
+      ]
+    ],
+    "tested_at": "2026-07-23T10:53:16"
   },
   {
     "variant_id": "efficientnet_L1",
@@ -549,7 +1404,26 @@
     "params_m": 28.34,
     "lr": 0.004,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.512246,
+    "test_acc": 0.711353,
+    "test_auc": 0.784164,
+    "test_precision": 0.773913,
+    "test_sensitivity": 0.803249,
+    "test_specificity": 0.525547,
+    "test_f1": 0.788308,
+    "test_mcc": 0.335864,
+    "test_cm": [
+      [
+        144,
+        130
+      ],
+      [
+        109,
+        445
+      ]
+    ],
+    "tested_at": "2026-07-23T11:04:31"
   },
   {
     "variant_id": "efficientnet_L2",
@@ -561,7 +1435,26 @@
     "params_m": 28.34,
     "lr": 0.004,
     "batch_size": 6,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.499342,
+    "test_acc": 0.708937,
+    "test_auc": 0.796556,
+    "test_precision": 0.789279,
+    "test_sensitivity": 0.770758,
+    "test_specificity": 0.583942,
+    "test_f1": 0.779909,
+    "test_mcc": 0.350713,
+    "test_cm": [
+      [
+        160,
+        114
+      ],
+      [
+        127,
+        427
+      ]
+    ],
+    "tested_at": "2026-07-23T11:15:54"
   },
   {
     "variant_id": "efficientnet_L3",
@@ -573,7 +1466,26 @@
     "params_m": 28.34,
     "lr": 0.004,
     "batch_size": 4,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.532249,
+    "test_acc": 0.72343,
+    "test_auc": 0.764493,
+    "test_precision": 0.77403,
+    "test_sensitivity": 0.82852,
+    "test_specificity": 0.510949,
+    "test_f1": 0.800349,
+    "test_mcc": 0.354298,
+    "test_cm": [
+      [
+        140,
+        134
+      ],
+      [
+        95,
+        459
+      ]
+    ],
+    "tested_at": "2026-07-23T11:36:10"
   },
   {
     "variant_id": "maxvit_T1",
@@ -585,7 +1497,26 @@
     "params_m": 14.94,
     "lr": 0.01,
     "batch_size": 32,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.631901,
+    "test_acc": 0.688406,
+    "test_auc": 0.60636,
+    "test_precision": 0.68408,
+    "test_sensitivity": 0.99278,
+    "test_specificity": 0.072993,
+    "test_f1": 0.810015,
+    "test_mcc": 0.184476,
+    "test_cm": [
+      [
+        20,
+        254
+      ],
+      [
+        4,
+        550
+      ]
+    ],
+    "tested_at": "2026-07-23T11:47:30"
   },
   {
     "variant_id": "maxvit_T2",
@@ -597,7 +1528,26 @@
     "params_m": 14.94,
     "lr": 0.01,
     "batch_size": 24,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.535458,
+    "test_acc": 0.699275,
+    "test_auc": 0.754829,
+    "test_precision": 0.761578,
+    "test_sensitivity": 0.801444,
+    "test_specificity": 0.492701,
+    "test_f1": 0.781003,
+    "test_mcc": 0.303231,
+    "test_cm": [
+      [
+        135,
+        139
+      ],
+      [
+        110,
+        444
+      ]
+    ],
+    "tested_at": "2026-07-23T11:59:11"
   },
   {
     "variant_id": "maxvit_T3",
@@ -609,7 +1559,26 @@
     "params_m": 14.94,
     "lr": 0.01,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.618546,
+    "test_acc": 0.69686,
+    "test_auc": 0.608027,
+    "test_precision": 0.69153,
+    "test_sensitivity": 0.987365,
+    "test_specificity": 0.109489,
+    "test_f1": 0.813383,
+    "test_mcc": 0.220575,
+    "test_cm": [
+      [
+        30,
+        244
+      ],
+      [
+        7,
+        547
+      ]
+    ],
+    "tested_at": "2026-07-23T12:18:05"
   },
   {
     "variant_id": "maxvit_S1",
@@ -621,7 +1590,26 @@
     "params_m": 30.4,
     "lr": 0.008,
     "batch_size": 24,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.65379,
+    "test_acc": 0.785024,
+    "test_auc": 0.855444,
+    "test_precision": 0.828671,
+    "test_sensitivity": 0.855596,
+    "test_specificity": 0.642336,
+    "test_f1": 0.841918,
+    "test_mcc": 0.506969,
+    "test_cm": [
+      [
+        176,
+        98
+      ],
+      [
+        80,
+        474
+      ]
+    ],
+    "tested_at": "2026-07-23T12:28:38"
   },
   {
     "variant_id": "maxvit_S2",
@@ -633,7 +1621,26 @@
     "params_m": 30.4,
     "lr": 0.008,
     "batch_size": 16,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.641127,
+    "test_acc": 0.774155,
+    "test_auc": 0.843283,
+    "test_precision": 0.821366,
+    "test_sensitivity": 0.84657,
+    "test_specificity": 0.627737,
+    "test_f1": 0.833778,
+    "test_mcc": 0.482398,
+    "test_cm": [
+      [
+        172,
+        102
+      ],
+      [
+        85,
+        469
+      ]
+    ],
+    "tested_at": "2026-07-23T12:41:46"
   },
   {
     "variant_id": "maxvit_S3",
@@ -645,7 +1652,26 @@
     "params_m": 30.4,
     "lr": 0.008,
     "batch_size": 8,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.68774,
+    "test_acc": 0.783816,
+    "test_auc": 0.84497,
+    "test_precision": 0.827225,
+    "test_sensitivity": 0.855596,
+    "test_specificity": 0.638686,
+    "test_f1": 0.841171,
+    "test_mcc": 0.503799,
+    "test_cm": [
+      [
+        175,
+        99
+      ],
+      [
+        80,
+        474
+      ]
+    ],
+    "tested_at": "2026-07-23T13:09:15"
   },
   {
     "variant_id": "maxvit_M1",
@@ -657,7 +1683,26 @@
     "params_m": 68.16,
     "lr": 0.006,
     "batch_size": 16,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.813798,
+    "test_acc": 0.778986,
+    "test_auc": 0.848949,
+    "test_precision": 0.829485,
+    "test_sensitivity": 0.84296,
+    "test_specificity": 0.649635,
+    "test_f1": 0.836168,
+    "test_mcc": 0.496871,
+    "test_cm": [
+      [
+        178,
+        96
+      ],
+      [
+        87,
+        467
+      ]
+    ],
+    "tested_at": "2026-07-23T13:23:54"
   },
   {
     "variant_id": "maxvit_M2",
@@ -669,7 +1714,26 @@
     "params_m": 68.16,
     "lr": 0.006,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.835141,
+    "test_acc": 0.768116,
+    "test_auc": 0.848517,
+    "test_precision": 0.833948,
+    "test_sensitivity": 0.815884,
+    "test_specificity": 0.671533,
+    "test_f1": 0.824818,
+    "test_mcc": 0.482335,
+    "test_cm": [
+      [
+        184,
+        90
+      ],
+      [
+        102,
+        452
+      ]
+    ],
+    "tested_at": "2026-07-23T13:43:33"
   },
   {
     "variant_id": "maxvit_M3",
@@ -681,7 +1745,26 @@
     "params_m": 68.16,
     "lr": 0.006,
     "batch_size": 6,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.692687,
+    "test_acc": 0.794686,
+    "test_auc": 0.869015,
+    "test_precision": 0.839223,
+    "test_sensitivity": 0.857401,
+    "test_specificity": 0.667883,
+    "test_f1": 0.848214,
+    "test_mcc": 0.531454,
+    "test_cm": [
+      [
+        183,
+        91
+      ],
+      [
+        79,
+        475
+      ]
+    ],
+    "tested_at": "2026-07-23T14:25:47"
   },
   {
     "variant_id": "maxvit_L1",
@@ -693,7 +1776,26 @@
     "params_m": 118.7,
     "lr": 0.004,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.955766,
+    "test_acc": 0.763285,
+    "test_auc": 0.823085,
+    "test_precision": 0.811847,
+    "test_sensitivity": 0.841155,
+    "test_specificity": 0.605839,
+    "test_f1": 0.826241,
+    "test_mcc": 0.4561,
+    "test_cm": [
+      [
+        166,
+        108
+      ],
+      [
+        88,
+        466
+      ]
+    ],
+    "tested_at": "2026-07-23T14:46:41"
   },
   {
     "variant_id": "maxvit_L2",
@@ -705,7 +1807,26 @@
     "params_m": 118.7,
     "lr": 0.004,
     "batch_size": 6,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 1.027019,
+    "test_acc": 0.764493,
+    "test_auc": 0.835358,
+    "test_precision": 0.804754,
+    "test_sensitivity": 0.855596,
+    "test_specificity": 0.580292,
+    "test_f1": 0.829396,
+    "test_mcc": 0.452635,
+    "test_cm": [
+      [
+        159,
+        115
+      ],
+      [
+        80,
+        474
+      ]
+    ],
+    "tested_at": "2026-07-23T15:19:54"
   },
   {
     "variant_id": "maxvit_L3",
@@ -717,7 +1838,26 @@
     "params_m": 118.7,
     "lr": 0.004,
     "batch_size": 4,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.912895,
+    "test_acc": 0.769324,
+    "test_auc": 0.848227,
+    "test_precision": 0.815652,
+    "test_sensitivity": 0.84657,
+    "test_specificity": 0.613139,
+    "test_f1": 0.830824,
+    "test_mcc": 0.46959,
+    "test_cm": [
+      [
+        168,
+        106
+      ],
+      [
+        85,
+        469
+      ]
+    ],
+    "tested_at": "2026-07-23T16:35:58"
   },
   {
     "variant_id": "regnet_T1",
@@ -729,7 +1869,26 @@
     "params_m": 3.9,
     "lr": 0.01,
     "batch_size": 32,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.560311,
+    "test_acc": 0.788647,
+    "test_auc": 0.856689,
+    "test_precision": 0.847706,
+    "test_sensitivity": 0.833935,
+    "test_specificity": 0.69708,
+    "test_f1": 0.840764,
+    "test_mcc": 0.5268,
+    "test_cm": [
+      [
+        191,
+        83
+      ],
+      [
+        92,
+        462
+      ]
+    ],
+    "tested_at": "2026-07-23T16:46:47"
   },
   {
     "variant_id": "regnet_T2",
@@ -741,7 +1900,26 @@
     "params_m": 3.9,
     "lr": 0.01,
     "batch_size": 24,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.517213,
+    "test_acc": 0.789855,
+    "test_auc": 0.85914,
+    "test_precision": 0.846715,
+    "test_sensitivity": 0.837545,
+    "test_specificity": 0.693431,
+    "test_f1": 0.842105,
+    "test_mcc": 0.528124,
+    "test_cm": [
+      [
+        190,
+        84
+      ],
+      [
+        90,
+        464
+      ]
+    ],
+    "tested_at": "2026-07-23T16:58:31"
   },
   {
     "variant_id": "regnet_T3",
@@ -753,7 +1931,26 @@
     "params_m": 3.9,
     "lr": 0.01,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.441893,
+    "test_acc": 0.804348,
+    "test_auc": 0.896321,
+    "test_precision": 0.910042,
+    "test_sensitivity": 0.785199,
+    "test_specificity": 0.843066,
+    "test_f1": 0.843023,
+    "test_mcc": 0.598445,
+    "test_cm": [
+      [
+        231,
+        43
+      ],
+      [
+        119,
+        435
+      ]
+    ],
+    "tested_at": "2026-07-23T17:10:33"
   },
   {
     "variant_id": "regnet_S1",
@@ -765,7 +1962,26 @@
     "params_m": 10.31,
     "lr": 0.008,
     "batch_size": 24,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.52716,
+    "test_acc": 0.80314,
+    "test_auc": 0.875102,
+    "test_precision": 0.860037,
+    "test_sensitivity": 0.84296,
+    "test_specificity": 0.722628,
+    "test_f1": 0.851413,
+    "test_mcc": 0.560155,
+    "test_cm": [
+      [
+        198,
+        76
+      ],
+      [
+        87,
+        467
+      ]
+    ],
+    "tested_at": "2026-07-23T17:21:54"
   },
   {
     "variant_id": "regnet_S2",
@@ -777,7 +1993,26 @@
     "params_m": 10.31,
     "lr": 0.008,
     "batch_size": 16,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.539076,
+    "test_acc": 0.799517,
+    "test_auc": 0.874937,
+    "test_precision": 0.852727,
+    "test_sensitivity": 0.84657,
+    "test_specificity": 0.70438,
+    "test_f1": 0.849638,
+    "test_mcc": 0.548957,
+    "test_cm": [
+      [
+        193,
+        81
+      ],
+      [
+        85,
+        469
+      ]
+    ],
+    "tested_at": "2026-07-23T17:33:08"
   },
   {
     "variant_id": "regnet_S3",
@@ -789,7 +2024,26 @@
     "params_m": 10.31,
     "lr": 0.008,
     "batch_size": 8,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.43924,
+    "test_acc": 0.822464,
+    "test_auc": 0.906414,
+    "test_precision": 0.899804,
+    "test_sensitivity": 0.826715,
+    "test_specificity": 0.813869,
+    "test_f1": 0.861712,
+    "test_mcc": 0.619372,
+    "test_cm": [
+      [
+        223,
+        51
+      ],
+      [
+        96,
+        458
+      ]
+    ],
+    "tested_at": "2026-07-23T17:45:14"
   },
   {
     "variant_id": "regnet_M1",
@@ -801,7 +2055,26 @@
     "params_m": 17.92,
     "lr": 0.006,
     "batch_size": 16,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.762276,
+    "test_acc": 0.792271,
+    "test_auc": 0.85661,
+    "test_precision": 0.847273,
+    "test_sensitivity": 0.841155,
+    "test_specificity": 0.693431,
+    "test_f1": 0.844203,
+    "test_mcc": 0.532652,
+    "test_cm": [
+      [
+        190,
+        84
+      ],
+      [
+        88,
+        466
+      ]
+    ],
+    "tested_at": "2026-07-23T17:58:07"
   },
   {
     "variant_id": "regnet_M2",
@@ -813,7 +2086,26 @@
     "params_m": 17.92,
     "lr": 0.006,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.706717,
+    "test_acc": 0.810386,
+    "test_auc": 0.882181,
+    "test_precision": 0.871028,
+    "test_sensitivity": 0.841155,
+    "test_specificity": 0.748175,
+    "test_f1": 0.855831,
+    "test_mcc": 0.579934,
+    "test_cm": [
+      [
+        205,
+        69
+      ],
+      [
+        88,
+        466
+      ]
+    ],
+    "tested_at": "2026-07-23T18:09:46"
   },
   {
     "variant_id": "regnet_M3",
@@ -825,7 +2117,26 @@
     "params_m": 17.92,
     "lr": 0.006,
     "batch_size": 6,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.579552,
+    "test_acc": 0.842995,
+    "test_auc": 0.908127,
+    "test_precision": 0.917323,
+    "test_sensitivity": 0.841155,
+    "test_specificity": 0.846715,
+    "test_f1": 0.877589,
+    "test_mcc": 0.664707,
+    "test_cm": [
+      [
+        232,
+        42
+      ],
+      [
+        88,
+        466
+      ]
+    ],
+    "tested_at": "2026-07-23T18:24:36"
   },
   {
     "variant_id": "regnet_L1",
@@ -837,7 +2148,26 @@
     "params_m": 37.17,
     "lr": 0.004,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.678226,
+    "test_acc": 0.792271,
+    "test_auc": 0.868791,
+    "test_precision": 0.847273,
+    "test_sensitivity": 0.841155,
+    "test_specificity": 0.693431,
+    "test_f1": 0.844203,
+    "test_mcc": 0.532652,
+    "test_cm": [
+      [
+        190,
+        84
+      ],
+      [
+        88,
+        466
+      ]
+    ],
+    "tested_at": "2026-07-23T18:35:56"
   },
   {
     "variant_id": "regnet_L2",
@@ -849,7 +2179,26 @@
     "params_m": 37.17,
     "lr": 0.004,
     "batch_size": 6,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.620301,
+    "test_acc": 0.81401,
+    "test_auc": 0.897632,
+    "test_precision": 0.890625,
+    "test_sensitivity": 0.823105,
+    "test_specificity": 0.79562,
+    "test_f1": 0.855535,
+    "test_mcc": 0.599307,
+    "test_cm": [
+      [
+        218,
+        56
+      ],
+      [
+        98,
+        456
+      ]
+    ],
+    "tested_at": "2026-07-23T18:47:35"
   },
   {
     "variant_id": "regnet_L3",
@@ -861,7 +2210,26 @@
     "params_m": 37.17,
     "lr": 0.004,
     "batch_size": 4,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.624835,
+    "test_acc": 0.838164,
+    "test_auc": 0.906878,
+    "test_precision": 0.910156,
+    "test_sensitivity": 0.841155,
+    "test_specificity": 0.832117,
+    "test_f1": 0.874296,
+    "test_mcc": 0.652142,
+    "test_cm": [
+      [
+        228,
+        46
+      ],
+      [
+        88,
+        466
+      ]
+    ],
+    "tested_at": "2026-07-23T19:07:02"
   },
   {
     "variant_id": "resnet_T1",
@@ -873,7 +2241,26 @@
     "params_m": 11.18,
     "lr": 0.01,
     "batch_size": 32,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.488844,
+    "test_acc": 0.748792,
+    "test_auc": 0.818579,
+    "test_precision": 0.81685,
+    "test_sensitivity": 0.805054,
+    "test_specificity": 0.635036,
+    "test_f1": 0.810909,
+    "test_mcc": 0.43697,
+    "test_cm": [
+      [
+        174,
+        100
+      ],
+      [
+        108,
+        446
+      ]
+    ],
+    "tested_at": "2026-07-23T19:17:20"
   },
   {
     "variant_id": "resnet_T2",
@@ -885,7 +2272,26 @@
     "params_m": 11.18,
     "lr": 0.01,
     "batch_size": 24,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.456925,
+    "test_acc": 0.762077,
+    "test_auc": 0.840681,
+    "test_precision": 0.820467,
+    "test_sensitivity": 0.82491,
+    "test_specificity": 0.635036,
+    "test_f1": 0.822682,
+    "test_mcc": 0.461238,
+    "test_cm": [
+      [
+        174,
+        100
+      ],
+      [
+        97,
+        457
+      ]
+    ],
+    "tested_at": "2026-07-23T19:28:31"
   },
   {
     "variant_id": "resnet_T3",
@@ -897,7 +2303,26 @@
     "params_m": 11.18,
     "lr": 0.01,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.473556,
+    "test_acc": 0.774155,
+    "test_auc": 0.83906,
+    "test_precision": 0.801314,
+    "test_sensitivity": 0.880866,
+    "test_specificity": 0.558394,
+    "test_f1": 0.839209,
+    "test_mcc": 0.468621,
+    "test_cm": [
+      [
+        153,
+        121
+      ],
+      [
+        66,
+        488
+      ]
+    ],
+    "tested_at": "2026-07-23T19:40:42"
   },
   {
     "variant_id": "resnet_S1",
@@ -909,7 +2334,26 @@
     "params_m": 21.29,
     "lr": 0.008,
     "batch_size": 24,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.485771,
+    "test_acc": 0.745169,
+    "test_auc": 0.814224,
+    "test_precision": 0.7962,
+    "test_sensitivity": 0.83213,
+    "test_specificity": 0.569343,
+    "test_f1": 0.813769,
+    "test_mcc": 0.411953,
+    "test_cm": [
+      [
+        156,
+        118
+      ],
+      [
+        93,
+        461
+      ]
+    ],
+    "tested_at": "2026-07-23T19:51:31"
   },
   {
     "variant_id": "resnet_S2",
@@ -921,7 +2365,26 @@
     "params_m": 21.29,
     "lr": 0.008,
     "batch_size": 16,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.483608,
+    "test_acc": 0.759662,
+    "test_auc": 0.829943,
+    "test_precision": 0.814159,
+    "test_sensitivity": 0.830325,
+    "test_specificity": 0.616788,
+    "test_f1": 0.822163,
+    "test_mcc": 0.451903,
+    "test_cm": [
+      [
+        169,
+        105
+      ],
+      [
+        94,
+        460
+      ]
+    ],
+    "tested_at": "2026-07-23T20:03:24"
   },
   {
     "variant_id": "resnet_S3",
@@ -933,7 +2396,26 @@
     "params_m": 21.29,
     "lr": 0.008,
     "batch_size": 8,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.47683,
+    "test_acc": 0.780193,
+    "test_auc": 0.84825,
+    "test_precision": 0.814189,
+    "test_sensitivity": 0.870036,
+    "test_specificity": 0.59854,
+    "test_f1": 0.841187,
+    "test_mcc": 0.48842,
+    "test_cm": [
+      [
+        164,
+        110
+      ],
+      [
+        72,
+        482
+      ]
+    ],
+    "tested_at": "2026-07-23T20:16:21"
   },
   {
     "variant_id": "resnet_M1",
@@ -945,7 +2427,26 @@
     "params_m": 23.51,
     "lr": 0.006,
     "batch_size": 16,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.511139,
+    "test_acc": 0.7343,
+    "test_auc": 0.807426,
+    "test_precision": 0.780201,
+    "test_sensitivity": 0.83935,
+    "test_specificity": 0.521898,
+    "test_f1": 0.808696,
+    "test_mcc": 0.378502,
+    "test_cm": [
+      [
+        143,
+        131
+      ],
+      [
+        89,
+        465
+      ]
+    ],
+    "tested_at": "2026-07-23T20:27:07"
   },
   {
     "variant_id": "resnet_M2",
@@ -957,7 +2458,26 @@
     "params_m": 23.51,
     "lr": 0.006,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.482884,
+    "test_acc": 0.772947,
+    "test_auc": 0.832479,
+    "test_precision": 0.812287,
+    "test_sensitivity": 0.859206,
+    "test_specificity": 0.59854,
+    "test_f1": 0.835088,
+    "test_mcc": 0.473585,
+    "test_cm": [
+      [
+        164,
+        110
+      ],
+      [
+        78,
+        476
+      ]
+    ],
+    "tested_at": "2026-07-23T20:38:14"
   },
   {
     "variant_id": "resnet_M3",
@@ -969,7 +2489,26 @@
     "params_m": 23.51,
     "lr": 0.006,
     "batch_size": 6,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.453732,
+    "test_acc": 0.774155,
+    "test_auc": 0.84966,
+    "test_precision": 0.834244,
+    "test_sensitivity": 0.826715,
+    "test_specificity": 0.667883,
+    "test_f1": 0.830462,
+    "test_mcc": 0.492373,
+    "test_cm": [
+      [
+        183,
+        91
+      ],
+      [
+        96,
+        458
+      ]
+    ],
+    "tested_at": "2026-07-23T20:51:03"
   },
   {
     "variant_id": "resnet_L1",
@@ -981,7 +2520,26 @@
     "params_m": 42.5,
     "lr": 0.004,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.493289,
+    "test_acc": 0.736715,
+    "test_auc": 0.806767,
+    "test_precision": 0.78866,
+    "test_sensitivity": 0.82852,
+    "test_specificity": 0.551095,
+    "test_f1": 0.808099,
+    "test_mcc": 0.390881,
+    "test_cm": [
+      [
+        151,
+        123
+      ],
+      [
+        95,
+        459
+      ]
+    ],
+    "tested_at": "2026-07-23T21:02:00"
   },
   {
     "variant_id": "resnet_L2",
@@ -993,7 +2551,26 @@
     "params_m": 42.5,
     "lr": 0.004,
     "batch_size": 6,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.519227,
+    "test_acc": 0.7343,
+    "test_auc": 0.783519,
+    "test_precision": 0.778333,
+    "test_sensitivity": 0.84296,
+    "test_specificity": 0.514599,
+    "test_f1": 0.809359,
+    "test_mcc": 0.376647,
+    "test_cm": [
+      [
+        141,
+        133
+      ],
+      [
+        87,
+        467
+      ]
+    ],
+    "tested_at": "2026-07-23T21:13:03"
   },
   {
     "variant_id": "resnet_L3",
@@ -1005,7 +2582,26 @@
     "params_m": 42.5,
     "lr": 0.004,
     "batch_size": 4,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.521894,
+    "test_acc": 0.718599,
+    "test_auc": 0.783387,
+    "test_precision": 0.777202,
+    "test_sensitivity": 0.812274,
+    "test_specificity": 0.529197,
+    "test_f1": 0.794351,
+    "test_mcc": 0.350385,
+    "test_cm": [
+      [
+        145,
+        129
+      ],
+      [
+        104,
+        450
+      ]
+    ],
+    "tested_at": "2026-07-23T21:29:07"
   },
   {
     "variant_id": "swin_T1",
@@ -1017,7 +2613,26 @@
     "params_m": 27.52,
     "lr": 0.01,
     "batch_size": 32,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.622701,
+    "test_acc": 0.692029,
+    "test_auc": 0.618429,
+    "test_precision": 0.698539,
+    "test_sensitivity": 0.949458,
+    "test_specificity": 0.171533,
+    "test_f1": 0.804897,
+    "test_mcc": 0.198361,
+    "test_cm": [
+      [
+        47,
+        227
+      ],
+      [
+        28,
+        526
+      ]
+    ],
+    "tested_at": "2026-07-23T21:40:04"
   },
   {
     "variant_id": "swin_T2",
@@ -1029,7 +2644,26 @@
     "params_m": 27.52,
     "lr": 0.01,
     "batch_size": 24,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.623307,
+    "test_acc": 0.681159,
+    "test_auc": 0.608343,
+    "test_precision": 0.695418,
+    "test_sensitivity": 0.931408,
+    "test_specificity": 0.175182,
+    "test_f1": 0.796296,
+    "test_mcc": 0.164398,
+    "test_cm": [
+      [
+        48,
+        226
+      ],
+      [
+        38,
+        516
+      ]
+    ],
+    "tested_at": "2026-07-23T21:51:29"
   },
   {
     "variant_id": "swin_T3",
@@ -1041,7 +2675,26 @@
     "params_m": 27.52,
     "lr": 0.01,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.614171,
+    "test_acc": 0.687198,
+    "test_auc": 0.610181,
+    "test_precision": 0.687898,
+    "test_sensitivity": 0.974729,
+    "test_specificity": 0.105839,
+    "test_f1": 0.806572,
+    "test_mcc": 0.170855,
+    "test_cm": [
+      [
+        29,
+        245
+      ],
+      [
+        14,
+        540
+      ]
+    ],
+    "tested_at": "2026-07-23T22:05:35"
   },
   {
     "variant_id": "swin_S1",
@@ -1053,7 +2706,26 @@
     "params_m": 48.84,
     "lr": 0.008,
     "batch_size": 24,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.460482,
+    "test_acc": 0.762077,
+    "test_auc": 0.840885,
+    "test_precision": 0.811518,
+    "test_sensitivity": 0.83935,
+    "test_specificity": 0.605839,
+    "test_f1": 0.8252,
+    "test_mcc": 0.453762,
+    "test_cm": [
+      [
+        166,
+        108
+      ],
+      [
+        89,
+        465
+      ]
+    ],
+    "tested_at": "2026-07-23T22:16:27"
   },
   {
     "variant_id": "swin_S2",
@@ -1065,7 +2737,26 @@
     "params_m": 48.84,
     "lr": 0.008,
     "batch_size": 16,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.47595,
+    "test_acc": 0.758454,
+    "test_auc": 0.841926,
+    "test_precision": 0.816071,
+    "test_sensitivity": 0.82491,
+    "test_specificity": 0.624088,
+    "test_f1": 0.820467,
+    "test_mcc": 0.451557,
+    "test_cm": [
+      [
+        171,
+        103
+      ],
+      [
+        97,
+        457
+      ]
+    ],
+    "tested_at": "2026-07-23T22:28:54"
   },
   {
     "variant_id": "swin_S3",
@@ -1077,7 +2768,26 @@
     "params_m": 48.84,
     "lr": 0.008,
     "batch_size": 8,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.635383,
+    "test_acc": 0.669082,
+    "test_auc": 0.545037,
+    "test_precision": 0.669082,
+    "test_sensitivity": 1.0,
+    "test_specificity": 0.0,
+    "test_f1": 0.801737,
+    "test_mcc": 0.0,
+    "test_cm": [
+      [
+        0,
+        274
+      ],
+      [
+        0,
+        554
+      ]
+    ],
+    "tested_at": "2026-07-23T22:49:38"
   },
   {
     "variant_id": "swin_M1",
@@ -1089,7 +2799,26 @@
     "params_m": 70.36,
     "lr": 0.006,
     "batch_size": 16,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.514983,
+    "test_acc": 0.704106,
+    "test_auc": 0.776951,
+    "test_precision": 0.765009,
+    "test_sensitivity": 0.805054,
+    "test_specificity": 0.5,
+    "test_f1": 0.784521,
+    "test_mcc": 0.314478,
+    "test_cm": [
+      [
+        137,
+        137
+      ],
+      [
+        108,
+        446
+      ]
+    ],
+    "tested_at": "2026-07-23T23:02:50"
   },
   {
     "variant_id": "swin_M2",
@@ -1101,7 +2830,26 @@
     "params_m": 70.36,
     "lr": 0.006,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.61296,
+    "test_acc": 0.687198,
+    "test_auc": 0.614904,
+    "test_precision": 0.691808,
+    "test_sensitivity": 0.960289,
+    "test_specificity": 0.135036,
+    "test_f1": 0.804233,
+    "test_mcc": 0.174361,
+    "test_cm": [
+      [
+        37,
+        237
+      ],
+      [
+        22,
+        532
+      ]
+    ],
+    "tested_at": "2026-07-23T23:24:21"
   },
   {
     "variant_id": "swin_M3",
@@ -1113,7 +2861,26 @@
     "params_m": 70.36,
     "lr": 0.006,
     "batch_size": 6,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.613523,
+    "test_acc": 0.690821,
+    "test_auc": 0.609944,
+    "test_precision": 0.690051,
+    "test_sensitivity": 0.976534,
+    "test_specificity": 0.113139,
+    "test_f1": 0.80867,
+    "test_mcc": 0.188108,
+    "test_cm": [
+      [
+        31,
+        243
+      ],
+      [
+        13,
+        541
+      ]
+    ],
+    "tested_at": "2026-07-24T00:02:45"
   },
   {
     "variant_id": "swin_L1",
@@ -1125,7 +2892,26 @@
     "params_m": 86.74,
     "lr": 0.004,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.610318,
+    "test_acc": 0.692029,
+    "test_auc": 0.616064,
+    "test_precision": 0.695937,
+    "test_sensitivity": 0.958484,
+    "test_specificity": 0.153285,
+    "test_f1": 0.806378,
+    "test_mcc": 0.195538,
+    "test_cm": [
+      [
+        42,
+        232
+      ],
+      [
+        23,
+        531
+      ]
+    ],
+    "tested_at": "2026-07-24T00:15:03"
   },
   {
     "variant_id": "swin_L2",
@@ -1137,7 +2923,26 @@
     "params_m": 86.74,
     "lr": 0.004,
     "batch_size": 6,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.614248,
+    "test_acc": 0.688406,
+    "test_auc": 0.611373,
+    "test_precision": 0.69171,
+    "test_sensitivity": 0.963899,
+    "test_specificity": 0.131387,
+    "test_f1": 0.80543,
+    "test_mcc": 0.178548,
+    "test_cm": [
+      [
+        36,
+        238
+      ],
+      [
+        20,
+        534
+      ]
+    ],
+    "tested_at": "2026-07-24T00:33:08"
   },
   {
     "variant_id": "swin_L3",
@@ -1149,7 +2954,26 @@
     "params_m": 86.74,
     "lr": 0.004,
     "batch_size": 4,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.617241,
+    "test_acc": 0.678744,
+    "test_auc": 0.61055,
+    "test_precision": 0.676904,
+    "test_sensitivity": 0.994585,
+    "test_specificity": 0.040146,
+    "test_f1": 0.805556,
+    "test_mcc": 0.126756,
+    "test_cm": [
+      [
+        11,
+        263
+      ],
+      [
+        3,
+        551
+      ]
+    ],
+    "tested_at": "2026-07-24T01:05:49"
   },
   {
     "variant_id": "vit_T1",
@@ -1161,7 +2985,26 @@
     "params_m": 5.52,
     "lr": 0.01,
     "batch_size": 32,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.649161,
+    "test_acc": 0.669082,
+    "test_auc": 0.487931,
+    "test_precision": 0.669082,
+    "test_sensitivity": 1.0,
+    "test_specificity": 0.0,
+    "test_f1": 0.801737,
+    "test_mcc": 0.0,
+    "test_cm": [
+      [
+        0,
+        274
+      ],
+      [
+        0,
+        554
+      ]
+    ],
+    "tested_at": "2026-07-24T01:16:21"
   },
   {
     "variant_id": "vit_T2",
@@ -1173,7 +3016,26 @@
     "params_m": 5.52,
     "lr": 0.01,
     "batch_size": 24,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.640477,
+    "test_acc": 0.669082,
+    "test_auc": 0.523459,
+    "test_precision": 0.669082,
+    "test_sensitivity": 1.0,
+    "test_specificity": 0.0,
+    "test_f1": 0.801737,
+    "test_mcc": 0.0,
+    "test_cm": [
+      [
+        0,
+        274
+      ],
+      [
+        0,
+        554
+      ]
+    ],
+    "tested_at": "2026-07-24T01:27:19"
   },
   {
     "variant_id": "vit_T3",
@@ -1185,7 +3047,26 @@
     "params_m": 5.52,
     "lr": 0.01,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.637153,
+    "test_acc": 0.669082,
+    "test_auc": 0.523841,
+    "test_precision": 0.669082,
+    "test_sensitivity": 1.0,
+    "test_specificity": 0.0,
+    "test_f1": 0.801737,
+    "test_mcc": 0.0,
+    "test_cm": [
+      [
+        0,
+        274
+      ],
+      [
+        0,
+        554
+      ]
+    ],
+    "tested_at": "2026-07-24T01:39:51"
   },
   {
     "variant_id": "vit_S1",
@@ -1197,7 +3078,26 @@
     "params_m": 21.67,
     "lr": 0.008,
     "batch_size": 24,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.568367,
+    "test_acc": 0.684783,
+    "test_auc": 0.712819,
+    "test_precision": 0.727838,
+    "test_sensitivity": 0.844765,
+    "test_specificity": 0.361314,
+    "test_f1": 0.781955,
+    "test_mcc": 0.232795,
+    "test_cm": [
+      [
+        99,
+        175
+      ],
+      [
+        86,
+        468
+      ]
+    ],
+    "tested_at": "2026-07-24T01:50:45"
   },
   {
     "variant_id": "vit_S2",
@@ -1209,7 +3109,26 @@
     "params_m": 21.67,
     "lr": 0.008,
     "batch_size": 16,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.589417,
+    "test_acc": 0.676329,
+    "test_auc": 0.689728,
+    "test_precision": 0.710294,
+    "test_sensitivity": 0.871841,
+    "test_specificity": 0.281022,
+    "test_f1": 0.78282,
+    "test_mcc": 0.187736,
+    "test_cm": [
+      [
+        77,
+        197
+      ],
+      [
+        71,
+        483
+      ]
+    ],
+    "tested_at": "2026-07-24T02:01:48"
   },
   {
     "variant_id": "vit_S3",
@@ -1221,7 +3140,26 @@
     "params_m": 21.67,
     "lr": 0.008,
     "batch_size": 8,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.611923,
+    "test_acc": 0.693237,
+    "test_auc": 0.629299,
+    "test_precision": 0.707182,
+    "test_sensitivity": 0.924188,
+    "test_specificity": 0.226277,
+    "test_f1": 0.801252,
+    "test_mcc": 0.213639,
+    "test_cm": [
+      [
+        62,
+        212
+      ],
+      [
+        42,
+        512
+      ]
+    ],
+    "tested_at": "2026-07-24T02:16:14"
   },
   {
     "variant_id": "vit_M1",
@@ -1233,7 +3171,26 @@
     "params_m": 38.33,
     "lr": 0.006,
     "batch_size": 16,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.611066,
+    "test_acc": 0.690821,
+    "test_auc": 0.618844,
+    "test_precision": 0.690051,
+    "test_sensitivity": 0.976534,
+    "test_specificity": 0.113139,
+    "test_f1": 0.80867,
+    "test_mcc": 0.188108,
+    "test_cm": [
+      [
+        31,
+        243
+      ],
+      [
+        13,
+        541
+      ]
+    ],
+    "tested_at": "2026-07-27T14:10:12"
   },
   {
     "variant_id": "vit_M2",
@@ -1245,7 +3202,26 @@
     "params_m": 38.33,
     "lr": 0.006,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.635146,
+    "test_acc": 0.669082,
+    "test_auc": 0.595157,
+    "test_precision": 0.669082,
+    "test_sensitivity": 1.0,
+    "test_specificity": 0.0,
+    "test_f1": 0.801737,
+    "test_mcc": 0.0,
+    "test_cm": [
+      [
+        0,
+        274
+      ],
+      [
+        0,
+        554
+      ]
+    ],
+    "tested_at": "2026-07-24T02:34:52"
   },
   {
     "variant_id": "vit_M3",
@@ -1257,7 +3233,26 @@
     "params_m": 38.33,
     "lr": 0.006,
     "batch_size": 6,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.636247,
+    "test_acc": 0.669082,
+    "test_auc": 0.586629,
+    "test_precision": 0.669082,
+    "test_sensitivity": 1.0,
+    "test_specificity": 0.0,
+    "test_f1": 0.801737,
+    "test_mcc": 0.0,
+    "test_cm": [
+      [
+        0,
+        274
+      ],
+      [
+        0,
+        554
+      ]
+    ],
+    "tested_at": "2026-07-24T02:54:14"
   },
   {
     "variant_id": "vit_L1",
@@ -1269,7 +3264,26 @@
     "params_m": 85.8,
     "lr": 0.004,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.637249,
+    "test_acc": 0.669082,
+    "test_auc": 0.477048,
+    "test_precision": 0.669082,
+    "test_sensitivity": 1.0,
+    "test_specificity": 0.0,
+    "test_f1": 0.801737,
+    "test_mcc": 0.0,
+    "test_cm": [
+      [
+        0,
+        274
+      ],
+      [
+        0,
+        554
+      ]
+    ],
+    "tested_at": "2026-07-24T03:05:24"
   },
   {
     "variant_id": "vit_L2",
@@ -1281,7 +3295,26 @@
     "params_m": 85.8,
     "lr": 0.004,
     "batch_size": 6,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.63342,
+    "test_acc": 0.669082,
+    "test_auc": 0.54848,
+    "test_precision": 0.669082,
+    "test_sensitivity": 1.0,
+    "test_specificity": 0.0,
+    "test_f1": 0.801737,
+    "test_mcc": 0.0,
+    "test_cm": [
+      [
+        0,
+        274
+      ],
+      [
+        0,
+        554
+      ]
+    ],
+    "tested_at": "2026-07-24T03:20:51"
   },
   {
     "variant_id": "vit_L3",
@@ -1293,7 +3326,26 @@
     "params_m": 85.8,
     "lr": 0.004,
     "batch_size": 4,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.61232,
+    "test_acc": 0.678744,
+    "test_auc": 0.621466,
+    "test_precision": 0.68509,
+    "test_sensitivity": 0.962094,
+    "test_specificity": 0.105839,
+    "test_f1": 0.8003,
+    "test_mcc": 0.134195,
+    "test_cm": [
+      [
+        29,
+        245
+      ],
+      [
+        21,
+        533
+      ]
+    ],
+    "tested_at": "2026-07-24T03:53:12"
   },
   {
     "variant_id": "xception_T1",
@@ -1305,7 +3357,26 @@
     "params_m": 20.81,
     "lr": 0.01,
     "batch_size": 32,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.742379,
+    "test_acc": 0.818841,
+    "test_auc": 0.875148,
+    "test_precision": 0.848276,
+    "test_sensitivity": 0.888087,
+    "test_specificity": 0.678832,
+    "test_f1": 0.867725,
+    "test_mcc": 0.582386,
+    "test_cm": [
+      [
+        186,
+        88
+      ],
+      [
+        62,
+        492
+      ]
+    ],
+    "tested_at": "2026-07-27T14:28:01"
   },
   {
     "variant_id": "xception_T2",
@@ -1317,7 +3388,26 @@
     "params_m": 20.81,
     "lr": 0.01,
     "batch_size": 24,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.422317,
+    "test_acc": 0.833333,
+    "test_auc": 0.892593,
+    "test_precision": 0.880952,
+    "test_sensitivity": 0.868231,
+    "test_specificity": 0.762774,
+    "test_f1": 0.874545,
+    "test_mcc": 0.62653,
+    "test_cm": [
+      [
+        209,
+        65
+      ],
+      [
+        73,
+        481
+      ]
+    ],
+    "tested_at": "2026-07-24T04:06:34"
   },
   {
     "variant_id": "xception_T3",
@@ -1329,7 +3419,26 @@
     "params_m": 20.81,
     "lr": 0.01,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.399439,
+    "test_acc": 0.842995,
+    "test_auc": 0.899385,
+    "test_precision": 0.901515,
+    "test_sensitivity": 0.859206,
+    "test_specificity": 0.810219,
+    "test_f1": 0.879852,
+    "test_mcc": 0.655321,
+    "test_cm": [
+      [
+        222,
+        52
+      ],
+      [
+        78,
+        476
+      ]
+    ],
+    "tested_at": "2026-07-24T04:19:14"
   },
   {
     "variant_id": "xception_S1",
@@ -1341,7 +3450,26 @@
     "params_m": 24.92,
     "lr": 0.008,
     "batch_size": 24,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.818991,
+    "test_acc": 0.792271,
+    "test_auc": 0.851636,
+    "test_precision": 0.852399,
+    "test_sensitivity": 0.833935,
+    "test_specificity": 0.708029,
+    "test_f1": 0.843066,
+    "test_mcc": 0.536313,
+    "test_cm": [
+      [
+        194,
+        80
+      ],
+      [
+        92,
+        462
+      ]
+    ],
+    "tested_at": "2026-07-24T04:30:33"
   },
   {
     "variant_id": "xception_S2",
@@ -1353,7 +3481,26 @@
     "params_m": 24.92,
     "lr": 0.008,
     "batch_size": 16,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.704215,
+    "test_acc": 0.791063,
+    "test_auc": 0.872638,
+    "test_precision": 0.856075,
+    "test_sensitivity": 0.826715,
+    "test_specificity": 0.718978,
+    "test_f1": 0.841139,
+    "test_mcc": 0.536992,
+    "test_cm": [
+      [
+        197,
+        77
+      ],
+      [
+        96,
+        458
+      ]
+    ],
+    "tested_at": "2026-07-24T04:42:28"
   },
   {
     "variant_id": "xception_S3",
@@ -1365,7 +3512,26 @@
     "params_m": 24.92,
     "lr": 0.008,
     "batch_size": 8,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.625288,
+    "test_acc": 0.81401,
+    "test_auc": 0.894474,
+    "test_precision": 0.883142,
+    "test_sensitivity": 0.83213,
+    "test_specificity": 0.777372,
+    "test_f1": 0.856877,
+    "test_mcc": 0.594168,
+    "test_cm": [
+      [
+        213,
+        61
+      ],
+      [
+        93,
+        461
+      ]
+    ],
+    "tested_at": "2026-07-24T04:56:47"
   },
   {
     "variant_id": "xception_M1",
@@ -1377,7 +3543,26 @@
     "params_m": 37.87,
     "lr": 0.006,
     "batch_size": 16,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.774701,
+    "test_acc": 0.77657,
+    "test_auc": 0.848191,
+    "test_precision": 0.848771,
+    "test_sensitivity": 0.810469,
+    "test_specificity": 0.708029,
+    "test_f1": 0.829178,
+    "test_mcc": 0.507942,
+    "test_cm": [
+      [
+        194,
+        80
+      ],
+      [
+        105,
+        449
+      ]
+    ],
+    "tested_at": "2026-07-24T05:07:50"
   },
   {
     "variant_id": "xception_M2",
@@ -1389,7 +3574,26 @@
     "params_m": 37.87,
     "lr": 0.006,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.919783,
+    "test_acc": 0.788647,
+    "test_auc": 0.856409,
+    "test_precision": 0.846435,
+    "test_sensitivity": 0.83574,
+    "test_specificity": 0.693431,
+    "test_f1": 0.841054,
+    "test_mcc": 0.525871,
+    "test_cm": [
+      [
+        190,
+        84
+      ],
+      [
+        91,
+        463
+      ]
+    ],
+    "tested_at": "2026-07-24T05:18:49"
   },
   {
     "variant_id": "xception_M3",
@@ -1401,7 +3605,26 @@
     "params_m": 37.87,
     "lr": 0.006,
     "batch_size": 6,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.711872,
+    "test_acc": 0.78744,
+    "test_auc": 0.85577,
+    "test_precision": 0.835106,
+    "test_sensitivity": 0.850181,
+    "test_specificity": 0.660584,
+    "test_f1": 0.842576,
+    "test_mcc": 0.515714,
+    "test_cm": [
+      [
+        181,
+        93
+      ],
+      [
+        83,
+        471
+      ]
+    ],
+    "tested_at": "2026-07-24T05:35:39"
   },
   {
     "variant_id": "xception_L1",
@@ -1413,7 +3636,26 @@
     "params_m": 40.29,
     "lr": 0.004,
     "batch_size": 10,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.877213,
+    "test_acc": 0.786232,
+    "test_auc": 0.860803,
+    "test_precision": 0.853659,
+    "test_sensitivity": 0.8213,
+    "test_specificity": 0.715328,
+    "test_f1": 0.837167,
+    "test_mcc": 0.527265,
+    "test_cm": [
+      [
+        196,
+        78
+      ],
+      [
+        99,
+        455
+      ]
+    ],
+    "tested_at": "2026-07-24T05:47:03"
   },
   {
     "variant_id": "xception_L2",
@@ -1425,7 +3667,26 @@
     "params_m": 40.29,
     "lr": 0.004,
     "batch_size": 6,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.855353,
+    "test_acc": 0.795894,
+    "test_auc": 0.855457,
+    "test_precision": 0.859813,
+    "test_sensitivity": 0.830325,
+    "test_specificity": 0.726277,
+    "test_f1": 0.844812,
+    "test_mcc": 0.547727,
+    "test_cm": [
+      [
+        199,
+        75
+      ],
+      [
+        94,
+        460
+      ]
+    ],
+    "tested_at": "2026-07-24T06:00:07"
   },
   {
     "variant_id": "xception_L3",
@@ -1437,6 +3698,25 @@
     "params_m": 40.29,
     "lr": 0.004,
     "batch_size": 4,
-    "status": "pending"
+    "status": "done",
+    "test_loss": 0.713644,
+    "test_acc": 0.824879,
+    "test_auc": 0.901536,
+    "test_precision": 0.885122,
+    "test_sensitivity": 0.848375,
+    "test_specificity": 0.777372,
+    "test_f1": 0.866359,
+    "test_mcc": 0.613909,
+    "test_cm": [
+      [
+        213,
+        61
+      ],
+      [
+        84,
+        470
+      ]
+    ],
+    "tested_at": "2026-07-24T06:22:55"
   }
 ]
