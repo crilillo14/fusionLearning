@@ -1,0 +1,11 @@
+{
+  "variant_id": "xception_S2",
+  "family": "xception",
+  "timm_name": "xception41",
+  "depth_tier": "small",
+  "resolution_tier": "mid",
+  "resolution_px": 512,
+  "params_m": 24.92,
+  "lr": 0.008,
+  "batch_size": 16
+}

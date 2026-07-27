@@ -1,0 +1,11 @@
+{
+  "variant_id": "vit_S2",
+  "family": "vit",
+  "timm_name": "vit_small_patch16_224",
+  "depth_tier": "small",
+  "resolution_tier": "mid",
+  "resolution_px": 512,
+  "params_m": 21.67,
+  "lr": 0.008,
+  "batch_size": 16
+}

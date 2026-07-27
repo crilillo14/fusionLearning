@@ -1,0 +1,11 @@
+{
+  "variant_id": "vit_L1",
+  "family": "vit",
+  "timm_name": "vit_base_patch16_224",
+  "depth_tier": "large",
+  "resolution_tier": "lo",
+  "resolution_px": 384,
+  "params_m": 85.8,
+  "lr": 0.004,
+  "batch_size": 10
+}
