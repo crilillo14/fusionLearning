@@ -1,0 +1,11 @@
+{
+  "variant_id": "vit_M1",
+  "family": "vit",
+  "timm_name": "vit_medium_patch16_gap_240",
+  "depth_tier": "medium",
+  "resolution_tier": "lo",
+  "resolution_px": 384,
+  "params_m": 38.33,
+  "lr": 0.006,
+  "batch_size": 16
+}

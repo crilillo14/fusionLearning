@@ -112,6 +112,17 @@ def main(rank, world_size, variant_id, dset="TOMPEI-CMMD"):
 
         num_classes = dataset_metadata_cls[dset]["num_classes"]
 
+        # Pretrained weights must land in the shared hub cache before any other rank
+        # calls create_classifier - all WORLD_SIZE ranks hitting a cold cache at once
+        # race each other over the network and reliably crash the download (see
+        # _errors/cls_vit_M1.txt, cls_xception_T1.txt: httpx client closed mid-retry /
+        # connection timeout). Rank 0 downloads alone, then the barrier ensures every
+        # other rank's create_classifier call below is a pure local-disk cache hit.
+        if rank == 0:
+            _prefetch = create_classifier(timm_name, family, resolution, num_classes=num_classes)
+            del _prefetch
+        dist.barrier()
+
         model = create_classifier(timm_name, family, resolution, num_classes=num_classes).to(device)
         model = DDP(model, device_ids=[rank], find_unused_parameters=True)
 
