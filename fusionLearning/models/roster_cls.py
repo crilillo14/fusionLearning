@@ -50,12 +50,44 @@ family -> grad-cam strategy (see inference_cls.py, unchanged by this pivot):
                          features_only=True (works for any architecture that
                          keeps a spatial grid through its stages - includes
                          the hybrid conv+windowed-attention families MaxViT/
-                         CoAtNet, not just pure CNNs; unverified against a
-                         real trained checkpoint, flag if gradcam_from_paths_cls
-                         fails for these two families and fall back to
-                         "transformer_final" if so)
+                         CoAtNet, not just pure CNNs; confirmed against real
+                         trained checkpoints - gradcam_from_paths_cls produced
+                         real per-stage figures for both families, see
+                         results/TOMPEI-CMMD/{coatnet,maxvit}_*/figures/)
   "transformer_final"  - only the final block is spatially interpretable
-                          (pure patch/window transformers - ViT, Swin)
+                          (pure patch/window transformers - ViT, Swin, DINO,
+                          DeiT)
+
+Addendum (explainability upgrade round): added two families, "dino" and "deit",
+both global-attention CLS-token ViT variants (same timm VisionTransformer class
+as "vit", just different pretraining recipes) - see notes/tompei_cmmd_classification_spec.md's
+sibling explainability-upgrade plan. 10 -> 12 families, 120 -> 144 configs.
+
+  "dino" - Caron et al. 2021 self-distillation pretraining (Meta AI/FAIR),
+           the specific method cited in the XAI literature for producing
+           unsupervised, semantically-sharp attention maps (its whole claim to
+           fame is that raw last-layer CLS attention is already a strong
+           localization signal, no Grad-CAM needed) - the direct motivation
+           for adding it here, to contrast against Grad-CAM/Attention-Rollout
+           on the other transformer families using the same lesion samples.
+           Checkpoint availability only offers two real capacity points
+           (small ~21.7M, base ~85.8M) - no tiny/medium DINO-pretrained ViT
+           was ever released - so tiers 1-2 and 3-4 each share a capacity,
+           differentiated instead by patch size (16 vs 8, i.e. attention-map
+           resolution) within each pair, and the "large" tier reaches into
+           DINOv2 (the same lab's direct successor method) rather than a
+           non-existent larger DINOv1 checkpoint. Same kind of checkpoint-
+           granularity constraint the roster already tolerates elsewhere
+           (see MaxViT/CoAtNet's "tiny" tier note above) - not a modeling
+           choice.
+  "deit"  - Touvron et al. 2021 "Data-efficient Image Transformers" - a
+           real 4-point capacity ladder exists (tiny/small/medium/base),
+           reusing DeiT-III's "medium" checkpoint to fill the one gap the
+           original DeiT release doesn't cover, same params as vit's own
+           tiny/small/medium/base progression almost exactly (same
+           underlying ViT sizes) - included as the standard ImageNet-
+           supervised-distillation baseline against DINO's self-supervised
+           one, both being the same base architecture class.
 """
 
 from __future__ import annotations
@@ -73,6 +105,8 @@ GRADCAM_FAMILY_TYPE: dict[str, str] = {
     "swin": "transformer_final",
     "maxvit": "cnn_staged",
     "coatnet": "cnn_staged",
+    "dino": "transformer_final",
+    "deit": "transformer_final",
 }
 
 # depth tier -> real timm checkpoint name, one per family, in tiny->large order.
