@@ -1,46 +1,13 @@
-# ABFL
+Everything is a bit of a mess right now, but this repository contains experiments related to stable & robust ensembling of deep classifiers & segmentation models.
 
-Code pertaining to Masked Attention for cross model fusion. 
+@fusionLearning/models/ contains segmentation & classification model training and any post hoc experiments done. Figures & results stored in models/results/{Dataset}/.
 
-Quick little schema of things:
+data ingestion, transformation & distributed sampling is done in @fusionLearning/data/. 
 
-```txt
- ____________
-|            |
-|  Model 1   | __ mask __
-|____________|             \
- ____________              ______________
-|            |            |              |
-|  Model 2   |----mask----|  Attention   | -------> improved segmentation mask 
-|____________|            |______________|
- ____________              /
-|            | __ mask __ /
-|  Model 3   |
-|____________|
+Ensemble "stability" is multi-faceted, and the variety of post hoc experiments reflect that. For example, modern takes on the bias variance decompositions ([Belkin2019](https://arxiv.org/abs/1812.11118), [Yang2019](https://proceedings.mlr.press/v119/yang20j)[Gupta2022](https://arxiv.org/abs/2206.10566)) of overparametrized models challenge the classical bias-variance tradeoff believed to be true for much of the 20th and 21st century (this phenomenon is often called "double descent"). Because of this, if you want to argue a minima exists for the generalized error, you have to first show that models you're ensembling aren't undergoing double descent. Under this scenario, which is commonly induced in data scarce learning tasks, arguing that ensembling is _optimal_ follows cleanly from g-Bregman bias-var decompositions ([Gupta2022](https://arxiv.org/abs/2206.10566)).
 
-```
+Most datasets used are _clinical_, such as lesion detection in mammographies. Because labelling is expensive, and positives are few and far between, scaling model size & compute (as Chinchilla scaling laws suggest) will not have the intended consequence. 
 
-Will make sure to attach a more detailed diagram soon.
+Robustness requires many experiments to parametrize, but essentially boils down to introducing synthetic errors with photometric data transforms. 
 
-Model architectures benchmarked under similar hyperparameters and comparable network depth and size.
-
-Fusion methods benchmarked: 
-1. Cross model pixel-wise mean (Arithmetic, Geometric, ...)
-2. Weighted cross Model fusion
-3. Convolutional fusion (akin to boosting, slapping a CNN on output heads of previous segmentations)
-4. 
-
-Should incorporate an LR scheduler. Hyperparameters based on Unet paper [https://arxiv.org/abs/1505.04597].
-
-For transforms look at ```data\aug.py```. Geometric and photometric augmentations separated for faster data processing.
-
-For dataloaders look at ```data\dataloaders.py```.
-
-For base model implementations look at ```models\*```. Most models come from [SMP](https://smp.readthedocs.io/en/latest/models.html#unetplusplus). Some come from Hugging Face.
-
-For specific net configurations, check out ```models/config.py```.
-
-> Some caveats that are annoying, but will take too long to refactor: 
-
-CUB has a lot of custom code for loading and transforms. Pascal VOC, ADE20K, Cityscapes dsets don't.
-
+Once training, logging, graphing, & housekeeping is done, I'll be sure to include a short exposition of the results.
