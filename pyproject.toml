@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
+    "albumentations>=2.0.8",
     "grad-cam>=1.5.5",
     "huggingface-hub>=1.7.1",
     "matplotlib>=3.5.0",

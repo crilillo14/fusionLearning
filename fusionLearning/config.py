@@ -26,7 +26,7 @@ TOMPEI_CMMD_TEST_LABEL = os.path.join(TOMPEI_CMMD_TASK, "test_label")
 
 # Model, weights and output directories
 LEARNED_WEIGHTS = os.path.join(MODULE_DIR, "weights")
-BASE_MODELS = os.path.join(MODULE_DIR, "models")
+BASE_MODELS = os.path.join(MODULE_DIR, "models", "segmentation")
 FUSION_MODELS = os.path.join(MODULE_DIR, "ensembles")
 
 # Where the generated segmentation masks will be stored
