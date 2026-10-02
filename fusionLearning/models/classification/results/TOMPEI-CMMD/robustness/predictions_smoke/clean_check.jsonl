@@ -1,0 +1,2 @@
+{"model": "efficientnet_T1_efficientnet_b0", "max_abs_dp_vs_published": 0.20793126090431213}
+{"model": "regnet_T1_regnety_004", "max_abs_dp_vs_published": 0.6473642979316712}
